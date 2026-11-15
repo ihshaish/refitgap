@@ -1,0 +1,96 @@
+Analysis plan: both drifts crossed, by remedy
+=============================================
+
+Aim
+---
+This plan tests whether the remedy that works depends on the cause of the deficit: a threshold
+refit enough under prior reweighting and not under a vocabulary change, both parts present when
+both causes act. It also compares a model retrained on all accumulated data with sequential
+training.
+
+Design
+------
+BiGRU on frozen GloVe embeddings, ASRS streams. The two extreme earlier streams: the full
+prior reweighting (control: its uniform subsample) and the full vocabulary permutation (control: the
+primary stream). Two-by-two design on the 35% subsample: neither cause; reweighting only;
+vocabulary only (the paired token swap at rho = 0.5 applied to the control's records); both.
+Remedies, each applied to the final sequential model of the stream and of its matched control,
+and scored on the untouched test set of each period. The calibration sample is 500 records from
+the period's training pool, 3 independent draws per seed and period, the same records for every
+remedy:
+  inherited thresholds theta1 (reference);
+  refit: thresholds refitted on the sample, model untouched;
+  head adaptation: the head trained on the sample, then the refit (Adam, 3e-3, 3 epochs);
+  full adaptation: all trainable parameters trained on the sample, then the refit (Adam, 3e-4, 5
+    epochs).
+Fitting thresholds on the adaptation sample slightly favours the two adaptations. Their settings
+were chosen on two development streams outside the analysed cells (the 40% prior dose and a
+quarter-dose swap), by mean recovery, on 26 August 2026 before the first run on an analysed cell.
+A fine-tune whose macro-F1 on its own sample falls more than 0.05 below the value before
+adaptation is marked diverged and reported as it is.
+Comparators outside this sequence: an oracle prior-odds correction of the scores with the true
+training priors (prior-bearing cells only; not a deployable remedy), and replay with a 5%
+reservoir trained on the stream (descriptive).
+Seeds: 10 per primary cell (both extreme streams, both controls, all four cells of the design);
+replay at 5; the cumulative baseline at 3.
+
+Analysis
+--------
+For a stream a, its control c and a remedy r, with Y the macro-F1 achieved:
+  deficit under r: d(a,r) = Y(c,r) - Y(a,r);
+  recovery: G(a,r) = d(a, inherited) - d(a,r);
+  G*(a,r): the same on the attainable level (exact split-half, 200 partitions);
+  repaired fraction of the refit: psi(a) = G(a, refit) / d(a, inherited).
+Every planned quantity has a fixed reference; none uses backward transfer or a fraction of
+headroom. Bootstrap over seeds, 20000 resamples, keeping all remedy observations and draws of a
+seed together and resampling stream and control seeds independently. Intervals are given on the
+planned contrasts; there is no significance threshold, and a miss is reported as a miss.
+Precision: at 10 seeds a difference-in-differences has a standard error of about 0.004, so the
+smallest meaningful recovery is 0.008 macro-F1, and a ratio whose denominator is below 0.010 or
+not positive is marked as not evaluable.
+Manipulation checks before any training on the new streams: prior drift of at least 0.12 in the
+reweighting cells; the vocabulary change moves a cell's priors by less than 0.01; and the two
+criteria given under Departures.
+
+Predictions
+-----------
+1. Known from the earlier streams and not a prediction: the recoverable fraction separates the
+   two causes, 97% [89, 104] against 9 to 16%.
+2. Primary: psi(prior) > 2 x psi(permutation). The twofold margin was chosen after the earlier
+   results and before this design.
+3. Primary: G*(permutation, full adaptation) - G*(prior, full adaptation) > 0, with a bootstrap
+   interval excluding zero. Secondary, direction only: the same order for head adaptation and
+   for replay.
+4. Primary: G(prior, refit) / G(prior, full adaptation) >= 0.8 and G(permutation, refit) /
+   G(permutation, full adaptation) < 0.5, both denominators at or above 0.010. The cuts are
+   practical, not significance thresholds.
+5. Direction only: G(prior, oracle correction) < G(prior, refit).
+6. In the cell with both causes, both parts of the deficit against the cell with neither are at
+   least 0.008: the mismatch part and the part unavailable to threshold choice. Exploratory: the
+   interaction of each part across the four cells, with intervals; non-additivity is a finding.
+7. Descriptive, no direction predicted: the final model retrained from a new initialisation on
+   all accumulated data each period (3 epochs, same architecture and optimiser, not matched in
+   compute) against the final sequential model on the same historical periods: differences in
+   macro-F1 at each model's own first-period thresholds, in macro-AUPRC and in the attainable
+   level.
+If 2 or 4 fails, the paper does not say which remedy a cause calls for. If 3 fails, that reading
+is weakened. Head adaptation failing where full adaptation succeeds is not a failure: it places
+the recoverable loss deeper than the head.
+
+Date
+----
+25 August 2026 (second version), before any run of this design; no outcome of any planned cell
+had been seen. The earlier result of prediction 1 and part of the refit's behaviour under
+reweighting were already known. Data collection closed on 27 August 2026.
+
+Departures
+----------
+Two manipulation criteria were corrected on 26 August 2026, after the check statistics were
+computed and before any training on the new cells: control drift within 0.02 of the primary
+stream's natural drift (0.0602), in place of at most 0.03; and a stability ratio of the
+vocabulary cell to its counterpart within [0.85, 0.995], in place of below 0.70.
+The cumulative baseline refitted its thresholds every period, so the first comparison credited
+it with a refit. The comparison is reported with both models at first-period thresholds, and the
+baseline's own refit separately.
+On 23 October 2026 the interaction terms of prediction 6 were recomputed under one definition
+of the control cell, which the first table had set to zero.

@@ -1,0 +1,73 @@
+Analysis plan: later changes to the DistilBERT paired refit
+===========================================================
+
+This note changes distilbert-paired-refit.txt (9 November 2026) in two dated parts. No arm,
+recipe, seed set, prediction or primary analysis of that plan changes.
+
+Added aim
+---------
+On MultiEURLEX, this note tests whether replay's lead after refit exceeds the effect of the extra
+optimiser updates replay receives, against the control matched on updates.
+
+Change of 10 November 2026: all ASRS pairs from new runs
+--------------------------------------------------------
+Written after the first night of runs, before any replay-minus-sequential quantity was computed
+and before any new sequential run existed.
+The repeatability check had passed (largest score difference 0.00098 against 0.0122; decision
+level 0.0000116 against 0.0013). The reuse check on seed 0 failed both parts: the first period
+of the stored sequential run against that of the new replay run differed by up to 0.511 in the
+scores (correlation 0.997) and by 0.0024 at the decision level. The stored runs had been trained
+on other devices.
+1. Every ASRS pair is between two new runs with the same code, device and initialisation, for
+   all six seeds. The stored runs are not used in pairs and keep their place in the
+   decomposition table. Six seeds are kept because the exact two-sided sign-flip test cannot
+   reach 0.05 with fewer (minimum p 0.031 at six, 0.0625 at five).
+2. The six new ASRS sequential runs replicate the DistilBERT decomposition on periods 2 to 7
+   with the paper's estimator, the same 200 partitions and the percentile bootstrap over seeds
+   (20000). They are reported beside the printed values (deficit B 0.0161, change in mismatch
+   Delta R 0.0176, attainable gap A -0.0015) with intervals, as descriptive.
+3. A run interrupted part-way either restarts from its first period or resumes at its next
+   period; resuming is allowed only if a retrained last period agrees with the stored one within
+   the repeatability tolerances (0.0122 and 0.0013).
+
+Change of 12 November 2026: one hardware cohort
+-----------------------------------------------
+Written before any replay-minus-sequential quantity was computed on any device.
+1. All six seeds on both streams are trained as one cohort on one GPU type (NVIDIA L4, CUDA),
+   with the library versions and model revision of the earlier runs. A run refuses to start on
+   any other configuration.
+2. The recipe is unchanged: data, tokeniser, initialisation pairing, batch size, epochs,
+   optimiser, precision, calibration, partitions and bootstrap. For one seed the pretrained
+   weights are bit-identical to the earlier device's and the new classifier weights differ by at
+   most 4.3e-8. The two arms of a seed share one initialisation within the cohort.
+3. Runs are not bit-identical run to run, as before; the tolerances are unchanged. The
+   repeatability check is repeated on this hardware before any other run, and a failure stops
+   the work.
+4. A run lost with its machine restarts once from its first period; a second loss stops it.
+5. The runs already made on the first device (ASRS replay, seed 0 complete and seed 1 partial)
+   are kept and reported as a separately labelled hardware comparison, never pooled with the
+   cohort and never counted as extra seeds.
+
+Replay against extra updates on current data (MultiEURLEX, declared as an extension)
+------------------------------------------------------------------------------------
+Arm: each period adds as many records as replay's buffer would hold, drawn from that period's
+own training records, so the number of updates matches replay. Same transformer, same
+initialisation as the seed's other arms, same calibration access and evaluation; seeds 0 to 5.
+Contrast: replay minus extra updates on current data, after both refit (G_V) and at theta1 (G_U),
+with the estimator and tests of the paired refit (paired t, TOST at 0.005, Holm within
+{G_U, G_V}, sign-flip).
+Reading: if the lower end of the 95% t interval of G_V is above zero, "replay's lead
+after refit is not attributed to extra optimiser updates"; otherwise "replay's lead after refit
+is not separated from extra optimiser updates at six seeds". Training time is reported
+separately. The comparison is not run on ASRS and is not a repair.
+
+Date
+----
+10 and 12 November 2026, at the points stated above. Before the second date only timing runs on
+a seed outside the plan (622) had been made on the new hardware, with no metric computed.
+
+Departures
+----------
+Relative to the plan of 9 November: the stored ASRS sequential runs are not used in the pairs,
+so the ASRS pairs are new in both arms; all runs come from one hardware cohort; and the
+comparison with extra updates on current data was added on MultiEURLEX.

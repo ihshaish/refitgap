@@ -1,0 +1,150 @@
+refitgap API
+============
+
+Stored per-period scores and labels in; cross-fitted macro-F1 levels, the split of a
+thresholded deficit into attainable gap and change in mismatch, and seed-paired contrasts
+out. numpy and scipy only; figures want matplotlib (pip install "refitgap[plots]").
+
+The estimator
+-------------
+
+For period id j and seed s, partition b is the b-th permutation of
+numpy.random.default_rng(7000 + 100*s + j); half 0 is the first n_j // 2 records. A refit
+picks, per label, the F1-maximising cutpoint on one half and is scored on the other, both
+ways round; a level is the mean over the partitions (200 in the paper). With U a model's
+macro-F1 at the carried rule theta_1 and V its refitted (attainable) level,
+
+    B = U_ref - U_final = (V_ref - V_final) + (R_final - R_ref) = A + dR,   R = V - U
+
+U is taken on the whole period by default (U_full), or on the held-out halves (U_half).
+For one rule shared across periods, R = C + M with C = V_sep - V_shared and
+M = V_shared - U, exact per partition. A score equal to its threshold is a positive; a label
+with no positive and no prediction has F1 0 and stays in the macro mean. Period ids are ints
+in [0, 100) and seeds non-negative ints, so no two (seed, period) pairs share partitions.
+
+Outcome rules
+-------------
+
+A contrast is a per-seed vector (method a minus method b, paired by seed). At margin 0.005:
+- equivalent: TOST p < 0.05 (Holm-adjusted within a family);
+- material: t p < 0.05 and |mean| >= margin;
+- small non-zero: t p < 0.05 and |mean| < margin;
+- unresolved: anything else, or a material / small non-zero call that the sign-flip test
+  (exact up to 20 seeds, Monte Carlo above) does not back;
+- non-inferior / inferior (family_ni): one-sided t and sign-flip tests at -margin.
+Intervals are marginal 95 % t intervals over seeds. Rows say "descriptive" unless you name
+a family fixed in advance (--family NAME); the class words then describe your numbers under
+the paper's rules, nothing grander.
+
+Functions
+---------
+
+compare(scores_ref, scores_final, labels, rule, *, seed, splits=200, record_ids=None,
+        label_ids=None, period_ids=None, labels_final=None, rule_name="carried", halves=False,
+        score_scale=None, fixed_split=None, ...)
+    Two scorers on the same labelled records, (n, K) each (lists for several periods), and
+    the carried rule `rule`, one threshold per label -> dict(carried, refitted, components,
+    per_period, metadata, decomposition, evaluations). rule_name is the name the vector goes by in the
+    returned Evaluations (evaluations["ref"], evaluations["final"]), which is what
+    method_contrast takes. labels_final: the labels exported with the final scorer, checked
+    cell by cell against `labels`. Mismatched shapes, ids or labels raise; scores or rule
+    outside [0, 1] raise unless score_scale="other".
+method_contrast(evals_a, evals_b, rule, *, periods=None, same_rule=True, names=("a", "b"), ...)
+    {seed: Evaluation} for two methods, and `rule`, the name of a rule held by every
+    Evaluation -> terms lead_at_carried_rule (G_U), lead_after_refit (G_V) and change
+    (G_V - G_U, the change after refitting, as in the paper), each with per-seed values,
+    mean, t interval and class. "placement" is G_U - G_V, the negative of change, kept for
+    compatibility. same_rule=False lets each method carry its own vector under that name.
+evaluate(Ps, Ys, seed, period_ids=None, rules=None, shared_periods=None, splits=200, ...)
+    One model's per-period scores and labels, and rules={name: (K,) vector} -> Evaluation
+    (levels per partition, both directions, every period); .summary() and .per_period()
+    give the means.
+decompose(ref, final, rule, periods=None, halves=False, same_rule=True)
+    Two Evaluations on the same records and a rule name -> B, A, dR (and dC, dM) per period
+    and mean. B and dR are also returned as D and R, their earlier names.
+
+    Two methods from Python, end to end (synthetic scores, two periods, five seeds):
+
+    import numpy as np, refitgap as rg
+    rng = np.random.default_rng(0); Y = [(rng.random((300, 3)) < 0.3).astype(int) for _ in range(2)]
+    ev = lambda sep: {s: rg.evaluate([1 / (1 + np.exp(1 - sep * y - rng.normal(size=y.shape))) for y in Y], Y, s,
+                                     rules={"carried": np.full(3, 0.5)}) for s in range(5)}
+    mc = rg.method_contrast(ev(2.5), ev(1.5), "carried", names=("mine", "baseline"))
+    print({t: round(mc["terms"][t]["mean"], 4) for t in ("lead_at_carried_rule", "lead_after_refit", "change")})
+
+    prints {'lead_at_carried_rule': 0.1484, 'lead_after_refit': 0.1903, 'change': 0.0419}.
+fit_exact(P, Y), fit_grid(P, Y), fit_shared_exact(Ps, Ys, w=None), fit_validation_rule(Pval, Yval)
+    Scores and labels -> (K,) thresholds: best cutpoint per label; the 19-point grid
+    0.05..0.95 (how theta_1 was fitted); one vector for several periods; the grid on a
+    validation split.
+f1_vec(P, Y, theta), macro_f1(P, Y, theta)
+    Per-label F1 and its mean at theta.
+partitions(n, seed, j, splits=200)
+    The index permutations behind every level.
+paired_stats(x), paired_contrast(a, b), family(members), family_ni(members), holm(ps)
+    Per-seed vectors (or {seed: value} dicts) -> mean, intervals, t / TOST / sign-flip p and
+    classes, as above.
+analyse(runs_a, runs_b=None, rule="inherited", mean_over=None, u_convention="full", ...)
+    Runs (make_run, run_from_npz, run_from_arrays) -> levels, decomposition and contrast
+    tables; write_tables(result, dir) writes levels.csv, decomposition.csv, contrasts.csv and
+    result.json; plots.save_figures and report.write_report draw from the same tables.
+make_run(final, labels, seed, rules, reference=None, ...), save_arrays(path, run)
+    A run from arrays; saved as an arrays file (scores_<j>, labels_<j>, optional
+    reference_<j>, rule_<name>, seed, label_names).
+load_run(path), evaluate_npz(path, seed, ...)
+    Read or evaluate a stored run file (P_<i>_<j>: model i on period j; Y_<j>; thresholds).
+align_to(reference_ids, ids, *arrays), drop_unlabelled(ids, Y, *arrays)
+    Reorder rows to a reference id order (missing or duplicate ids raise); drop records with
+    a missing (NaN) label.
+identification_example()
+    The fourteen-record case in exact fractions: equal AUROC (6/11) and average precision
+    (5/18), equal deficits (1/26), one all mismatch, one all attainable gap.
+f1_bounds_from_counts(tp, fp, fn, tn)
+    Sharp range of the best single-threshold F1 behind one confusion table
+    (40, 10, 10, 40 gives [0.8, 10/11]). A bound, not a confidence interval.
+
+Command line
+------------
+
+    refitgap evaluate --npz run_s0.npz run_s1.npz --seeds 0 1 [--npz-b ...] --out DIR
+    refitgap evaluate --arrays a_s0.npz ... [--arrays-b b_s0.npz ...] --out DIR
+    refitgap report   (same inputs) --out DIR      # adds three figures and report.html
+    refitgap example  [--out DIR]                  # the tiny example below
+    refitgap --version
+
+Settings: --periods, --mean-over, --shared-periods, --shared-weights, --splits (200),
+--rule (inherited), --validation, --u-convention full|half, --no-reference, --margin
+(0.005), --family NAME, --names, --workers. Two methods are paired by seed; stored label
+names must agree. levels.csv: V_sep, V_shared, C, U_half, U_full, R, M per method, seed,
+model, period and rule. decomposition.csv: B, A, dR per period against the per-period
+reference. contrasts.csv: paired leads with per-seed values, mean, interval and p.
+
+Tiny example
+------------
+
+Two periods of four records, two labels (a, b), seed 0, one partition, inherited thresholds 0.5.
+The reference of period 1 is the final model itself.
+
+    period  record  labels a,b  final a,b   reference a,b
+    0       r0      1,0         0.4,0.6     0.9,0.3
+    0       r1      1,0         0.4,0.2     0.9,0.3
+    0       r2      0,1         0.1,0.8     0.2,0.8
+    0       r3      0,1         0.1,0.3     0.2,0.8
+    1       r0, r2  1,0         0.9,0.3     same as final
+    1       r1, r3  0,1         0.2,0.8     same as final
+
+default_rng(7000).permutation(4) = [1, 2, 0, 3] and default_rng(7001) gives [3, 0, 1, 2],
+so period 0 splits {r1, r2} | {r0, r3} and period 1 {r3, r0} | {r1, r2}. The reference
+separates everything: V = U = 1. The final model on period 0 reaches V_sep = V_shared = 3/4
+and U = 1/4 at 0.5, so C = 0 and M = R = 1/2; on period 1 it is the reference, V_sep = U = 1
+and V_shared = 11/12. Period 0 thus splits B = 3/4 into A = 1/4 (all label b: positive r3 now
+scores below negative r0) and dR = 1/2 (all label a: still separated, but below 0.5). The
+tests check every printed value against these fractions to 1e-12.
+
+Limits
+------
+
+A, C, M and R describe what thresholded predictions from the stored scores can reach: a
+large A says the scores lost separation, not that the representation lost the information.
+Every level survives any strictly increasing per-label map of scores and rules. The package
+recommends nothing; retrain-or-recalibrate needs costs the scores do not carry.

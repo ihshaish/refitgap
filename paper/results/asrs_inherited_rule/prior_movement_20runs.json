@@ -1,0 +1,161 @@
+{
+ "generator": "prior_movement_asrs.py",
+ "scoring": "score_inherited_rule.py",
+ "range": "periods 2-7 (j=1..6)",
+ "fit_set": "final model's period-1 TEST scores (2077 records), exact fitter; prior weights per label = period-j prior odds",
+ "bootstrap": {
+  "B": 20000,
+  "seed": 20260920,
+  "blocks": "seed (10); block value = mean over C1, C2 of per-run range means; ratio of block means"
+ },
+ "frozen20_refit_V": {
+  "denominator": "V(s_N) from oracle_both (exact split-half B=20)",
+  "n_runs": 20,
+  "n_blocks": 10,
+  "levels": {
+   "frozen_dep": 0.69250379329468,
+   "refit_old": 0.7092897267268372,
+   "prior_only": 0.7142092632736444,
+   "refit_V": 0.717839417108412
+  },
+  "total_gain": 0.025335623813732038,
+  "share_same_scorer_refit_pct": 66.25427325400693,
+  "ci_same_scorer": [
+   58.1774476401297,
+   72.91503314659073
+  ],
+  "share_prior_reweighting_pct": 19.41746760599079,
+  "ci_prior": [
+   14.279958937485912,
+   24.962174669284394
+  ],
+  "share_remainder_pct": 14.328259140002269,
+  "ci_remainder": [
+   10.632319760631034,
+   18.769379010168077
+  ],
+  "share_published_construct_pct": 85.67174085999774,
+  "ci_published": [
+   81.23062098983193,
+   89.36768023936897
+  ],
+  "n_runs_prior_gain_positive": 20,
+  "n_runs_old_gain_positive": 19,
+  "per_condition": {
+   "C1": {
+    "same_scorer": 57.22588469011485,
+    "prior": 27.587165915054054,
+    "remainder": 15.186949394831098,
+    "published": 84.81305060516891
+   },
+   "C2": {
+    "same_scorer": 74.50698538734322,
+    "prior": 11.949671123399222,
+    "remainder": 13.543343489257554,
+    "published": 86.45665651074245
+   }
+  }
+ },
+ "frozen20_refit_S10": {
+  "denominator": "npz-style split-half S=10, rng 31+j",
+  "n_runs": 20,
+  "n_blocks": 10,
+  "levels": {
+   "frozen_dep": 0.69250379329468,
+   "refit_old": 0.7092897267268372,
+   "prior_only": 0.7142092632736444,
+   "refit_S10": 0.7178713379079554
+  },
+  "total_gain": 0.025367544613275433,
+  "share_same_scorer_refit_pct": 66.17090336513218,
+  "ci_same_scorer": [
+   58.47720130506055,
+   72.37279886052993
+  ],
+  "share_prior_reweighting_pct": 19.393033980248124,
+  "ci_prior": [
+   14.20294054318203,
+   25.06024998457227
+  ],
+  "share_remainder_pct": 14.436062654619702,
+  "ci_remainder": [
+   11.194902945641912,
+   18.441396488078816
+  ],
+  "share_published_construct_pct": 85.5639373453803,
+  "ci_published": [
+   81.55860351192118,
+   88.80509705435809
+  ],
+  "n_runs_prior_gain_positive": 20,
+  "n_runs_old_gain_positive": 19,
+  "per_condition": {
+   "C1": {
+    "same_scorer": 57.61595725561272,
+    "prior": 27.77521013038725,
+    "remainder": 14.608832614000029,
+    "published": 85.39116738599998
+   },
+   "C2": {
+    "same_scorer": 73.8716784900039,
+    "prior": 11.847778549888634,
+    "remainder": 14.280542960107464,
+    "published": 85.71945703989253
+   }
+  }
+ },
+ "tuned_glove_3runs": {
+  "files": [
+   "results/methods/primary_C2_naive_ref_s0_scores.npz",
+   "results/methods/primary_C2_naive_ref_s1_scores.npz",
+   "results/methods/primary_C2_naive_ref_s2_scores.npz"
+  ],
+  "n_runs": 3,
+  "denominator": "split-half S=10, rng 31+j",
+  "levels": {
+   "frozen_dep": 0.6856918507870096,
+   "refit_old": 0.7096472262755068,
+   "prior_only": 0.715009638543579,
+   "refit_S10": 0.7195744874919466
+  },
+  "share_same_scorer_refit_pct": 70.70103692670035,
+  "ci_same_scorer": [
+   61.36274224696413,
+   77.59038233813975
+  ],
+  "share_prior_reweighting_pct": 15.826431439707799,
+  "ci_prior": [
+   13.02538549254297,
+   19.258814543136555
+  ],
+  "share_published_construct_pct": 86.52746836640816,
+  "ci_published": [
+   80.62155679010068,
+   92.71565697138143
+  ],
+  "bootstrap": "over 3 runs, 20000 resamples, default_rng(20260818)",
+  "per_run": [
+   {
+    "seed": 0,
+    "frozen_dep": 0.6881847465959389,
+    "refit_old": 0.712725258641727,
+    "prior_only": 0.717509124542984,
+    "refit_S10": 0.7198130377658938
+   },
+   {
+    "seed": 1,
+    "frozen_dep": 0.6828353522386079,
+    "refit_old": 0.7086707621018385,
+    "prior_only": 0.7132293910181788,
+    "refit_S10": 0.7178333867992749
+   },
+   {
+    "seed": 2,
+    "frozen_dep": 0.6860554535264817,
+    "refit_old": 0.7075456580829549,
+    "prior_only": 0.714290400069574,
+    "refit_S10": 0.7210770379106711
+   }
+  ]
+ }
+}

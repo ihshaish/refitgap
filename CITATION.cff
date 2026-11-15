@@ -1,0 +1,34 @@
+cff-version: 1.2.0
+message: "If you use refitgap, please cite the paper below and this software."
+title: "refitgap: score-based evaluation of thresholded forgetting in continual multi-label classification"
+type: software
+version: 0.1.0
+license: MIT
+repository-code: "https://github.com/ihshaish/refitgap"
+authors:
+  - family-names: Ihshaish
+    given-names: Hisham
+    email: hisham.ihshaish@uwe.ac.uk
+    orcid: "https://orcid.org/0000-0001-5530-4894"
+    affiliation: "School of Computing and Creative Technologies, University of the West of England, Bristol, UK; Department of Computer Science, Birzeit University, Birzeit, Palestine"
+keywords:
+  - continual learning
+  - multi-label classification
+  - backward transfer
+  - attainable gap
+  - evaluation
+preferred-citation:
+  type: article
+  title: "Decomposing Backward Transfer in Continual Multi-Label Text Classification"
+  status: submitted
+  notes: "Under review."
+  authors:
+    - family-names: Ihshaish
+      given-names: Hisham
+      affiliation: "University of the West of England; Birzeit University"
+    - family-names: Mayhew
+      given-names: Peter
+      affiliation: "University of the West of England; GE Aerospace"
+    - family-names: Aydin
+      given-names: Mehmet
+      affiliation: "University of the West of England"

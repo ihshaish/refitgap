@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "refitgap"
+dynamic = ["version"]
+description = "Split a continual learner's thresholded forgetting into what the scores lost and what the carried rule lost, from stored scores."
+readme = { file = "README.txt", content-type = "text/plain" }
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Hisham Ihshaish", email = "hisham.ihshaish@uwe.ac.uk" }]
+keywords = ["continual learning", "multi-label classification", "backward transfer", "thresholds", "evaluation"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+]
+dependencies = ["numpy>=1.24", "scipy>=1.10"]
+
+[project.optional-dependencies]
+plots = ["matplotlib>=3.5"]
+test = ["pytest>=7.0", "scikit-learn>=1.3"]
+
+[project.urls]
+Homepage = "https://github.com/ihshaish/refitgap"
+Repository = "https://github.com/ihshaish/refitgap"
+Issues = "https://github.com/ihshaish/refitgap/issues"
+
+[project.scripts]
+refitgap = "refitgap.cli:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+refitgap = ["*.txt"]
+
+[tool.setuptools.dynamic]
+version = { attr = "refitgap.__version__" }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-p no:cacheprovider -m 'not slow'"
+markers = ["slow: recomputes stored paper numbers from score files (minutes to hours; run with -m slow)"]

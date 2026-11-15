@@ -1,0 +1,6 @@
+include README.txt LICENSE CITATION.cff
+recursive-include src/refitgap *.py *.txt
+include tests/*.py
+prune paper
+prune examples
+global-exclude __pycache__ *.py[cod] .DS_Store

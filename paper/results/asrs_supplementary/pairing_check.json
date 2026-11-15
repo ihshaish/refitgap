@@ -1,0 +1,29 @@
+{
+ "seed_used": 20260802,
+ "mapped_tokens": 875,
+ "outputs_unique": false,
+ "n_distinct_outputs": 655,
+ "outputs_within_selected_vocabulary": true,
+ "involution_share": 0.6925714285714286,
+ "tokens_assigned_more_than_once": 402,
+ "tokens_in_more_than_one_label_list": 460,
+ "pairs": [
+  [
+   "ATC Issue",
+   "Deviation - Altitude"
+  ],
+  [
+   "Deviation / Discrepancy - Procedural",
+   "Deviation - Track / Heading"
+  ],
+  [
+   "Conflict",
+   "Inflight Event / Encounter"
+  ],
+  [
+   "Aircraft Equipment Problem",
+   "Flight Deck / Cabin / Aircraft Event"
+  ]
+ ],
+ "unpaired_label": "Ground Event / Encounter"
+}

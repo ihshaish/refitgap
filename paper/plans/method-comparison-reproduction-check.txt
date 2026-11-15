@@ -1,0 +1,23 @@
+Method comparison: the reproduction check
+=========================================
+
+Check
+    The sequential-training runs made again for the method comparison on the CPU cluster had to
+    reproduce the runs stored in August: identical inherited thresholds and a largest
+    elementwise score difference of at most 1e-3 on every cluster seed. Runs on a local machine
+    were to be reported only.
+
+Outcome
+    4 of 40 runs fell outside the tolerance, with identical thresholds on all four: reweighted
+    stream seed 2, 0.0029; its control seed 2, 0.0044; control seed 5, 0.0034; control seed 3,
+    0.244. On the last one, macro-F1 at the inherited thresholds differs from the stored run by
+    at most 0.0038.
+
+Response
+    We waived the check in a note written before any method contrast was computed or looked
+    at. The other checks ran first and passed (the stored decomposition reproduced within
+    0.0002 per cell, against a tolerance of 0.002). No tolerance was widened, no run was dropped
+    or replaced, and the analysis is unchanged: all 40 runs are kept and the comparison is
+    reported as a new paired cohort. A repeat of control seed 3 on a fifth node matches the run
+    used in the comparison bit for bit, so run-to-run randomness does not explain the difference;
+    node-dependent arithmetic remains a guess.

@@ -1,0 +1,20 @@
+{
+ "irreducible": {
+  "spearman": -0.6477502756312957,
+  "p_blocked_spearman": 0.004918981481481482,
+  "p_blocked_pearson": 0.0016637731481481482,
+  "arrangements": 13824
+ },
+ "threshold": {
+  "spearman": 0.6693419514856722,
+  "p_blocked_spearman": 0.009837962962962963,
+  "p_blocked_pearson": 0.0033275462962962963,
+  "arrangements": 13824
+ },
+ "total": {
+  "spearman": 0.043183351708753044,
+  "p_blocked_spearman": 0.8780381944444444,
+  "p_blocked_pearson": 0.6535011574074074,
+  "arrangements": 13824
+ }
+}

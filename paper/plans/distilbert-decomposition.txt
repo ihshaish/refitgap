@@ -1,0 +1,52 @@
+Analysis plan: the decomposition B = A + Delta R on DistilBERT
+=========================================================
+
+Aim
+---
+This plan tests whether the composition of the backward deficit found on the BiGRU, where the
+change in mismatch Delta R is the larger part, extends to a transformer fine-tuned end to end.
+
+Design
+------
+ASRS primary stream, unchanged. DistilBERT base uncased, fine-tuned end to end with sequential
+training: AdamW at 2e-5, batch 32, 256 subword tokens, 3 epochs per period, settings unchanged.
+Initialisations: 6 (seeds 0 to 5) if the GPU budget allows, else 5 (seeds 0 to 4); fixed at 6
+before the first run. Kept for every run: the scores of every period model on every period's
+test set, the inherited thresholds theta1 (fitted on the first-period validation split of the
+first-period model) and every period model's scores on that validation split.
+
+Analysis
+--------
+Macro-F1 at theta1; attainable levels by exact split-half selection over 200 partitions shared
+between the two models; deficit B, attainable gap A and change in mismatch Delta R. Periods 2 to 7
+are primary and the conventional range is reported beside them. Percentile bootstrap over
+initialisations, 20000 resamples.
+Primary quantity: Delta R - A on periods 2 to 7, mean over initialisations with its bootstrap
+interval, and the count of initialisations with Delta R - A > 0. The intended test is the bootstrap
+interval; the exact two-sided sign-flip p is reported beside it (minimum 2/64 = 0.031 with 6
+initialisations, 0.0625 with 5). Reproducing the BiGRU share of 0.90 is not a criterion.
+Secondary, descriptive: the share of the final model's mismatch recovered by a refit of the
+final model's thresholds on first-period validation data; the refit from 500 and from 200
+labelled records; the conventional-range values.
+
+Readings
+--------
+1. Delta R - A > 0 with an interval excluding zero: the composition found on the BiGRU extends to an
+   end-to-end transformer under this training regime.
+2. Delta R - A < 0 with an interval excluding zero: the decomposition identifies a boundary of
+   architecture or training regime, and the paper presents the ASRS composition as
+   regime-sensitive.
+3. The interval includes zero: the extension has limited precision at this number of seeds, and
+   the paper says its strongest numerical statements remain specific to the BiGRU condition.
+No stream, label set, period, threshold procedure or estimator changes. All runs are reported,
+with no selection among seeds.
+
+Date
+----
+13 October 2026, before any run of this design. Three published DistilBERT runs, which show
+thresholded and threshold-free backward transfer diverging, and the BiGRU results informed the
+hypothesis only.
+
+Departures
+----------
+None.

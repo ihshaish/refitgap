@@ -1,0 +1,89 @@
+Analysis plan: full-model repair against replay on the vocabulary stream (BiGRU, new seeds)
+==========================================================================================
+
+Aim
+---
+On new training runs, this plan tests whether full-model repair of the final sequential model,
+fitted on the final buffer of the paired replay run, falls more than 0.005 below replay on
+historical performance under the shared rule. The shallower repairs had found it inferior on
+seeds 0 to 9 (-0.0185, interval -0.0221 to -0.0149), on seeds that had been analysed before. New
+seeds give new training runs within the same setting: corpus, stream construction, learner and
+the test and calibration records are those of the shallower repairs.
+
+Design
+------
+- Learner and streams: BiGRU with frozen GloVe embeddings on the ASRS vocabulary stream
+  (principal) and its control stream, periods numbered 0 to 7. The reweighted pair is not used.
+- Arms: sequential training, replay (5% reservoir) and extra updates on current data (as many
+  extra current-period records as replay's buffer records, the same number of steps).
+- Seeds 200 to 207, eight seeds, all on one processor model on cloud CPUs. No seed is added
+  after looking and a failed seed is not replaced. Results are not pooled with seeds 0 to 9.
+- Repair: full model only, on both streams, started from the final sequential checkpoint and
+  fitted on the final buffer of the same seed's replay run (3342 records on the vocabulary
+  stream). The recipe is that of the shallower repairs, unchanged and not retuned: learning rate
+  1e-3, no penalty, 3 epochs (159 steps), Adam, batch 64, no evaluation data. No logit adapter,
+  no union of buffers.
+
+Analysis
+--------
+- Shared rule, as in the shallower repairs: one threshold per label for each arm, fitted on
+  the pooled fitting halves of the test sets of periods 0 to 7, macro-F1 on the held-out halves,
+  mean over 200 partitions and both directions. Historical is the mean over periods 0 to 6 and
+  current is period 7. The calibration records (about 8300) lie outside the buffer.
+- Contrasts per seed, on the vocabulary stream and not control-adjusted: historical, repair
+  minus replay (the only primary); current, repair minus sequential and repair minus replay;
+  recovery, repair minus sequential on the historical periods.
+- Margin 0.005 on the historical periods and on the current period, alpha 0.05, at least 6
+  passing seeds. Each contrast is a test family of one, so there is no Holm adjustment.
+- Inferior: the two-sided t test and two-sided sign-flip test both below 0.05 with a mean of at
+  least 0.005 in size, and the one-sided t test and one-sided sign-flip test beyond -0.005 both
+  below 0.05. Non-inferior: the one-sided t test and one-sided sign-flip test against -0.005
+  both below 0.05. Otherwise unresolved. Recovery is tested two-sided only.
+- Adequate: non-inferior on the historical contrast and on both current contrasts
+  (intersection-union), and the cost condition on training passes: the repair's full-network
+  passes are below replay's extra training examples in every passing seed (10026 against 70182
+  on seeds 0 to 9). The cost of the recipe search (1203120 passes) is reported beside it and is
+  not part of the condition, unlike in the shallower repairs.
+- Secondary family of three, Holm over the three for the t and TOST p-values: (a) replay minus
+  extra updates on current data, historical, under the shared rule; (b) replay's reduction of
+  the control-differenced shared-rule cost, on periods 1 to 6; (c) replay minus extra updates on
+  the control-differenced attainable gap of the method comparison, on periods 0 to 7.
+- Descriptive: control-differenced historical contrast, recovery as a share of the sequential
+  deficit, arm levels under the inherited and refitted thresholds, macro-AUPRC, replay's lead at
+  checkpoints 1 to 6 and at first learning of each period, and the costs.
+
+Predictions
+-----------
+1. Adequate (as defined above): the final buffer supports an adequate endpoint alternative to
+   replay; this would be contrary to the result on seeds 0 to 9.
+2. Inferior on the historical contrast: the repair did not substitute for replay, which confirms
+   the earlier full-model result in the same setting only. It would not show that later repair
+   is impossible, or that historical content must be present throughout training.
+3. Trade-off: recovery material and positive while current performance is below sequential by
+   more than 0.005.
+4. Otherwise unresolved: the new-seed study does not decide substitutability.
+"Confirmed on new seeds" is written only when the planned test rejects in the planned
+direction; "not confirmed" says nothing about the opposite; "contrary" only when the opposite
+test rejects. A current-period shortfall against sequential never reads "did not substitute".
+5. Expected values: the repair inferior, with a mean of about -0.010 to -0.025; (a) large and
+   positive (+0.1285 on seeds 0 to 9); (b) near +0.02 (+0.0220); (c) near +0.0829. The spread
+   may be larger than on seeds 0 to 9.
+6. Planning power for inferiority with eight seeds, at a true mean of -0.0149 and sd 0.0082:
+   0.92, falling to 0.85 with one seed lost and 0.72 with two.
+
+Date
+----
+31 October 2026, after a trial run on development seed 100 and before any run on seeds 200 to
+207. Everything on seeds 0 to 9 and the recipe tuning on seeds 100 and 101 had been seen. The
+analysis was to run once, after every run had finished, and only after the design of the
+MultiEURLEX repair and the inclusion rules of a DistilBERT repair had been fixed in dated plans.
+
+Departures
+----------
+- Head repair was dropped from this experiment on 31 October 2026, after the trial run and
+  before any run on new seeds, because a check of its cached-feature path failed there. The
+  head-repair result of the shallower repairs stands on seeds 0 to 9 only.
+- Inferiority here requires the test beyond the margin, where the shallower repairs' second
+  reading required only a material negative difference.
+- A DistilBERT version of this experiment on the vocabulary stream, planned on 1 November 2026,
+  was not run to completion.

@@ -1,0 +1,33 @@
+{
+  "stream": "huffpost",
+  "window": [
+    201201,
+    201712
+  ],
+  "n_periods": 8,
+  "data_seed": 20260802,
+  "test_frac": 0.2,
+  "near_dups_dropped": 6,
+  "labels": {
+    "BLACK VOICES": {
+      "min_test_positives": 60,
+      "below_aviation_floor": true
+    },
+    "BUSINESS": {
+      "min_test_positives": 47,
+      "below_aviation_floor": true
+    },
+    "COMEDY": {
+      "min_test_positives": 82,
+      "below_aviation_floor": false
+    },
+    "ENTERTAINMENT": {
+      "min_test_positives": 208,
+      "below_aviation_floor": false
+    },
+    "QUEER VOICES": {
+      "min_test_positives": 99,
+      "below_aviation_floor": false
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+ "A": {
+  "mean": 0.001197557612304125,
+  "max_abs": 0.0229666258209964
+ },
+ "B": {
+  "mean": 0.012537765421680601,
+  "max_abs": 0.039726273624958286
+ },
+ "identity_A": {
+  "mean": 0.0,
+  "max_abs": 0.0
+ },
+ "identity_B": {
+  "mean": 0.0,
+  "max_abs": 0.0
+ },
+ "mono_A": {
+  "mean": 0.001197557612304125,
+  "max_abs": 0.0229666258209964
+ },
+ "mono_B": {
+  "mean": 0.043970413761787404,
+  "max_abs": 0.0757560784080814
+ },
+ "mono_V_change": {
+  "mean": 0.0,
+  "max_abs": 0.0
+ },
+ "identity_RN_minus_Rref": {
+  "mean": 0.0,
+  "max_abs": 0.0
+ },
+ "random_A": {
+  "mean": 0.3804732126687789,
+  "max_abs": 0.40353010070847856
+ },
+ "random_B": {
+  "mean": 0.45870459952609466,
+  "max_abs": 0.5018676239512395
+ },
+ "transform": {
+  "gamma": [
+   1.154,
+   0.894,
+   1.832,
+   0.63,
+   2.022,
+   1.206,
+   0.971,
+   0.571,
+   0.59
+  ],
+  "ordering_and_ties_preserved_in_all_cells": true
+ },
+ "criteria": {
+  "identity": "B, A, dR exactly zero (max|.| = 0.0); R_N = R_ref",
+  "monotone": "V change exactly zero so mono_A = A exactly; mono_B and dR differ",
+  "randomised": "random_A large and positive"
+ }
+}

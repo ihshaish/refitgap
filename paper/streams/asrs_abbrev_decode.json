@@ -1,0 +1,2242 @@
+{
+"agl": [
+"nasa",
+"aviation",
+"safety",
+"reporting",
+"system",
+"abbreviations",
+"encode/decode",
+"following",
+"are",
+"standard",
+"asrs",
+"encode",
+"and",
+"decode",
+"terms",
+"encode",
+"above",
+"ground",
+"level"
+],
+"ata": [
+"actual",
+"time",
+"of",
+"arrival"
+],
+"atd": [
+"actual",
+"time",
+"of",
+"departure"
+],
+"aero": [
+"aeronautical"
+],
+"aim": [
+"aeronautical",
+"information",
+"manual"
+],
+"acr": [
+"air",
+"carrier"
+],
+"ac": [
+"air",
+"conditioning"
+],
+"adc": [
+"air",
+"data",
+"computer"
+],
+"adiz": [
+"air",
+"defense",
+"identification",
+"zone"
+],
+"adg": [
+"air",
+"driven",
+"generator"
+],
+"afb": [
+"air",
+"force",
+"base"
+],
+"ang": [
+"air",
+"national",
+"guard"
+],
+"arsr": [
+"air",
+"route",
+"surveillance",
+"radar"
+],
+"artcc": [
+"air",
+"route",
+"traffic",
+"control",
+"center"
+],
+"atc": [
+"air",
+"traffic",
+"control"
+],
+"acft": [
+"aircraft"
+],
+"atp": [
+"airline",
+"transport",
+"pilot",
+"certificate"
+],
+"atr": [
+"airline",
+"transport",
+"rating"
+],
+"arpt": [
+"airport"
+],
+"afd": [
+"airport/facility",
+"directory"
+],
+"asr": [
+"airport",
+"surveillance",
+"radar"
+],
+"atct": [
+"airport",
+"traffic",
+"control",
+"tower"
+],
+"atog": [
+"allowable",
+"takeoff",
+"gross",
+"weight"
+],
+"alt": [
+"altitude"
+],
+"altdev": [
+"altitude",
+"deviation"
+],
+"amb": [
+"ambiguity"
+],
+"am": [
+"ante",
+"meridiem"
+],
+"apch": [
+"approach"
+],
+"ctl": [
+"approach",
+"control"
+],
+"approx": [
+"approximately"
+],
+"rnav": [
+"area",
+"navigation"
+],
+"arr": [
+"arrival",
+"arrive"
+],
+"asap": [
+"as",
+"soon",
+"as",
+"possible"
+],
+"attn": [
+"attention"
+],
+"adi": [
+"attitude",
+"direction",
+"indicator"
+],
+"auth": [
+"authority/authorized"
+],
+"afss": [
+"automated",
+"flight",
+"service",
+"station"
+],
+"arts": [
+"automated",
+"radar",
+"terminal",
+"systems"
+],
+"asos/awos": [
+"automated",
+"surface",
+"observation",
+"sys"
+],
+"auto": [
+"automatic"
+],
+"acars": [
+"automatic",
+"communications",
+"addressing",
+"reporting",
+"system"
+],
+"adf": [
+"automatic",
+"direction",
+"finder"
+],
+"als": [
+"approach",
+"lighting",
+"system"
+],
+"atis": [
+"automatic",
+"terminal",
+"information",
+"service"
+],
+"awos": [
+"automatic",
+"weather",
+"observing/reporting",
+"system"
+],
+"afds": [
+"autopilot",
+"and",
+"flight",
+"director",
+"system"
+],
+"aux": [
+"auxiliary"
+],
+"apu": [
+"auxiliary",
+"power",
+"unit"
+],
+"avg": [
+"average"
+],
+"avgas": [
+"aviation",
+"gasoline"
+],
+"ame": [
+"aviation",
+"medical",
+"examiner"
+],
+"asrs": [
+"aviation",
+"safety",
+"reporting",
+"system"
+],
+"bc": [
+"back",
+"course"
+],
+"bal": [
+"balance"
+],
+"base": [
+"base",
+"operations",
+"office"
+],
+"ops": [
+"base",
+"operations",
+"office"
+],
+"btwn": [
+"between"
+],
+"bvlos": [
+"beyond",
+"visual",
+"line",
+"of",
+"sight"
+],
+"bfr": [
+"biennial",
+"flight",
+"review"
+],
+"brite": [
+"bright",
+"radar",
+"indicator",
+"tower",
+"equipment"
+],
+"bcstn": [
+"broadcast",
+"station"
+],
+"bkn": [
+"broken"
+],
+"cab": [
+"cabin",
+"attendant"
+],
+"capt": [
+"captain",
+"ca",
+"or"
+],
+"carb": [
+"carburetor"
+],
+"cat": [
+"category"
+],
+"crt": [
+"cathode",
+"ray",
+"tube"
+],
+"dh": [
+"decision",
+"height"
+],
+"dvfr": [
+"defense",
+"visual",
+"flight",
+"rules"
+],
+"deg": [
+"degree"
+],
+"demo": [
+"demonstration"
+],
+"dept": [
+"department"
+],
+"dod": [
+"department",
+"of",
+"defense"
+],
+"doe": [
+"department",
+"of",
+"energy"
+],
+"dot": [
+"department",
+"of",
+"transportation"
+],
+"dep": [
+"departure"
+],
+"dsnd": [
+"descend"
+],
+"dscnt": [
+"descent"
+],
+"dest": [
+"destination"
+],
+"daa": [
+"detect",
+"and",
+"avoid"
+],
+"dev": [
+"deviation"
+],
+"dgps": [
+"differential",
+"global",
+"positioning",
+"system"
+],
+"dfdr": [
+"digital",
+"flight",
+"data",
+"recorder"
+],
+"dfgs": [
+"digital",
+"flight",
+"guidance",
+"system"
+],
+"df": [
+"direction",
+"finder"
+],
+"dme": [
+"distance",
+"measuring",
+"equipment"
+],
+"distr": [
+"distraction"
+],
+"ebnd": [
+"eastbound"
+],
+"edt": [
+"eastern",
+"daylight",
+"time"
+],
+"est": [
+"eastern",
+"standard",
+"time"
+],
+"emi": [
+"electromagnetic",
+"interference"
+],
+"ecam": [
+"electronic",
+"centralized",
+"aircraft",
+"monitoring"
+],
+"efis": [
+"electronic",
+"flight",
+"instrument",
+"system"
+],
+"esc": [
+"electronic",
+"speed",
+"control"
+],
+"emer": [
+"emergency"
+],
+"ecoa": [
+"emergency",
+"certificate",
+"of",
+"authorization"
+],
+"elt": [
+"emergency",
+"locator",
+"transmitter"
+],
+"ems": [
+"emergency",
+"medical",
+"service"
+],
+"enrte": [
+"en",
+"route"
+],
+"eng": [
+"engine"
+],
+"eicas": [
+"engine",
+"indicating",
+"and",
+"crew",
+"alerting",
+"system"
+],
+"engr": [
+"engineer"
+],
+"equip": [
+"equipment"
+],
+"eta": [
+"estimated",
+"time",
+"of",
+"arrival"
+],
+"etd": [
+"estimated",
+"time",
+"of",
+"departure"
+],
+"evac": [
+"evacuate/evacuation"
+],
+"eval": [
+"evaluate",
+"evaluation"
+],
+"exam": [
+"examination"
+],
+"eac": [
+"expected",
+"approach",
+"clearance"
+],
+"dcu": [
+"data",
+"control",
+"unit"
+],
+"db": [
+"decibel"
+],
+"ctr": [
+"center"
+],
+"cadc": [
+"central",
+"air",
+"data",
+"computer"
+],
+"caws": [
+"central",
+"aural",
+"warning",
+"system"
+],
+"cdt": [
+"central",
+"daylight",
+"time"
+],
+"cpu": [
+"central",
+"processing",
+"unit"
+],
+"cst": [
+"central",
+"standard",
+"time"
+],
+"coa": [
+"certificate",
+"of",
+"authorization"
+],
+"cow": [
+"certificate",
+"of",
+"waiver"
+],
+"cfi": [
+"certified",
+"flight",
+"instructor"
+],
+"chk": [
+"check"
+],
+"cb": [
+"circuit",
+"breaker"
+],
+"cap": [
+"civil",
+"air",
+"patrol"
+],
+"clr": [
+"clear"
+],
+"clrnc": [
+"clearance"
+],
+"cd": [
+"clearance",
+"delivery"
+],
+"clb": [
+"climb"
+],
+"crm": [
+"cockpit",
+"resource",
+"management"
+],
+"ctaf": [
+"common",
+"traffic",
+"advisory",
+"frequency"
+],
+"com": [
+"communication"
+],
+"cbo": [
+"community",
+"based",
+"organization"
+],
+"cgp": [
+"company",
+"ground",
+"personnel"
+],
+"lmm": [
+"compass",
+"locator",
+"at",
+"ils",
+"middle",
+"marker"
+],
+"lom": [
+"compass",
+"locator",
+"at",
+"ils",
+"outer",
+"marker"
+],
+"config": [
+"configuration"
+],
+"csd": [
+"constant",
+"speed",
+"drive"
+],
+"cdu": [
+"control",
+"display",
+"unit"
+],
+"cfit": [
+"controlled",
+"flight",
+"into",
+"terrain"
+],
+"cftt": [
+"controlled",
+"flight",
+"toward",
+"terrain"
+],
+"cic": [
+"controller",
+"in",
+"charge"
+],
+"coord": [
+"coordination"
+],
+"cdi": [
+"course",
+"deviation",
+"indicator"
+],
+"cfr": [
+"crash",
+"fire",
+"rescue",
+"equipment"
+],
+"xcountry": [
+"cross",
+"country"
+],
+"xing": [
+"crossing"
+],
+"xwind": [
+"crosswind"
+],
+"eat": [
+"expected",
+"approach",
+"time"
+],
+"erops": [
+"extended",
+"range",
+"operations"
+],
+"etops": [
+"extended",
+"range",
+"twin",
+"operations"
+],
+"gado": [
+"general",
+"aviation",
+"district",
+"office"
+],
+"ghz": [
+"gigahertz"
+],
+"gs": [
+"glideslope"
+],
+"gns": [
+"global",
+"navigation",
+"system"
+],
+"gps": [
+"global",
+"positioning",
+"system"
+],
+"gar": [
+"go",
+"around"
+],
+"gov": [
+"government"
+],
+"gmt": [
+"greenwich",
+"mean",
+"time"
+],
+"gnd": [
+"ground"
+],
+"gc": [
+"ground",
+"control"
+],
+"gcs": [
+"ground",
+"control",
+"station"
+],
+"gpws": [
+"ground",
+"proximity",
+"warning",
+"system"
+],
+"spd": [
+"ground",
+"speed"
+],
+"fria": [
+"faa-recognized",
+"identification",
+"area"
+],
+"fac": [
+"facility"
+],
+"fax": [
+"facsimile"
+],
+"fam": [
+"federal",
+"air",
+"marshal"
+],
+"faa": [
+"federal",
+"aviation",
+"administration"
+],
+"far": [
+"federal",
+"aviation",
+"regulation"
+],
+"fcc": [
+"federal",
+"communications",
+"commission"
+],
+"ft": [
+"feet/foot"
+],
+"fpm": [
+"feet",
+"per",
+"minute"
+],
+"fov": [
+"field",
+"of",
+"view"
+],
+"faf": [
+"final",
+"approach",
+"fix"
+],
+"fo": [
+"first",
+"officer"
+],
+"fpv": [
+"first",
+"person",
+"view"
+],
+"fbo": [
+"fixed-base",
+"operator"
+],
+"flt": [
+"flight"
+],
+"fcdu": [
+"flight",
+"control",
+"data",
+"concentrator"
+],
+"fcu": [
+"flight",
+"control",
+"unit"
+],
+"flc": [
+"flight",
+"crew"
+],
+"fd": [
+"flight",
+"director"
+],
+"fgc": [
+"flight",
+"guidance",
+"computer"
+],
+"fgs": [
+"flight",
+"guidance",
+"unit"
+],
+"flip": [
+"flight",
+"information",
+"publication"
+],
+"fido": [
+"flight",
+"inspection",
+"district",
+"office"
+],
+"fl": [
+"flight",
+"level"
+],
+"fmc": [
+"flight",
+"management",
+"computer"
+],
+"fmgc": [
+"flight",
+"management",
+"guidance",
+"computer"
+],
+"fmgs": [
+"flight",
+"management",
+"guidance",
+"system"
+],
+"fms": [
+"flight",
+"management",
+"system"
+],
+"fma": [
+"flight",
+"mode",
+"annunciator"
+],
+"fss": [
+"flight",
+"service",
+"station"
+],
+"fsdo": [
+"flight",
+"standards",
+"district",
+"office"
+],
+"fyi": [
+"for",
+"your",
+"information"
+],
+"fod": [
+"foreign",
+"object",
+"debris"
+],
+"freq": [
+"frequency"
+],
+"fm": [
+"frequency",
+"modulation"
+],
+"hdof": [
+"handoff"
+],
+"hud": [
+"head",
+"up",
+"display"
+],
+"hdg": [
+"heading"
+],
+"hq": [
+"headquarters"
+],
+"hvy": [
+"heavy"
+],
+"hgt": [
+"height"
+],
+"qfe": [
+"height",
+"above",
+"airport",
+"elevation"
+],
+"heli": [
+"helicopter"
+],
+"hz": [
+"hertz"
+],
+"hf": [
+"high",
+"frequency"
+],
+"hials": [
+"high",
+"intensity",
+"approach",
+"light",
+"system"
+],
+"hirl": [
+"high",
+"intensity",
+"runway",
+"lights"
+],
+"hwy": [
+"highway"
+],
+"horiz": [
+"horizontal"
+],
+"hsi": [
+"horizontal",
+"situation",
+"indicator"
+],
+"hr": [
+"hour"
+],
+"hyd": [
+"hydraulic"
+],
+"id": [
+"identification"
+],
+"iff": [
+"identification",
+"friend",
+"or",
+"foe"
+],
+"ident": [
+"identify"
+],
+"iaw": [
+"in",
+"accordance",
+"with"
+],
+"inbnd": [
+"inbound"
+],
+"inc": [
+"incorporated"
+],
+"ias": [
+"indicated",
+"air",
+"speed"
+],
+"imu": [
+"inertial",
+"measurement",
+"unit"
+],
+"isdu": [
+"inertial",
+"navigation",
+"display",
+"unit"
+],
+"ins": [
+"inertial",
+"navigation",
+"system"
+],
+"irs/iru": [
+"inertial",
+"reference",
+"system/unit"
+],
+"info": [
+"information"
+],
+"iaf": [
+"initial",
+"approach",
+"fix"
+],
+"ioe": [
+"initial",
+"operating",
+"experience"
+],
+"ga": [
+"general",
+"aviation"
+],
+"inop": [
+"inoperative"
+],
+"istr": [
+"instruct",
+"instructor"
+],
+"inst": [
+"instrument"
+],
+"iap": [
+"instrument",
+"approach",
+"procedure"
+],
+"ifr": [
+"instrument",
+"flight",
+"rules"
+],
+"ils": [
+"instrument",
+"landing",
+"system"
+],
+"imc": [
+"instrument",
+"meteorological",
+"conditions"
+],
+"interfac": [
+"interfacility"
+],
+"if": [
+"intermediate",
+"fix"
+],
+"intl": [
+"international"
+],
+"iata": [
+"international",
+"air",
+"transport",
+"association"
+],
+"icao": [
+"international",
+"civil",
+"aviation",
+"organization"
+],
+"ifss": [
+"international",
+"flight",
+"service",
+"station"
+],
+"iro": [
+"international",
+"relief",
+"officer"
+],
+"interp": [
+"interpretation"
+],
+"intxn": [
+"intersection"
+],
+"llws": [
+"low",
+"level",
+"wind",
+"shear"
+],
+"llwas": [
+"low",
+"level",
+"wind",
+"shear",
+"alert",
+"system"
+],
+"mag": [
+"magnetic"
+],
+"maint": [
+"maintenance"
+],
+"mgmnt": [
+"management"
+],
+"mgr": [
+"manager"
+],
+"mvfr": [
+"marginal",
+"visual",
+"flight",
+"rules"
+],
+"mcas": [
+"marine",
+"corps",
+"air",
+"station"
+],
+"max": [
+"maximum"
+],
+"msl": [
+"mean",
+"sea",
+"level"
+],
+"mech": [
+"mechanic"
+],
+"mf": [
+"medium",
+"frequency"
+],
+"mals": [
+"medium",
+"intensity",
+"approach",
+"lighting",
+"system"
+],
+"malsr": [
+"medium",
+"intensity",
+"approach",
+"lighting",
+"system",
+"with",
+"runway",
+"alignment",
+"indicator",
+"lights"
+],
+"malsf": [
+"medium",
+"intensity",
+"approach",
+"lighting",
+"system",
+"with",
+"sequenced",
+"flashing",
+"lights"
+],
+"mirl": [
+"medium",
+"intensity",
+"runway",
+"edge",
+"lights"
+],
+"mhz": [
+"megahertz"
+],
+"msg": [
+"message"
+],
+"metro": [
+"metropolitan"
+],
+"mike,": [
+"microphone"
+],
+"mic": [
+"microphone"
+],
+"mls": [
+"microwave",
+"landing",
+"system"
+],
+"mm": [
+"middle",
+"marker"
+],
+"mi": [
+"mile"
+],
+"mil": [
+"milliampere",
+"hour",
+"mah",
+"military"
+],
+"moa": [
+"military",
+"operating",
+"area"
+],
+"mtr": [
+"military",
+"training",
+"route"
+],
+"mb": [
+"millibars"
+],
+"mca": [
+"minimum",
+"crossing",
+"altitude"
+],
+"mda": [
+"minimum",
+"descent",
+"altitude"
+],
+"mea": [
+"minimum",
+"enroute",
+"altitude"
+],
+"mel": [
+"minimum",
+"equipment",
+"list"
+],
+"moca": [
+"minimum",
+"obstruction",
+"clearance",
+"altitude"
+],
+"msa": [
+"minimum",
+"safe",
+"altitude"
+],
+"msaw": [
+"minimum",
+"safe",
+"altitude",
+"warning"
+],
+"mva": [
+"minimum",
+"vector",
+"altitude"
+],
+"min": [
+"minute"
+],
+"misc": [
+"miscellaneous"
+],
+"map": [
+"missed",
+"approach",
+"point"
+],
+"mcp": [
+"mode",
+"control",
+"panel"
+],
+"mdt": [
+"mountain",
+"daylight",
+"time"
+],
+"kg": [
+"kilogram"
+],
+"khz": [
+"kilohertz"
+],
+"km": [
+"kilometers"
+],
+"kw": [
+"kilowatt"
+],
+"kt": [
+"knot"
+],
+"kias": [
+"knots",
+"indicated",
+"airspeed"
+],
+"lndg": [
+"landing"
+],
+"lwoc": [
+"landing",
+"without",
+"clrnc"
+],
+"lz": [
+"landing",
+"zone"
+],
+"lnav": [
+"lateral",
+"navigation"
+],
+"lat": [
+"latitude"
+],
+"l/r": [
+"left/right"
+],
+"ltss": [
+"less",
+"than",
+"standard",
+"separation"
+],
+"ltr": [
+"letter"
+],
+"loa": [
+"letter",
+"of",
+"agreement"
+],
+"led": [
+"light",
+"emitting",
+"diode"
+],
+"los": [
+"line",
+"of",
+"sight"
+],
+"lcd": [
+"liquid",
+"crystal",
+"display"
+],
+"lipo": [
+"lithium",
+"polymer",
+"battery"
+],
+"lcl": [
+"local"
+],
+"lc": [
+"local",
+"control"
+],
+"loc": [
+"localizer"
+],
+"loran": [
+"long",
+"range",
+"navigation"
+],
+"long": [
+"longitude"
+],
+"laanc": [
+"low-altitude",
+"authorization",
+"and",
+"notification",
+"capability"
+],
+"lf": [
+"low",
+"frequency"
+],
+"lirl": [
+"low",
+"intensity",
+"runway",
+"edge",
+"lights"
+],
+"mst": [
+"mountain",
+"standard",
+"time"
+],
+"mfdu": [
+"multi",
+"function",
+"display",
+"unit"
+],
+"muni": [
+"municipal"
+],
+"pmc": [
+"pilot",
+"manipulating",
+"controls"
+],
+"pnf": [
+"pilot",
+"not",
+"flying"
+],
+"pirep": [
+"pilot",
+"report"
+],
+"poi": [
+"point",
+"of",
+"interest"
+],
+"pos": [
+"position"
+],
+"pca": [
+"positive",
+"control",
+"area"
+],
+"pm": [
+"post",
+"meridiem"
+],
+"lb": [
+"pound"
+],
+"pwr": [
+"power"
+],
+"pcu": [
+"power",
+"control",
+"unit"
+],
+"pdc": [
+"pre",
+"departure",
+"clearance"
+],
+"precip": [
+"precipitation"
+],
+"papi": [
+"precision",
+"approach",
+"path",
+"indicator"
+],
+"par": [
+"precision",
+"approach",
+"radar"
+],
+"pvt": [
+"private"
+],
+"prob": [
+"problem"
+],
+"proc": [
+"procedure"
+],
+"prop": [
+"propeller"
+],
+"prox": [
+"proximity"
+],
+"pa": [
+"public",
+"address"
+],
+"pub": [
+"publication"
+],
+"natl": [
+"national"
+],
+"nasa": [
+"national",
+"aeronautics",
+"and",
+"space",
+"administration"
+],
+"noaa": [
+"national",
+"oceanic",
+"and",
+"atmospheric",
+"administration"
+],
+"ntsb": [
+"national",
+"transportation",
+"safety",
+"board"
+],
+"nws": [
+"national",
+"weather",
+"service"
+],
+"nm": [
+"nautical",
+"mile"
+],
+"nas": [
+"naval",
+"air",
+"station"
+],
+"nav": [
+"navigate",
+"navigation"
+],
+"navaid": [
+"navigational",
+"aid"
+],
+"ndb/dme": [
+"ndb",
+"and",
+"dme"
+],
+"nmac": [
+"near",
+"midair",
+"collision"
+],
+"nfz": [
+"no-fly",
+"zone"
+],
+"nordo": [
+"no",
+"radio"
+],
+"norac": [
+"no",
+"radio",
+"contact"
+],
+"nfct": [
+"non",
+"federal",
+"control",
+"tower"
+],
+"ndb": [
+"nondirectional",
+"radio",
+"beacon"
+],
+"nbnd": [
+"northbound"
+],
+"notam": [
+"notice",
+"to",
+"airmen",
+"of",
+"air",
+"missions"
+],
+"qrh": [
+"quick",
+"reference",
+"handbook"
+],
+"rapcon": [
+"radar",
+"approach",
+"control"
+],
+"rc": [
+"radio",
+"controlled"
+],
+"rdmi": [
+"radio",
+"direction",
+"magnetic",
+"indicator"
+],
+"rf": [
+"radio",
+"frequency"
+],
+"rfi": [
+"radio",
+"frequency",
+"interference"
+],
+"rmi": [
+"radio",
+"magnetic",
+"indicator"
+],
+"rat": [
+"ram",
+"air",
+"turbine/ram",
+"air",
+"temperature"
+],
+"ref": [
+"reference"
+],
+"reg": [
+"regulation"
+],
+"rto": [
+"rejected",
+"takeoff"
+],
+"rid": [
+"remote",
+"id"
+],
+"rpa": [
+"remotely",
+"piloted",
+"aircraft"
+],
+"rpas": [
+"remotely",
+"piloted",
+"aircraft",
+"system"
+],
+"rpic": [
+"remote",
+"pilot",
+"in",
+"command"
+],
+"rpv": [
+"remotely",
+"piloted",
+"vehicle"
+],
+"ra": [
+"resolution",
+"advisory"
+],
+"restr": [
+"restrict",
+"restricted",
+"restriction"
+],
+"rtb": [
+"return",
+"to",
+"base"
+],
+"rtf": [
+"ready",
+"to",
+"fly"
+],
+"rth": [
+"return",
+"to",
+"home"
+],
+"ons": [
+"omega",
+"navigation",
+"system"
+],
+"osd": [
+"on-screen",
+"display"
+],
+"ojt": [
+"on-the-job",
+"training"
+],
+"op": [
+"operation"
+],
+"opdev": [
+"operational",
+"deviation"
+],
+"operror": [
+"operational",
+"error"
+],
+"ots": [
+"out",
+"of",
+"service"
+],
+"om": [
+"outer",
+"marker"
+],
+"oat": [
+"outside",
+"air",
+"temperature"
+],
+"ovcst": [
+"overcast"
+],
+"pdt": [
+"pacific",
+"daylight",
+"time"
+],
+"pst": [
+"pacific",
+"standard",
+"time"
+],
+"pax": [
+"passenger"
+],
+"pcl": [
+"pilot",
+"controlled",
+"lighting"
+],
+"pltdev": [
+"pilot",
+"deviation"
+],
+"pf": [
+"pilot",
+"flying"
+],
+"pic": [
+"pilot",
+"in",
+"command"
+],
+"rtl": [
+"return",
+"to",
+"launch"
+],
+"rpm": [
+"revolutions",
+"per",
+"minute"
+],
+"rte": [
+"route"
+],
+"rail": [
+"runway",
+"alignment",
+"indicator",
+"lights"
+],
+"reil": [
+"runway",
+"end",
+"identifier",
+"lights"
+],
+"rvv": [
+"runway",
+"visibility",
+"value"
+],
+"rvr": [
+"runway",
+"visual",
+"range"
+],
+"rwy": [
+"runway"
+],
+"usaf": [
+"united",
+"states",
+"air",
+"force"
+],
+"usa": [
+"united",
+"states",
+"army"
+],
+"uscg": [
+"united",
+"states",
+"coast",
+"guard"
+],
+"usmc": [
+"united",
+"states",
+"marine",
+"corps"
+],
+"usn": [
+"united",
+"states",
+"navy"
+],
+"uhf": [
+"ultra",
+"high",
+"frequency"
+],
+"unauth": [
+"unauthorized"
+],
+"uap": [
+"unidentified",
+"anomalous",
+"phenomena"
+],
+"ufo": [
+"unidentified",
+"flying",
+"object"
+],
+"uasfm": [
+"unmanned",
+"aerial",
+"systems",
+"facility",
+"map"
+],
+"uav": [
+"unmanned",
+"aerial",
+"vehicle"
+],
+"ua": [
+"unmanned",
+"aircraft"
+],
+"uas": [
+"unmanned",
+"aircraft",
+"system"
+],
+"utm": [
+"unmanned",
+"aircraft",
+"systems",
+"traffic",
+"management"
+],
+"utc": [
+"universal",
+"time",
+"coordinated"
+],
+"sl": [
+"sea",
+"level"
+],
+"selcal": [
+"selective",
+"calling"
+],
+"saa": [
+"sense",
+"and",
+"avoid"
+],
+"sfl": [
+"sequenced",
+"flashing",
+"lights"
+],
+"svc": [
+"service"
+],
+"stol": [
+"short",
+"takeoff",
+"and",
+"landing"
+],
+"sigmet": [
+"significant",
+"meteorological",
+"information"
+],
+"sit": [
+"situation"
+],
+"sbnd": [
+"southbound"
+],
+"sgi": [
+"special",
+"governmental",
+"interest"
+],
+"svfr": [
+"special",
+"visual",
+"flight",
+"rules"
+],
+"spec": [
+"specification"
+],
+"stab": [
+"stabilizer"
+],
+"std": [
+"standard"
+],
+"alsf-1": [
+"standard",
+"hi",
+"intensity",
+"approach",
+"lighting",
+"system",
+"with",
+"sequenced",
+"flashers"
+],
+"alsf-2": [
+"standard",
+"hi",
+"intensity",
+"approach",
+"lighting",
+"system",
+"with",
+"sequenced",
+"flashers"
+],
+"sid": [
+"standard",
+"instrument",
+"departure"
+],
+"sop": [
+"standard",
+"operating",
+"procedure"
+],
+"star": [
+"standard",
+"terminal",
+"arrival",
+"route"
+],
+"sm": [
+"statute",
+"mile"
+],
+"supvr": [
+"supervisor"
+],
+"sys": [
+"system"
+],
+"sosc": [
+"system",
+"operations",
+"support",
+"center"
+],
+"tacan": [
+"tactical",
+"air",
+"navigation",
+"aid"
+],
+"tkof": [
+"takeoff"
+],
+"togw": [
+"takeoff",
+"gross",
+"weight"
+],
+"txwy": [
+"taxiway"
+],
+"telco": [
+"telephone",
+"company"
+],
+"temp": [
+"temperature"
+],
+"tca": [
+"terminal",
+"control",
+"area"
+],
+"tracon": [
+"terminal",
+"radar",
+"approach",
+"control",
+"facility"
+],
+"trsa": [
+"terminal",
+"radar",
+"service",
+"area"
+],
+"trust": [
+"the",
+"recreational",
+"uas",
+"safety",
+"test"
+],
+"tstm": [
+"thunderstorm"
+],
+"toc": [
+"top",
+"of",
+"climb"
+],
+"tod": [
+"top",
+"of",
+"descent"
+],
+"tdz": [
+"touchdown",
+"zone"
+],
+"twr": [
+"tower"
+],
+"tfc": [
+"traffic"
+],
+"ta": [
+"traffic",
+"advisory"
+],
+"tcas": [
+"traffic",
+"alert",
+"and",
+"collision",
+"avoidance",
+"system"
+],
+"trng": [
+"training"
+],
+"xmission": [
+"transmission"
+],
+"xmit": [
+"transmit"
+],
+"tx": [
+"transmitter"
+],
+"xponder": [
+"transponder"
+],
+"tas": [
+"true",
+"air",
+"speed"
+],
+"turb": [
+"turbulence"
+],
+"vert": [
+"vertical"
+],
+"vnav": [
+"vertical",
+"navigation"
+],
+"vstol": [
+"vertical/short",
+"takeoff",
+"and",
+"landing"
+],
+"vhf": [
+"very",
+"high",
+"frequency"
+],
+"vlf": [
+"very",
+"low",
+"frequency"
+],
+"tr": [
+"vfr",
+"low",
+"altitude",
+"training",
+"routes"
+],
+"vr": [
+"vfr",
+"military",
+"training",
+"routes"
+],
+"vor": [
+"vfr",
+"omni-directional",
+"radio",
+"range"
+],
+"vis": [
+"visibility"
+],
+"vasi": [
+"visual",
+"approach",
+"slope",
+"indicator"
+],
+"vfr": [
+"visual",
+"flight",
+"rules"
+],
+"vlos": [
+"visual",
+"line",
+"of",
+"sight"
+],
+"vmc": [
+"visual",
+"meteorological",
+"conditions"
+],
+"vo": [
+"visual",
+"observer"
+],
+"vor/dme": [
+"vor",
+"and",
+"dme"
+],
+"vortac": [
+"vor",
+"and",
+"tacan"
+],
+"wx": [
+"weather"
+],
+"wk": [
+"week"
+],
+"wt": [
+"weight"
+],
+"wbnd": [
+"westbound"
+],
+"wac": [
+"world",
+"aeronautical",
+"chart"
+],
+"zzzzz": [
+"aircraft",
+"aircraft",
+"aircraft",
+"aircraft",
+"aircraft",
+"continuing",
+"through",
+"alphabet",
+"fix",
+"intersection"
+]
+}

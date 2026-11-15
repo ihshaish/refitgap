@@ -1,0 +1,155 @@
+{
+ "range": [
+  1988,
+  2014
+ ],
+ "min_pos": 75,
+ "n_periods": 8,
+ "test_frac": 0.2,
+ "data_seed": 20260802,
+ "near_duplicates_removed": 11427,
+ "records": 45028,
+ "labels_kept": [
+  "100149",
+  "100160",
+  "100148",
+  "100147",
+  "100152",
+  "100143",
+  "100156",
+  "100158",
+  "100144",
+  "100157",
+  "100161",
+  "100146"
+ ],
+ "label_support": {
+  "100149": {
+   "min_test_positives": 91,
+   "kept": true
+  },
+  "100160": {
+   "min_test_positives": 106,
+   "kept": true
+  },
+  "100148": {
+   "min_test_positives": 106,
+   "kept": true
+  },
+  "100147": {
+   "min_test_positives": 541,
+   "kept": true
+  },
+  "100152": {
+   "min_test_positives": 93,
+   "kept": true
+  },
+  "100143": {
+   "min_test_positives": 125,
+   "kept": true
+  },
+  "100156": {
+   "min_test_positives": 373,
+   "kept": true
+  },
+  "100158": {
+   "min_test_positives": 85,
+   "kept": true
+  },
+  "100154": {
+   "min_test_positives": 43,
+   "kept": false
+  },
+  "100153": {
+   "min_test_positives": 26,
+   "kept": false
+  },
+  "100142": {
+   "min_test_positives": 27,
+   "kept": false
+  },
+  "100145": {
+   "min_test_positives": 31,
+   "kept": false
+  },
+  "100150": {
+   "min_test_positives": 63,
+   "kept": false
+  },
+  "100162": {
+   "min_test_positives": 8,
+   "kept": false
+  },
+  "100159": {
+   "min_test_positives": 23,
+   "kept": false
+  },
+  "100144": {
+   "min_test_positives": 185,
+   "kept": true
+  },
+  "100151": {
+   "min_test_positives": 8,
+   "kept": false
+  },
+  "100157": {
+   "min_test_positives": 326,
+   "kept": true
+  },
+  "100161": {
+   "min_test_positives": 480,
+   "kept": true
+  },
+  "100146": {
+   "min_test_positives": 118,
+   "kept": true
+  },
+  "100155": {
+   "min_test_positives": 59,
+   "kept": false
+  }
+ },
+ "period_spans": [
+  [
+   198801,
+   199201,
+   5671
+  ],
+  [
+   199201,
+   199501,
+   5672
+  ],
+  [
+   199501,
+   199801,
+   5671
+  ],
+  [
+   199801,
+   200201,
+   5672
+  ],
+  [
+   200201,
+   200401,
+   5672
+  ],
+  [
+   200401,
+   200701,
+   5671
+  ],
+  [
+   200701,
+   201101,
+   5672
+  ],
+  [
+   201101,
+   201401,
+   5672
+  ]
+ ],
+ "labels_per_record": 2.990361552811584
+}

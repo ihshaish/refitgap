@@ -1,0 +1,66 @@
+Analysis plan: the reweighted stream
+====================================
+
+Aim
+---
+This plan tests two expectations for a stream whose label priors alone move: the model keeps its
+ranking quality while its thresholded performance falls, and a threshold refit recovers the
+loss here but not under the vocabulary permutation.
+
+Design
+------
+Records are reweighted, never edited: no text and no label changes, only the mixture of records
+per period, so P(x | y) is preserved and the manipulation is pure label shift. The vocabulary
+permutation is the mirror image: it removes class associations and leaves priors untouched.
+Three streams, each a subsample at keep = 0.35 without replacement: a uniform control of the
+same size, a 40% dose and a full dose. Each period is split at random into two disjoint halves
+and the tilt is applied within each; one half supplies training records, the other the test set,
+so training and test priors move together.
+                   train   test   train prior drift   test prior drift   min test positives
+  control          14623  14623        0.067               0.065                 86
+  40% dose        14623  14623        0.109               0.114                 83
+  full dose        14623  14623        0.164               0.155                 99
+(drift: mean absolute change in label priors, first against final period; positives per label
+per period). No record has both roles within a period, and every label has at least 75 test
+positives.
+Manipulation check, run before this plan was written: the stability of P(token | label), which
+label shift leaves unchanged by construction, calibrated against each stream's permutation null,
+is 0.787, 0.724 and 0.669 across the three streams. The residual drift of 0.118 is reported as a
+limit beside every result from these streams. The vocabulary permutation moves the same
+statistic from 0.875 to 0.008.
+
+Measures
+--------
+Mean backward transfer in macro-AUPRC and in macro-F1, BiGRU on frozen GloVe embeddings,
+sequential training, 5 seeds; and the share of the macro-F1 deficit recovered by refitting the
+one threshold per label on 500 labelled records per period.
+
+Predictions
+-----------
+1. Full-dose macro-AUPRC backward transfer is at least the control's minus 0.005: ranking
+   quality is kept.
+2. Full-dose macro-F1 backward transfer is below the control's minus 0.005: thresholded
+   performance falls, because the F1-optimal operating point depends on prevalence.
+3. Dose-response: macro-F1 backward transfer is ordered control > 40% dose > full dose (1/6 by
+   chance).
+4. Refitting thresholds on 500 labelled records per period recovers at least 50% of the
+   macro-F1 deficit on the full-dose stream and less than 20% on the vocabulary permutation
+   stream. This contrast is the result; predictions 1 to 3 alone fit weaker accounts.
+The account fails if: the full-dose macro-AUPRC backward transfer is clearly below the control's
+(by more than 0.01); the refit fails on the reweighted deficit or succeeds on the permutation
+deficit; macro-F1 shows no dose-response despite a measured prior movement; or the manipulation
+check drifts further, once models are trained, than the 0.064 recorded under the first build.
+All streams are reported whatever they show.
+
+Date
+----
+Before any model was trained on the rebuilt streams; the construction was rebuilt on 8 August
+2026.
+
+Departures
+----------
+The first build resampled the training records only (23394 per stream) and left the test sets at
+the original priors, which is not label shift. It was replaced by the build above before the
+analysed runs. One stream (the 40% dose) had been trained under the first build; those results
+are discarded and not reported. The residual drift is larger under the rebuild (0.118 against
+0.064), because the disjoint halves leave fewer records per label.

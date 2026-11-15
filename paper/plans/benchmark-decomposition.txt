@@ -1,0 +1,53 @@
+Analysis plan: the decomposition B = A + Delta R on the four benchmark streams
+=========================================================================
+
+Aim
+---
+The paper decomposed the backward deficit at inherited thresholds on the ASRS primary stream
+only. On the four benchmark streams it reported that thresholded and threshold-free backward
+transfer diverge, but no scores were kept, so the attainable gap A and the change in mismatch
+Delta R could not be formed. This plan measures the composition of the deficit on these streams.
+The study is observational and does not extend the controlled result.
+
+Design
+------
+Streams: HuffPost, Amazon, arXiv cs subcategories and arXiv primary archives, as built.
+Learner: BiGRU on frozen GloVe embeddings, 3 epochs per period, sequential training, unchanged.
+Seeds 0 to 4, those of the published benchmark rows: 20 runs. Every period model is scored on
+every period's test set and the scores are kept with the inherited thresholds theta1.
+
+Analysis
+--------
+From the stored scores: macro-F1 of the final model and of the period's own model at the run's
+theta1; their attainable levels by exact split-half selection over 200 partitions shared between
+the two models; then the deficit B, the attainable gap A, the change in mismatch Delta R and the two
+mismatches, per run and period. Means over periods 2 to 7 and over all historical periods 1 to
+7. Percentile bootstrap over the 5 seed blocks, 20000 resamples.
+The new runs' macro-F1 and macro-AUPRC cells are compared with the published rows of the same
+stream and seed. Training is not bit-deterministic, so the agreement is descriptive.
+
+Predictions
+-----------
+The paper read the benchmark figure as follows: on arXiv cs subcategories, Amazon and HuffPost
+the thresholded decline lies below the threshold-free one; on arXiv archives it lies above.
+1. On each of arXiv cs subcategories, Amazon and HuffPost, Delta R is positive on periods 2 to 7
+   (mean over seeds).
+2. On the same three streams Delta R is the larger part of the deficit, Delta R > A.
+3. On HuffPost, where both measures fall, A is positive and larger than on the ASRS primary
+   stream (A > 0.0012).
+4. On arXiv archives Delta R is smaller than on each of the other three streams.
+5. Falsifier: if on any of the three streams of prediction 1 the attainable gap is the larger
+   part (A > Delta R), the reading that the thresholded excess is mismatch does not hold outside
+   ASRS as a pattern, and the paper names the exception.
+6. Descriptive, no threshold: A/B and Delta R/B per stream, with the ASRS value (Delta R/B = 0.90)
+   as the reference row, and the per-period profile of B, A and Delta R.
+No stream, learner, threshold procedure, estimator or period changes. All 20 runs are reported
+whatever they show.
+
+Date
+----
+11 October 2026, before any run of this design was started.
+
+Departures
+----------
+None.

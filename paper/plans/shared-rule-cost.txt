@@ -1,0 +1,82 @@
+Shared-rule cost: one rule across periods
+=========================================
+
+Aim
+---
+The mismatch R compares a final model's attainable level, where each period has its own best
+rule, with the level of one deployed rule. Part of R may be the price of serving several periods
+with one rule at all. We split R = C + M: C is the attainable level under separate rules minus
+that under the best single rule (the shared-rule cost), and M is the distance of the deployed
+rule from the best single rule. Two questions are kept apart: what one rule costs in principle,
+and which fitted policy does better with the labels at hand. The quantities apply only where one
+shared rule is required; per-period rules are legitimate wherever period identity is available.
+
+Design
+------
+Stored scores only; no training. The 200 runs of the method comparison (sequential training,
+replay, extra updates on current data, LwF, EWC; four streams; seeds 0 to 9); MultiEURLEX with
+sequential training, replay and LwF (10 seeds each); the ASRS paired refit with sequential
+training and replay (seeds 0 to 9). The vocabulary pair is the principal controlled stream. On
+the reweighted pair the cost is expected to be positive by construction (the prior steps at
+period 4), so only differences between arms are read there. On natural streams a method is
+compared with sequential training on the same stream.
+
+Analysis
+--------
+The shared rule is the exact maximiser of the mean over periods of per-label F1. Every term is
+cross-fitted on the method comparison's 200 split-half partitions. A contrast Delta C is sequential
+training minus the method, paired by seed (ten pairs), control-differenced on the two pairs.
+Each contrast: mean, 95% paired t interval (9 df), TOST at a margin of 0.005, exact sign-flip
+check (1024 patterns), and the method comparison's outcomes (equivalent, material, small
+non-zero, unresolved). The margin stays at 0.005.
+
+First specification. Shared rule fitted at matched total budget (on all pooled fitting halves,
+each separate rule seeing its own period's share); periods 2 to 7; Delta C per arm; Holm within each
+arm over streams. It did not say whether "over streams" meant control-differenced pairs or
+single streams, so an arm's outcome must agree across five sets of tests: (1) the two pairs;
+(2) the four streams of the method comparison; (3) those four and MultiEURLEX; (4) the two pairs
+and the natural ASRS stream; (5) the two pairs, the ASRS stream and MultiEURLEX. Where the five
+disagree, the arm is reported as dependent on the specification.
+
+All-period variant. Budget matched per fit (the shared rule sees about as many records as each
+separate rule); all eight periods, the current one included at equal weight; the vocabulary
+pair only. One family of four, Holm across them: Delta C for LwF, for EWC and for replay, and replay
+minus extra updates on current data in Delta C. Everything else is unadjusted and decides nothing:
+M, R, the attainable gap under a shared rule, the matched total budget, periods 1 to 7 and 2 to
+7, the inherited thresholds, the reweighted pair and the natural streams.
+
+Also planned. A simulation with eight periods and known optima (four scenarios, three sizes)
+measures the bias of the per-fit estimate; if its reach 2b exceeds 0.0025 every reading of the
+family of four is qualified (it came to 0.0009). Per-fit budgets of 100, 250, 500 and 1000
+records are descriptive, without extrapolation. Per arm and stream (15 cells, the reweighted
+pair left out), the per-fit cost less the simulated bias is called equivalent to zero within
+0.005 only if its TOST passes after Holm across the 15. At matched total budget each cell reads
+"shared wins" or "separate wins" when the 95% interval excludes zero, otherwise equivalent
+within 0.005 or unresolved; a negative fitted cost is never called a negative cost in principle.
+The paper's per-period change in mismatch is not split into C and M.
+
+Predictions
+-----------
+None. An expectation without a falsifier: on the vocabulary pair the control-differenced cost
+is about zero for every arm, and each Delta C is equivalent or unresolved. Its basis is an earlier
+reading on sequential ASRS runs (one shared rule 0.7185, per-period rules 0.7178, periods 2 to
+7, matched total budget).
+
+Date
+----
+Written 29 Oct 2026, before any C or M of a stored run was computed; only synthetic numbers had
+been seen. It was specified after the method comparison's results were known and reuses that
+comparison's seeds, so it is an extension on inspected runs.
+
+Departures
+----------
+1. The plan of 29 Oct 2026 made the all-period variant principal. The same day, after its
+   outcomes were seen, we took the first specification to govern and report the variant beside
+   it. The five sets of tests were written after the outcomes were seen, with some
+   vocabulary-pair cells already printed.
+2. The variant changes budget, period range and family together. EWC's outcome differs between
+   the two and is reported as dependent on the specification. For EWC's small non-zero Delta C the
+   planned words "below the margin" are withdrawn: the estimate is below 0.005, but the effect
+   is not shown to lie below it (one-sided p 0.22).
+3. "Positive by construction" on the reweighted pair is an expectation, not a certainty (the
+   observed per-fit cost under sequential training is 0.0132).

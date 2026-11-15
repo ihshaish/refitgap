@@ -1,0 +1,83 @@
+Forward comparison by lag
+=========================
+
+Aim
+---
+A stale model, trained through period i, can be scored on a later period j beside the
+up-to-date model. By lag, this plan splits the stale model's shortfall into attainable gap and
+mismatch. Five further analyses use the same stored scores.
+
+Data
+----
+Stored scores only; no training. The ASRS stream under the two frozen-embedding conditions
+(GloVe governs), 10 seeds each; the benchmark streams; the MultiEURLEX paired refit runs where
+stored in the same format. A stream without stored forward cells is reported missing, never
+substituted. Macro-F1 on the 0 to 1 scale, 200 split-half partitions.
+
+Analysis
+--------
+1. Forward decomposition by lag. For periods j = 2 to 8 and lags 1 to 7, both models are scored
+   on period j's test records. Shortfall of the stale model: up-to-date minus stale at the
+   inherited thresholds. Attainable part: the same difference in cross-fitted attainable level
+   (shared partitions). Mismatch part: the remainder. Means over the cells of a lag, then over
+   seeds, with 95% percentile bootstrap intervals over seeds (20000 resamples, seed 20260920).
+   The mismatch share is formed only where the shortfall's interval
+   excludes zero. Governing contrast, on ASRS with GloVe: the share at lag 1 against the mean
+   share over lags 3 to 6, with the interval of the difference, and the same contrast on the
+   mismatch part itself; a lag with no formed share counts as no difference shown. Beside it: a
+   balanced profile (lags 1 to 4 on the last four periods only) and a secondary profile under
+   the stale model's own-period rule. Lag 7 has one cell. The lag-0 cells (zero by definition)
+   and the backward cells are compared with the paper's values. Other streams are read after
+   ASRS.
+2. Per-label account on ASRS, periods 2 to 7, backward decomposition, both conditions together
+   (20 observations). The label means must reproduce 0.0125, 0.0012 and 0.0113 to within 5e-5.
+   All nine per-label changes in mismatch are given with intervals, and
+   the share of Ground Event / Encounter (78% in-sample in the paper).
+3. Curvature as a predictor of per-label mismatch, on all 64 cells of ASRS with GloVe. Measured
+   mismatch m: F1 at the in-sample best threshold minus F1 at the inherited threshold.
+   (a) Check of the theorem: p1 = half the curvature of the smoothed F1 curve at its maximum
+   times the squared threshold displacement (201 thresholds, Gaussian width 0.02; 0.01 and 0.04
+   as sensitivity). Rank and linear correlation of p1 with m, the slope of m on p1 (near 1
+   expected only at displacements up to 0.05; bins 0.05, 0.10, 0.20), and the correlation of m
+   with the squared displacement alone. No p-values. The paper's displacement correlation, 0.46
+   to 0.72, is the baseline.
+   (b) A predictor without labels: p2 = half a curvature proxy (density of scores within 0.05
+   of the inherited threshold; 0.025 and 0.10 as sensitivity) times the squared change in mean
+   score between the validation split and period j, with one fitted scale. The scale is fitted
+   leaving one label out; a split by period is secondary. An earlier test of the prevalence slope
+   alone was weak; this is the second test and is reported as such.
+4. Inherited thresholds refitted with the exact optimiser in place of the grid: deficit,
+   attainable gap, change in mismatch and levels on periods 2 to 7, beside the printed values.
+   Direction two-sided in advance.
+5. Margin sensitivity. Every planned outcome word of the paper's contrasts is recomputed at
+   margins 0.003, 0.004, 0.005, 0.0075 and 0.010, with the same test families and Holm
+   structure. The 0.005 column must reproduce the printed outcomes. One table, a row per
+   contrast and a column per margin.
+6. Calibration subsample. The shared rule is refitted on calibration subsamples of the buffer's
+   size (3342 on the vocabulary stream, 1801 on MultiEURLEX), 200 draws, both arms on the same
+   draw: repair minus replay on the historical periods and the current period, mean and 95% t
+   interval over seeds. Run only where per-record scores are stored; otherwise we report what
+   is missing.
+
+Predictions
+-----------
+1. Check of the theorem (3a): rank correlation of p1 with m of at least 0.6.
+2. Predictor without labels (3b), read on ASRS with GloVe only: pooled held-out rank
+   correlation of at least 0.4, and a predicted mismatch share within 0.15 of the measured one.
+   Both are reported whichever way they fall.
+The lag profile carries a governing contrast but no predicted direction. The prediction that
+the attainable part is at least 0.8 of the shortfall at every lag from 1 to 5, for the
+fine-tuned DistilBERT, belongs to the DistilBERT paired refit plan.
+
+Date
+----
+Written 9 Nov 2026, before any result was read, and refined the same day, still before
+any result was read. The ASRS stream had been inspected in earlier analyses, so every result on
+it is exploratory; the readings on other streams were specified before they were read.
+
+Departures
+----------
+Three settings of the first version were changed in the same-day refinement, before any result
+was read: the bootstrap resamples in 1, first written as 2000; the tolerance on the label means
+in 2, first written as 1e-6; and the scale in 3(b), first written as fitted on seeds 0 to 4 and
+tested on seeds 5 to 9 with a fixed slope of -1.14.

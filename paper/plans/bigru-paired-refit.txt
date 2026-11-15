@@ -1,0 +1,74 @@
+Analysis plan: replay against sequential training after refit (BiGRU, paired)
+=============================================================================
+
+Aim
+---
+To measure how much of replay's apparent retention advantage over sequential training remains
+when both models refit one threshold per label on equal terms.
+
+Design
+------
+ASRS primary stream, 8 periods, unchanged. BiGRU on frozen GloVe embeddings, 3 epochs per
+period, hyperparameters unchanged. Two arms: sequential training, and experience replay with a
+reservoir buffer of 5% of the training pool replayed in full each period. Seeds 0 to 9, the
+same seed for both members of a pair. The buffer is empty in the first period, so the two
+members train the same first-period model and share the inherited thresholds theta1. Pairing rule:
+the first-period scores and thresholds must be bit-identical within every pair; if any pair
+fails, the design is reported as seed-matched rather than paired and the failure is stated.
+All ten pairs are reported, with no selection among seeds. A run that fails to complete is rerun
+with the same seed, and a pair that cannot be completed is reported as missing. EWC and the
+history windows are not rerun.
+
+Measures
+--------
+For each pair and each historical period 2 to 7 (fixed here, before the runs), on the final
+model:
+  U_m   macro-F1 of arm m at the inherited thresholds theta1;
+  V_m   attainable macro-F1 after refit, by exact split-half selection over 200 partitions
+        shared between the two members of a pair;
+  R_m = V_m - U_m, the mismatch;
+  G_U = U_replay - U_seq, replay's lead under inherited thresholds;
+  G_V = V_replay - V_seq, replay's lead after both refit with the same calibration budget;
+  Delta = G_U - G_V = R_seq - R_replay, the part of the lead that is mismatch.
+Each is averaged over periods within a pair, then over the 10 pairs.
+
+Tests
+-----
+Primary: Delta, mean over the 10 pairs, with a percentile bootstrap interval over pairs (20000
+draws), the count of pairs with Delta > 0 and the exact two-sided sign-flip p (minimum 2/1024 at 10
+pairs). The intended test is the bootstrap interval.
+Secondary:
+1. G_V with its interval, read against a margin of 0.005 macro-F1 fixed here (under a third of
+   replay's earlier gain and below the between-run standard deviation of backward transfer,
+   0.004 to 0.008). "Replay retains an advantage after refit" requires the interval of G_V to
+   lie above 0.005; "no material advantage" requires it to lie below 0.005; anything else is
+   unresolved.
+2. The refit from 500 and from 200 labelled records drawn from the period's test set (20 draws),
+   evaluated on the remaining test records for both members: G at n = 500 and 200.
+3. Current-period performance: the period-j model on period j, for j = 1..7 as the plan indexed
+   them (the historical range above is j = 1..6), under theta1 and under the split-half refit,
+   replay minus sequential.
+4. Resources: the labelled historical records replay keeps (5% of the training pool) against
+   the calibration records the refit uses per period (about half a test period, or 500 or 200).
+
+Readings
+--------
+1. Delta > 0 with an interval excluding zero and G_V above the margin: replay preserves performance
+   beyond what threshold choice recovers, and conventional evaluation also credits it with a
+   decision-rule benefit.
+2. Delta > 0 with an interval excluding zero and G_V below the margin: conventional backward
+   evaluation attributes to replay a benefit that a threshold refit on the sequential model
+   obtains without stored data; the method ranking is a property of the threshold policy.
+3. The interval of Delta includes zero: the earlier composition is not reproduced; we report the
+   paired estimates and say nothing about the policy dependence of the ranking.
+4. G_V unresolved against the margin: reported as unresolved at 10 pairs, with the margin.
+
+Date
+----
+22 October 2026, before any run of this design. An earlier unpaired grid (5 replay runs against
+3 sequential runs; replay's gain 0.018, of which 0.016 was a reduction in mismatch) informed
+the hypothesis only and stays in the paper as the unpaired pilot.
+
+Departures
+----------
+None.

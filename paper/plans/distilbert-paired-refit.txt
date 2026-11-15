@@ -1,0 +1,91 @@
+Analysis plan: replay against sequential training after refit (DistilBERT, paired)
+==================================================================================
+
+Aim
+---
+To measure how much of replay's lead over sequential training remains for a pretrained
+transformer fine-tuned end to end once both models refit one threshold per label. This carries
+the BiGRU paired refit (bigru-paired-refit.txt) to DistilBERT on two streams. It tests no
+repair.
+
+Design
+------
+ASRS primary: 8 periods, 9 labels, 831 validation records, 2069 to 2104 test records per period,
+7479 then 8279 to 8406 training records per period, replay budget 3342.
+MultiEURLEX: 8 periods, 12 labels, 450 validation records, 1116 to 1131 test records per period,
+4052 then 4470 to 4518 training records per period, replay budget 1801.
+About 38% of ASRS records and all MultiEURLEX records in a sampled batch exceed 256 subword
+tokens and are truncated.
+Arms: sequential training (each period trains on its own records) and replay (each period also
+trains on a reservoir buffer of 5% of the training pool, replayed in full). Both arms of a seed
+load the same initialisation and train the same first period, so they share theta1 on one device.
+Recipe, as in the DistilBERT decomposition: distilbert-base-uncased, AdamW at 2e-5, linear
+warm-up over 10% of each period's updates, batch 32, 256 subword tokens, 3 epochs per period;
+thresholds theta1 fitted once on a 19-point grid (0.05 to 0.95) on the first-period validation
+split and then inherited. Seeds 0 to 5. New runs: MultiEURLEX sequential (6), MultiEURLEX replay
+(6), ASRS replay (6). The ASRS sequential members were to be the six stored runs of the
+DistilBERT decomposition, whose backward results we had already seen; the ASRS pairs were to be
+labelled accordingly. All runs are reported, with no selection among seeds. No finite-label
+refit, no extra updates on current data, no pooling with the BiGRU results.
+
+Repeatability rule
+------------------
+A repeat (same seed and device, second process) or a pairing check passes when both hold:
+(a) the largest absolute difference in the first-period model's scores is at most 0.0122, the
+    median between-seed standard deviation of those scores over the six stored initialisations;
+(b) the difference in the first-period model's mean macro-F1 at theta1 over the eight periods is at
+    most 0.0013, which is 0.2 of that quantity's between-seed standard deviation (0.0066) and
+    about a quarter of the 0.005 margin.
+The first period of stored ASRS seed 3 is trained twice before any other run; the same rule
+checks the pairing within each MultiEURLEX seed and the reuse of each stored ASRS sequential run
+against the first period of its new replay partner. A stored run that fails is replaced by a new
+sequential run on the device of its partner, decided before any replay-minus-sequential quantity
+is computed. The constants come from the stored decomposition scores and from no result of this
+plan. The rule was written after a repeat difference of 0.0029 had been seen on an earlier run,
+where the tolerance had been 1e-3.
+
+Analysis
+--------
+Per stream, pair and historical period 2 to 7 (fixed before the runs), on the final model:
+U_m, macro-F1 of arm m at theta1 on the whole period; V_m, attainable macro-F1 after refit, by exact
+split-half selection over 200 partitions shared within a pair; G_U = U_replay - U_seq, the
+inherited lead; G_V = V_replay - V_seq, the refitted lead; Delta = G_U - G_V. Each is averaged over
+periods within a pair, then over the 6 pairs.
+Per stream the test family is {G_U, G_V}: paired t, TOST at the 0.005 margin, Holm within the
+family, and an exact two-sided sign-flip test that overrides (minimum p 2/64 = 0.031 at 6
+pairs). Each lead is classed as equivalent, material, small non-zero or unresolved. Beside each
+we print the percentile bootstrap over pairs (20000 resamples) and the count of positive pairs.
+Delta with its bootstrap interval is descriptive. The two streams are separate families.
+Secondary, descriptive: the forward comparison by lag for each stream and arm (shortfall, its
+attainable part and the change in mismatch), with the stale model's own-period rule; lags 1 to 5
+reported, lags 6 and 7 printed with the training-volume confound stated; bootstrap over seeds;
+the share formed only where the shortfall's interval excludes zero.
+
+Predictions
+-----------
+Informed by the BiGRU paired results (ASRS G_V +0.0034 [0.0019, 0.0049], G_U +0.0086;
+MultiEURLEX G_V +0.0243, G_U +0.0305) and the DistilBERT decomposition (deficit +0.0161,
+attainable gap -0.0015, change in mismatch +0.0176).
+1. ASRS: G_V equivalent within 0.005; G_U positive, small non-zero or material.
+2. MultiEURLEX: G_V material and positive; G_U material and positive; Delta positive.
+3. Forward comparison, both streams: the attainable part is at least 0.8 of the shortfall at
+   every lag from 1 to 5 where a share is formed.
+Wording fixed for G_V, per stream: equivalent, "equivalent to zero within 0.005 once both
+refitted"; material and positive, "kept a lead beyond 0.005"; small non-zero, "kept a lead below
+0.005 that the interval separates from zero"; negative, the same with "trailed"; unresolved,
+"unresolved relative to 0.005 at 6 pairs". We write that the inherited lead is all mismatch
+only when G_U is material or small non-zero and G_V is equivalent.
+
+Date
+----
+9 November 2026, before any run of this plan: nothing had been trained, scored or launched.
+Stops are technical only (repeatability, memory, a failed validation, a third attempt) and none
+depends on a difference between arms. A seed that cannot complete is reported as missing.
+
+Departures
+----------
+An earlier DistilBERT repair design, planned on 1 November, stopped at its repeatability check
+(0.0029 against its tolerance of 1e-3); that stop says nothing about any prediction.
+The stored ASRS sequential runs did not pass the reuse check, so every ASRS pair was retrained
+from new runs, and all runs moved to one hardware cohort. Both changes, and the added comparison
+with extra updates on current data, are in distilbert-matched-updates.txt.

@@ -1,0 +1,97 @@
+Method comparison: the part each method reduces
+===============================================
+
+Aim
+---
+On two ASRS streams whose cause of drift is fixed by construction, this plan tests whether each
+continual-learning method reduces a different part of the deficit, the attainable gap or the
+mismatch.
+Under sequential training the deficit splits as 0.001 + 0.036 (attainable gap + mismatch) on the
+reweighted stream and as 0.194 + 0.025 on the vocabulary stream.
+
+Design
+------
+Two pairs, each an intervention stream and its control: the reweighted stream against a uniform
+subsample, and the fully permuted vocabulary stream against the unmodified ASRS stream. Nine
+labels, eight periods. Learner: BiGRU with frozen GloVe embeddings, 3 epochs per period.
+Five arms, each applied from the first period: sequential training; replay (a 5% reservoir, not
+tuned); EWC (per-example empirical diagonal Fisher); LwF (binary distillation, T = 2); and extra
+updates on current data, a control that takes replay's number of optimiser steps but draws the
+added records from the current period. One implementation per method family.
+Seeds 0 to 9, the same seed for all five arms on all four streams: 200 runs, ten pairs per
+contrast, no seed selection, no interim look and no extension.
+EWC's lambda and LwF's alpha were chosen per intervention stream on two separate seeds (100, 101),
+on 5% of each period's training pool held out from training: the setting with the highest mean
+macro-F1 at the inherited thresholds over all periods seen at each checkpoint, ties (equal at 3
+decimals) to the weaker setting, one grid extension if an endpoint is chosen. No test score was
+read. Chosen: EWC lambda 0.001 on the reweighted stream (the weakest value, tied with sequential
+training) and 1 on the vocabulary stream; LwF alpha 0.1 on both. Each control takes its
+intervention stream's setting.
+
+Analysis
+--------
+Per seed and pair, from the final models over all eight periods: deficit D = control minus
+intervention in macro-F1 at thresholds refitted from the final model's own scores on the
+first-period validation split; attainable gap A, the same difference in split-half attainable
+level (200 partitions shared by all arms); mismatch R = D - A. A contrast is sequential training
+minus the method, paired by seed (Delta A, Delta R; positive where the method reduced that part).
+Delta A_0 is the attainable contrast in a common environment: both final models scored on the
+control stream's test records, without any record of the paired stream's training pool, over
+periods 4 to 8 on the reweighted pair and 3 to 8 on the vocabulary pair. Each contrast: mean, 95%
+paired t interval (9 df), TOST at a margin of 0.005, and Holm within each arm's family of four
+(Delta A_0 and Delta R on each pair), separately for the TOST and the t-test. Outcomes: equivalent
+(TOST), material (non-zero and at least 0.005), small non-zero, unresolved. An exact sign-flip
+test (1024 patterns) is the check: a non-zero outcome it does not support at
+0.05 is read as unresolved.
+Between-method family (four contrasts, Holm across them): LwF minus replay in Delta A_0 on each pair
+(two-sided, reported), in net Delta A on the vocabulary stream (planned material and negative) and
+in Delta R on the reweighted stream (must not be material and negative). Also given on seeds 5 to
+9. Replay minus extra updates on current data (two contrasts, Holm across them): Delta R on the
+reweighted stream and net Delta A on the vocabulary stream. Replay's reduction is put down to
+stored history only if the contrast is material and positive; otherwise it reads "not separated
+from extra updates on current data". Learning rule: if a method's attainable level at first
+learning falls on a control stream (interval below -0.005), its statements are withheld. If it
+falls on the intervention stream, a favourable outcome reads "preserves by adapting less" and an
+equivalence is not counted. The summary sentence (LwF reduces the mismatch, replay the attainable
+gap) is allowed only if the between-method family, the learning rule and both
+replay-minus-extra-updates contrasts hold. The predictions explain that outcome; they do not
+decide it. Reported without adjustment, deciding nothing: the aggregate Delta D, the net Delta A,
+periods 2 to 7, the inherited thresholds, the historical periods (1 to 3 reweighted, 1 to 2
+vocabulary), the other crossed terms, the split by time of learning, other threshold policies and
+the unmodified stream. Power, from the sequential runs: equivalence on Delta A_0 is weak at ten
+pairs (0.67 on the reweighted pair, 0.06 on the vocabulary pair, before Holm), and equivalence on
+Delta R cannot be shown; an effect of 0.02 is detected with power 0.99.
+
+Predictions
+-----------
+1. LwF's Delta R on the reweighted stream is material and positive. Fails if equivalent, or material
+   and negative.
+2. LwF's Delta A_0 on the vocabulary pair (periods 3 to 8) is equivalent. Fails if material, either
+   sign. Not counted if LwF's learning is restricted.
+3. Replay's Delta R on the reweighted stream is material and positive. Fails as in 1. Already seen
+   on five seeds (+0.019), so this is a repeat.
+4. Replay's Delta A_0 on the vocabulary pair (periods 3 to 8) is material and positive. Fails as in
+   1. Already seen unpaired (+0.089) and on five seeds (+0.080 in net Delta A), so this is a repeat.
+5. EWC's two Delta A_0 contrasts are equivalent; its two Delta R contrasts are reported with
+   intervals and outcomes only, since equivalence on Delta R cannot be decided at ten pairs. A
+   stream counts only where EWC's learning is not restricted. Holds when both streams count and
+   both are equivalent; fails if either counted Delta A_0 is material.
+No prediction on the net Delta A of either pair or on Delta R on the vocabulary stream. The whole
+reading fails if prediction 2 fails or LwF shows replay's pattern (its Delta A_0 on the vocabulary
+pair and its Delta R on the reweighted stream both material and positive). On MultiEURLEX (added
+27 Oct 2026, before its runs and before any result of the main comparison was read): sequential
+training's mismatch minus LwF's, periods 2 to 7 at the inherited thresholds, ten seeds, is
+material and positive. One contrast, no Holm; LwF at alpha 0.1, T = 2, not re-tuned.
+
+Date
+----
+Written 26 Oct 2026, before any run of this design. The specification above was fixed on
+27 Oct 2026, after the tuning runs and before any of the 200 runs. Set after tuning readings
+(no decomposition value) had been seen: EWC's estimator, grid and selection rule; the
+extra-updates arm; Delta A_0 in place of the net Delta A; the between-method family; ten seeds.
+
+Departures
+----------
+Before any method contrast was computed (28 Oct 2026) we waived the check that the new
+sequential runs reproduce earlier stored runs within 1e-3: 4 of 40 did not. All runs were kept;
+see the note on the reproduction check.

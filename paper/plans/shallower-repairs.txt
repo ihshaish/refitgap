@@ -1,0 +1,102 @@
+Analysis plan: shallower repairs of the final sequential model on replay's final buffer (BiGRU)
+==============================================================================================
+
+Aim
+---
+This plan tests whether the final buffer of the paired replay run, used after sequential
+training to repair the final sequential model, can substitute for replay during training at the
+final evaluation point. We
+compare four repairs of increasing depth with replay, at the endpoint only.
+
+Design
+------
+- BiGRU with frozen GloVe embeddings on ASRS, periods numbered 0 to 7: the vocabulary stream
+  (principal), the reweighted stream (secondary) and their two control streams. Seeds 0 to 9 on
+  4 streams give 40 cells, paired by seed. The stored sequential and replay runs (5% reservoir)
+  of the method comparison are reused. Sequential training is rerun only to save checkpoints and
+  must reproduce its stored run exactly; otherwise that seed stops on that stream, with no retry
+  and no replacement. With fewer than 6 passing seeds a stream is not tested. No interim look.
+- Four repairs under one shared rule, each started from the final sequential checkpoint:
+  (1) threshold refit only, which uses no buffer record; (2) logit adapter, a full 9 x 9 affine
+  map on the label logits; (3) head, the classifier layer on the penultimate features; (4) full
+  model, every trainable parameter. Repairs 2 to 4 are fitted on the final buffer of the same
+  seed's replay run (3342 records on the vocabulary pair, 731 on the reweighted pair) with
+  Adam, batch 64, an optional penalty towards the start, fixed epochs and no evaluation data.
+- Union of buffers (secondary, vocabulary stream only): repairs 2 to 4 fitted on the union of all
+  eight recorded buffers (about 9300 records), with the final-buffer recipe, step count and
+  period shares. It is an expanded-data comparison, not one at equal memory, and is not tuned.
+- Recipes: chosen per intervention stream and repair on held-out tuning seeds 100 and 101, which
+  withhold 5% of each period's training pool; never on seeds 0 to 9 or on test scores. Grid:
+  learning rate {1e-4, 1e-3, 1e-2} x penalty {0, 1} x epochs {1, 3, 10, 30}. Selected: the
+  highest held-out historical score among settings whose held-out current score is at least the
+  threshold refit's minus 0.0025; ties at three decimals go to fewer steps, then the smaller
+  learning rate, then the larger penalty. If none qualifies, the highest current score is taken
+  and flagged. A grid-edge setting is reported and the grid is not extended.
+
+Analysis
+--------
+- Shared rule: one threshold per label for each arm, fitted on the pooled fitting halves of
+  the test sets of periods 0 to 7 and scored by macro-F1 on the held-out halves, as a mean over
+  200 partitions and both directions (50 in tuning). Historical is the mean over periods 0 to 6
+  and current is period 7. The calibration records (about 1040 per period on the vocabulary
+  pair, 915 on the reweighted pair) lie outside the buffer and are the same for every arm.
+- Contrasts per seed: historical, repair minus replay (principal); current, repair minus
+  sequential and repair minus replay; recovery, repair minus sequential on historical periods;
+  for the union of buffers also union minus final buffer. Margin 0.005 on the historical periods
+  and on the current period (against sequential and against replay), alpha 0.05.
+- Tests: non-inferiority by a one-sided paired t test against -0.005, Holm-adjusted within its
+  family, together with a one-sided sign-flip test; inferiority by the mirror pair of tests, for
+  a contrast that is also material and negative. Also reported: 95% paired t intervals, TOST at
+  +/-0.005 (the only basis for "equivalent"), the two-sided t test and BCa intervals. Classes:
+  equivalent; material (Holm-adjusted t p < 0.05 and a mean of at least 0.005 in size); small
+  non-zero; unresolved, which also covers a two-sided sign-flip p of 0.05 or more.
+- Test families, Holm over the four levels of repair within each, per intervention stream:
+  historical (four); current against sequential (three, the threshold refit being zero by
+  construction); current against replay (four); recovery (three, two-sided only). No repair is
+  designated in advance. A repair is named adequate by an intersection-union test: the largest
+  of its three non-inferiority p-values, Holm across the four repairs, every sign-flip condition
+  met. The union of buffers has five families of three: historical, the two current contrasts,
+  and union minus final buffer on historical and on current.
+- Cost condition on training passes, required for "low-cost": the repair's full-network passes
+  on a seed, plus its share of the recipe search (the grid's passes on the stream's two tuning
+  runs divided by the 10 seeds), are below replay's extra training examples (about 70000 on the
+  vocabulary stream) on every passing seed.
+- Secondary, deciding nothing: the reweighted stream; contrasts differenced against the control
+  stream; both arms scored on the control environment; inherited thresholds, thresholds refitted
+  on first-period validation data, per-period rules and macro-AUPRC; replay minus sequential
+  under the shared rule and at the intermediate checkpoints 1 to 6.
+
+Predictions
+-----------
+1. A low-cost repair reaches replay without unacceptable current-period loss (named adequate,
+   cost condition met): the final buffer supports an adequate endpoint alternative to replay.
+2. Replay retains a material advantage (historical contrast material and negative for all four
+   repairs). This would not show that historical content must be present throughout training.
+3. Historical recovery comes with current-period deterioration (recovery material and positive,
+   current against sequential material and negative): a recovery-adaptation trade-off.
+4. Differences remain unresolved: the study does not decide substitutability.
+5. "The tested repairs did not substitute for replay" is written only if every repair is
+   inferior on the historical contrast or on current against replay.
+6. Union of buffers: the final buffer already suffices; or the union improves on it by a
+   material amount and reaches replay, so access to discarded records helps; or neither reaches
+   replay; or unresolved.
+7. Expectation: the threshold refit fails historical non-inferiority on the vocabulary stream,
+   since most of that stream's deficit is attainable gap (0.194 of 0.219) and a threshold refit
+   moves only the mismatch. No direction was stated for the other three repairs.
+
+Date
+----
+29 October 2026, before any run of this design and before any of its outcomes was computed. The
+recipes were tuned on 29 October, after the plan and before any repair on seeds 0 to 9. Seeds 0
+to 9 had been analysed in the method comparison and the shared-rule analysis of the same runs
+had been read, so replay's lead and the threshold refit's result were known and item 7 was no
+longer open. We report the results as an extension on reused seeds.
+
+Departures
+----------
+- On 30 October 2026, before any outcome was computed, all 24 reruns of seeds 0 to 5 on cloud
+  CPUs failed to reproduce their stored runs, while the 16 reruns of seeds 6 to 9 passed. We set
+  the no-retry rule aside once and reran seeds 0 to 5 on the processor model inferred for the
+  stored runs. Only exactly reproducing models are analysed.
+- Five of the six selected recipes lie on a grid edge; the full-model recipe on the vocabulary
+  stream (learning rate 1e-3, no penalty, 3 epochs) does not.

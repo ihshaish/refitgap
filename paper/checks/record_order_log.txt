@@ -1,0 +1,75 @@
+ environment  period  n_test  retained  stored_clean_mask_count  retained_cap_control_pool  retained_cap_intervention_pool  all_test_cap_own_pool  Y_checks_pass_all_arms_seeds                                              sha256_retained_ids
+     control       1    1818      1505                     1505                          0                               0                      0                          True 34550f9409e43dc9690f61cc8ce5f29206f9af9152f529f6448f66c84d2bd1ab
+     control       2    1819      1499                     1499                          0                               0                      0                          True 1a0553e156d841b4bd762545eaf8de06e12a9bc01edf22c02a8ed4ccd97f2d97
+     control       3    1811      1520                     1520                          0                               0                      0                          True 91f13e52c6606aa6bcdba3c20e2d129da924f56f2e2f369867bcc00f799f851e
+     control       4    1835      1516                     1516                          0                               0                      0                          True 2cd6ac2abba7c0a28c71347d35ab139e1b28d7274d68c6a49921d6944d8825a8
+     control       5    1834      1538                     1538                          0                               0                      0                          True ad7823915a68ca28d2c078a49566c6f6c3b9d030a3185189bef6c3beadba2b5d
+     control       6    1828      1502                     1502                          0                               0                      0                          True e0b2d04d7477ca497deef7d569de0586ec40e2c3a9832f4689541701f7d173a0
+     control       7    1839      1504                     1504                          0                               0                      0                          True 54b7590d9c87ffa1ef5bac26d1784613b122b8c9fe9ada3beed59c1edb8f844f
+     control       8    1839      1523                     1523                          0                               0                      0                          True e627f0dee009494e61f5a16e4efd23a646fa96d10919ffda6dbc16cc4d082fe7
+intervention       1    1818      1510                     1510                          0                               0                      0                          True c5d4751bed68f19aa65f21b528bdbad6c34d2e1038b29e066f1ac312417b055f
+intervention       2    1819      1509                     1509                          0                               0                      0                          True ac3639310b427348bf0a0c0c119f588a3de3c34a423f6cd4470f46b6fd821005
+intervention       3    1811      1499                     1499                          0                               0                      0                          True 1fa6eb72b77457962df150add478084b594b5f57531563bafca38e4c470b6b8e
+intervention       4    1835      1534                     1534                          0                               0                      0                          True 4f929078a96c0478032068c04e9543771e4268d0868d9be34bc4b94f16c7c04e
+intervention       5    1834      1506                     1506                          0                               0                      0                          True 4098df6b24cbbeb0d5b4a07a5713ec57accea30a5d0478c5f7e56f6b62c180ae
+intervention       6    1828      1505                     1505                          0                               0                      0                          True 1090de68d3a7ded9a7e2859a5a88cdae5357cb40a3820a9109f74b21065273e6
+intervention       7    1839      1501                     1501                          0                               0                      0                          True 272040b8ad1de958122ca0438107ec868083cc544d7701df0a091f46491eaedd
+intervention       8    1839      1503                     1503                          0                               0                      0                          True c338574005270c807b73c21d397ea6bfc53e0d2fe8a4490fa4e4d0d7a3380971
+{
+ "arms": {
+  "naive": [
+   "asrsprior00_C2_naive_lam1_s0_scores.npz",
+   "asrsprior100_C2_naive_lam1_s0_scores.npz"
+  ],
+  "replay": [
+   "asrsprior00_C2_replay_lam1_s0_scores.npz",
+   "asrsprior100_C2_replay_lam1_s0_scores.npz"
+  ],
+  "ewc": [
+   "asrsprior00_C2_ewc_ewc0.001_fpe_lam1_s0_scores.npz",
+   "asrsprior100_C2_ewc_ewc0.001_fpe_lam1_s0_scores.npz"
+  ],
+  "lwf": [
+   "asrsprior00_C2_lwf_a0.1_T2_lam1_s0_scores.npz",
+   "asrsprior100_C2_lwf_a0.1_T2_lam1_s0_scores.npz"
+  ],
+  "replaycur": [
+   "asrsprior00_C2_replaycur_lam1_s0_scores.npz",
+   "asrsprior100_C2_replaycur_lam1_s0_scores.npz"
+  ]
+ },
+ "seeds": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9
+ ],
+ "n_label_array_comparisons": 2400,
+ "failures": [],
+ "counts_all_match": true,
+ "any_retained_in_a_pool": 0,
+ "own_test_in_own_pool": 0,
+ "fingerprint": {
+  "cells": 800,
+  "shared_per_cell_range": [
+   300,
+   350
+  ],
+  "max_abs_diff_all": 0.00048828125,
+  "min_frac_exact": 0.9866666666666667,
+  "naive_max_abs_diff": 0.00048828125,
+  "naive_min_frac_exact": 0.9933774834437086,
+  "null_median_diff_range": [
+   0.70587158203125,
+   0.9347419738769531
+  ],
+  "null_frac_within_1e3_max": 0.016666666666666666
+ },
+ "runtime_s": 4.179961919784546
+}

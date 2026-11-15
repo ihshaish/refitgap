@@ -1,0 +1,23 @@
+{
+ "note": "the 3 external streams specified before their runs and HuffPost, same construction as the aviation streams (N=8 equal-count periods, 20% test split, dedup, 75-positive rule; HuffPost departs from the rule, see the paper). Sources and access routes in DATA.md.",
+ "huffpost": {
+  "records": 34805,
+  "labels": 5,
+  "span": "201201-201712"
+ },
+ "arxiv": {
+  "records": 120000,
+  "labels": 6,
+  "span": "201201-202312"
+ },
+ "arxivfine": {
+  "records": 120000,
+  "labels": 8,
+  "span": "201201-202312"
+ },
+ "amazon": {
+  "records": 116154,
+  "labels": 4,
+  "span": "201201-202212"
+ }
+}

@@ -1,0 +1,26 @@
+arXiv controlled study: stopped at its design criterion
+=======================================================
+
+We fixed this plan on 28 Aug 2026.
+
+Plan
+    An external test of the pattern seen on ASRS. On arXiv, a reweighted stream at the strongest
+    dose that met the plan's support constraints (about half the ASRS displacement), then
+    sequential training on 20 seed blocks with three branches each, read against the ASRS
+    predictions.
+
+Criterion
+    Before any final block was trained, five design-only scorers (same recipe, disjoint seeds)
+    had to show a mean refit gain of at least 0.010 macro-F1: what a fixed learner recovers by
+    refitting its thresholds on the shifted periods. Below that, the plan said, the effect is
+    too small to estimate and the study stops.
+
+Value
+    +0.0087 (the five scorers: +0.0104, +0.0064, +0.0121, +0.0073, +0.0074), against the
+    required 0.010. Not met, so the study was not run.
+
+Departures
+    A first execution of the criterion had joined its evaluation weights to a differently
+    ordered copy of the pool; we corrected it before any final training, with the required
+    0.010 unchanged. The stop says nothing about transfer, in either direction: the final runs
+    never happened.

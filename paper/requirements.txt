@@ -1,0 +1,12 @@
+# Pinned loosely: nothing here is version sensitive except pyarrow/pandas
+# needing to agree about parquet.
+numpy>=1.24
+pandas>=2.0
+pyarrow>=12.0
+scikit-learn>=1.3
+scipy>=1.10
+torch>=2.0
+matplotlib>=3.7
+gensim>=4.3          # only for train_embedding.py (domain word2vec)
+transformers>=4.35   # only for the DistilBERT runs
+datasets>=2.14     # only to download MultiEURLEX, see DATA.txt

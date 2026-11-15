@@ -1,0 +1,46 @@
+Analysis plan: the vocabulary stream
+====================================
+
+Aim
+---
+The five-corpus result is observational. If the association between vocabulary and labels is
+moved deliberately on the ASRS stream, which is otherwise stable and shows no ranking loss, this
+plan tests whether ranking quality falls, and whether only when the embeddings are tuned.
+
+Design
+------
+From the second period onward, occurrences of the 1697 most label-discriminative tokens are
+permuted among themselves with probability rho, drawn again each period. Labels, label priors
+and corpus size are fixed, and the marginal token distribution is almost unchanged. Association
+stability measured before training:
+  primary stream (control)      rho 0      0.904   (0% of tokens below 0.5)
+  paired swap                   rho 0.50   0.844   (3%)
+  permutation                   rho 0.50   0.818   (6%)
+  permutation                   rho 1.00   0.594   (30%)
+The full permutation reaches the stability of the arXiv cs subcategories stream (0.595), which
+lost only calibration with frozen embeddings and lost ranking with tuned ones.
+BiGRU with frozen GloVe and with tuned GloVe embeddings, sequential training, 3 seeds per cell.
+
+Measures
+--------
+Mean backward transfer in macro-AUPRC, per stream and embedding condition.
+
+Predictions
+-----------
+1. Monotonicity: mean macro-AUPRC backward transfer declines monotonically in the strength of
+   the manipulation, in both conditions.
+2. Crossing: the full permutation shows negative macro-AUPRC backward transfer with tuned
+   embeddings, of the order of the arXiv cs subcategories result (about -0.013).
+3. The split by condition reproduces: with frozen embeddings the full permutation stays
+   non-negative or close to zero.
+The mechanism fails if macro-AUPRC backward transfer is unchanged across the doses, if
+forgetting is as strong at rho = 0.5 as at rho = 1.0, or if the frozen condition degrades as
+much as the tuned one.
+
+Date
+----
+8 August 2026, before any model was trained on these streams.
+
+Departures
+----------
+None.

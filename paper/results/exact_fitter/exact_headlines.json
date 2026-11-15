@@ -1,0 +1,184 @@
+{
+ "attainable_grid_full": {
+  "mean": -0.000771824995005027,
+  "block_sd": 0.003806417439886132,
+  "blocks": 20,
+  "seeds": 10,
+  "ci_block": [
+   -0.002388806236235106,
+   0.0008261718490051435
+  ],
+  "ci_seed_clustered": [
+   -0.0020843177476569997,
+   0.0005254271149847631
+  ],
+  "positive_blocks": 8,
+  "positive_seeds": 5,
+  "bootstrap_seed": 20260829
+ },
+ "attainable_grid_published": {
+  "mean": -0.0006645051942058346,
+  "block_sd": 0.00378245396181691,
+  "blocks": 17,
+  "seeds": 9,
+  "ci_block": [
+   -0.002387317489396296,
+   0.0011007897774561676
+  ],
+  "ci_seed_clustered": [
+   -0.001900158110015717,
+   0.0005185991042876381
+  ],
+  "positive_blocks": 7,
+  "positive_seeds": 4,
+  "bootstrap_seed": 20260829
+ },
+ "attainable_exact_full": {
+  "mean": -0.0012083808998125196,
+  "block_sd": 0.0035894844759376135,
+  "blocks": 20,
+  "seeds": 10,
+  "ci_block": [
+   -0.0027485780320227727,
+   0.00028519977156773866
+  ],
+  "ci_seed_clustered": [
+   -0.0024035568391971435,
+   -5.5211300370295806e-05
+  ],
+  "positive_blocks": 8,
+  "positive_seeds": 5,
+  "bootstrap_seed": 20260829
+ },
+ "attainable_exact_published": {
+  "mean": -0.0011097612564367032,
+  "block_sd": 0.0035236901835893125,
+  "blocks": 17,
+  "seeds": 9,
+  "ci_block": [
+   -0.002717407917465571,
+   0.0005216031489306012
+  ],
+  "ci_seed_clustered": [
+   -0.0021960764453499816,
+   -0.00010453395477296846
+  ],
+  "positive_blocks": 7,
+  "positive_seeds": 4,
+  "bootstrap_seed": 20260829
+ },
+ "paired_refit_grid_primary_full": {
+  "mean": 0.009978503706590846,
+  "block_sd": 0.005289241100855755,
+  "blocks": 20,
+  "seeds": 10,
+  "ci_block": [
+   0.007748847535493992,
+   0.012260126749884987
+  ],
+  "ci_seed_clustered": [
+   0.007390098905443288,
+   0.012431126165115448
+  ],
+  "positive_blocks": 20,
+  "positive_seeds": 10,
+  "bootstrap_seed": 20260829
+ },
+ "paired_refit_grid_conventional_full": {
+  "mean": 0.008708878576582094,
+  "block_sd": 0.00498627467704731,
+  "blocks": 20,
+  "seeds": 10,
+  "ci_block": [
+   0.006602269186735718,
+   0.010884373251978342
+  ],
+  "ci_seed_clustered": [
+   0.0063440968588287594,
+   0.010961669429567165
+  ],
+  "positive_blocks": 20,
+  "positive_seeds": 10,
+  "bootstrap_seed": 20260829
+ },
+ "paired_refit_exact_primary_full": {
+  "mean": 0.009542013507352325,
+  "block_sd": 0.005158089809107447,
+  "blocks": 20,
+  "seeds": 10,
+  "ci_block": [
+   0.007369459227737208,
+   0.011763129376848909
+  ],
+  "ci_seed_clustered": [
+   0.007030098139729668,
+   0.011881995652039259
+  ],
+  "positive_blocks": 20,
+  "positive_seeds": 10,
+  "bootstrap_seed": 20260829
+ },
+ "paired_refit_exact_conventional_full": {
+  "mean": 0.008227333804271268,
+  "block_sd": 0.004825844863864502,
+  "blocks": 20,
+  "seeds": 10,
+  "ci_block": [
+   0.00620290568763961,
+   0.010332377260930822
+  ],
+  "ci_seed_clustered": [
+   0.005915683188070521,
+   0.010438211554309998
+  ],
+  "positive_blocks": 20,
+  "positive_seeds": 10,
+  "bootstrap_seed": 20260829
+ },
+ "attainable_trainable_grid": {
+  "mean": -0.004814777291641033,
+  "block_sd": 0.0013424315931224668,
+  "blocks": 4,
+  "seeds": 2,
+  "ci_block": [
+   -0.006018009459338018,
+   -0.0038254324756297753
+  ],
+  "ci_seed_clustered": [
+   -0.005778166289586958,
+   -0.003851388293695107
+  ],
+  "positive_blocks": 0,
+  "positive_seeds": 0,
+  "bootstrap_seed": 20260829
+ },
+ "attainable_trainable_exact": {
+  "mean": -0.004391474693673787,
+  "block_sd": 0.0015088481037346575,
+  "blocks": 4,
+  "seeds": 2,
+  "ci_block": [
+   -0.005736602760794976,
+   -0.0032979123033462787
+  ],
+  "ci_seed_clustered": [
+   -0.005485037084001295,
+   -0.0032979123033462787
+  ],
+  "positive_blocks": 0,
+  "positive_seeds": 0,
+  "bootstrap_seed": 20260829
+ },
+ "refit_capture_grid": {
+  "bound": 0.009243071386741917,
+  "n500_same": 76.2,
+  "n200_same": 17.4,
+  "n500_lagged": 36.9
+ },
+ "refit_capture_exact": {
+  "bound": 0.008790136868340454,
+  "n500_same": 80.1,
+  "n200_same": 18.3,
+  "n500_lagged": 38.8
+ }
+}

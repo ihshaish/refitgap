@@ -1,0 +1,5 @@
+R_N_whole    0.025342 [0.020751, 0.029721]
+R_N_same     0.025666 [0.021080, 0.030042]
+R_ref_whole  0.014001 [0.010848, 0.017154]
+R_ref_same   0.014333 [0.011178, 0.017477]
+{'sklearn_version': '1.4.2', 'analysis_mf1': 0.5, 'refitgap_macro_f1': 0.5, 'refitgap_f1_vec': [0.0, 1.0], 'tie_analysis': 1.0, 'tie_refitgap': 1.0, 'max_dev_analysis_vs_refitgap_on_120_final_cells': 0.0}

@@ -1,0 +1,82 @@
+Analysis plan: full-model repair of the final sequential DistilBERT on MultiEURLEX
+=================================================================================
+
+Aim
+---
+On MultiEURLEX, this plan tests whether full-model repair of the final sequential DistilBERT,
+fitted on the final replay buffer at the end of the stream, matches replay on historical and
+current performance within 0.005 under the shared rule, with no more training than replay's
+extra updates. The
+result is one row beside the BiGRU repair on MultiEURLEX. It is not a timing study, not a
+head-only repair and not a buffer-only deployment.
+
+Design
+------
+- Runs: the six paired-comparison runs on MultiEURLEX (seeds 0 to 5; sequential training, replay
+  and extra updates on current data), reused without new training. Periods are numbered 0 to 7.
+- Repair: every parameter of the final sequential model, fitted on the final buffer of the same
+  seed's replay run (1801 records, 193 to 280 per period). AdamW with weight decay 0.01, batch
+  32, constant learning rate, optional penalty towards the starting point, no evaluation data,
+  no early stopping. One repair per seed.
+- Recipe: chosen on two development initialisations (seeds 300 and 301, sequential and replay
+  runs that withhold 10% of each period's training records). Grid: learning rate {1e-5, 2e-5,
+  5e-5} x penalty {0, 1} x epochs {1, 3, 6, 10, 20}. Twenty epochs are 36020 record passes,
+  under replay's 37821 extra ones.
+- Selection rule, copied from the BiGRU repair on MultiEURLEX: highest held-out historical
+  score, subject to a held-out current score at least that of the threshold refit minus 0.0025,
+  means over the two development seeds; ties at three decimals go to fewer steps, then the
+  smaller learning rate, then the larger penalty. Nothing from seeds 0 to 5 enters selection.
+- Competence rule: the selected setting meets that constraint and scores above the threshold
+  refit on held-out historical data on each development seed and on their mean. A setting on a
+  grid edge is flagged and the grid is not widened. If the rule fails, no analysed seed is
+  repaired and we report "no competent full repair found in the fixed search".
+
+Analysis
+--------
+- Shared rule, as for the BiGRU: one threshold per label for each arm, fitted on the pooled
+  fitting halves of the test sets of periods 0 to 7, macro-F1 on the held-out halves, mean over
+  200 partitions and both directions. Historical is the mean over periods 0 to 6, current is
+  period 7. The calibration records (about 9000) lie outside the buffer.
+- Contrasts per seed: historical, repair minus replay (primary); current, repair minus replay;
+  current, repair minus sequential, which tells whether the repair lowered its starting model;
+  recovery, repair minus sequential on the historical periods.
+- Margin 0.005 on the historical periods and on the current period, alpha 0.05, six paired
+  initialisations; each contrast is a test family of one. Inferior and non-inferior each need
+  the one-sided t test and the sign-flip test together, as in the BiGRU repair. With fewer than
+  six passing seeds nothing is tested.
+- Adequate: non-inferior on the three contrasts (intersection-union), and the cost condition on
+  training passes: the repair processes fewer records than replay's extra ones (37821) in every
+  initialisation. The cost of the recipe search is reported beside it, outside the condition.
+- Descriptive: the gap to close (replay minus sequential, historical), the recovered share, the
+  costs, and dating a lead: replay's lead when each period was first learned and at the
+  endpoint, for replay against sequential training and against extra updates on current data.
+
+Predictions
+-----------
+Each contrast is reported separately, historical before current, as non-inferior, below beyond
+0.005 or unresolved. The combined readings are those of the BiGRU repair:
+1. Adequate: performance adequate and the cost condition met.
+2. Inferior: historical performance below replay by more than 0.005.
+3. Trade-off: current performance below replay or below sequential by more than 0.005. "Replay's
+   current-period advantage persists" is written when the repair is below replay but not below
+   its starting model; "recovery-adaptation trade-off" only when historical performance is
+   within 0.005 of replay and current performance fell more than 0.005 below sequential.
+4. Not decided: everything else, printed with the estimates.
+A shortfall is described for the selected recipe only, never as "repair fails" in general or
+"earlier replay is necessary". No outcome shows whether replay's timing caused a difference.
+The half-widths of the BiGRU repair at six seeds (historical 0.0021, current 0.0047) are a
+guide to precision only.
+
+Date
+----
+13 November 2026, before any development or repair run had been trained. The selected recipe
+was added on 14 November 2026, after the development runs and before any repair outcome on the
+analysed initialisations: learning rate 1e-5, penalty 1, 3 epochs (171 steps). It met the
+competence rule (held-out historical 0.7686 against 0.7544 on the development mean).
+
+Departures
+----------
+- The repair was designed after the six paired-comparison runs it reuses had been analysed. The
+  runs give no independent test of a difference between BiGRU and DistilBERT.
+- The selected learning rate is the lowest of the grid. Every setting without the penalty failed
+  the current-score constraint.

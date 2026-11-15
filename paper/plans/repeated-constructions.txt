@@ -1,0 +1,87 @@
+Analysis plan: repeated constructions of both drifts
+====================================================
+
+Aim
+---
+The paper's constructed streams were each built once. This plan tests whether the two
+compositions (a vocabulary change gives mostly an attainable gap, a prior tilt gives mostly
+mismatch) hold when the construction itself is drawn again.
+
+Starting point
+--------------
+Two vocabulary constructions, each realised once. Fixed pairing: the nine labels are paired
+once, the top 200 mutual-information tokens per label (document count at least 50, first period
+only) are exchanged rank for rank between paired labels, and each occurrence is exchanged with
+probability rho from the fourth period onward (875 tokens, 34% of running text). Per-period
+permutation: the pooled top 400 tokens per label (document count at least 40; 1697 tokens, 84%
+of running text) are permuted anew in each period from the third onward, each occurrence
+rewritten with probability rho. Published attainable shares of the deficit (10 seeds, against
+the control): 0.836 [0.746, 0.937] for the fixed pairing at rho = 0.5 and 0.887 [0.871, 0.905]
+for the permutation at rho = 1.0; the two rows of the reweighted stream have upper interval
+limits of 0.14.
+
+Design
+------
+Learner throughout: BiGRU on frozen GloVe embeddings, sequential training, 3 epochs per period.
+First design (21 September 2026): 3 new pairings at rho = 1.0 and 0.5 and 3 new permutation
+draws at rho = 1.0, construction seeds 20260921 to 20260923, model seeds 0 to 2, 27 runs,
+against the primary-stream control.
+Second design (11 October 2026): the same three construction seeds extended to the prior tilt at
+rho = 1.0 with its uniform control (keep 0.35, tilt 5, onset in the fourth period); model seeds
+0 to 2; 45 runs.
+Final design (11 October 2026, later), which replaces both run lists. Primary: the pair matched
+in size in the paper, the strong reweighting (0.037 = 0.001 + 0.036) against the half-dose
+pairing (0.034 = 0.028 + 0.006), with nearly equal deficits that decompose in opposite
+directions. Construction seeds 20260921 to 20260928 (8); per seed, the full prior tilt with its
+uniform control and the half-dose pairing (rho = 0.5) with the primary stream as control; model
+seeds 0 and 1; 48 runs. Secondary: the full-dose pairing and the permutation at rho = 1.0 for
+construction seeds 20260921 to 20260923, model seeds 0 and 1; 12 runs. All 60 runs are reported.
+
+Analysis
+--------
+The final model is rescored with thresholds fitted to its own scores on first-period validation
+data, and attainable levels come from exact split-half selection over 200 partitions, on all
+periods. Against the control matched by seed: D = U(control) - U(arm), A = V(control) - V(arm),
+R = D - A, and the shares A/D and R/D. In the final design D, A and R are means over a
+construction's 2 model seeds, and the unit of inference is the construction (8): the mean over
+constructions of R - A for the prior tilt and of A - R for the pairing, with a percentile
+bootstrap over the 8 constructions and the count with the predicted sign.
+
+Predictions
+-----------
+Vocabulary (first design; in the final design they apply to the secondary runs):
+1. For every mapping the attainable share A/D exceeds 0.75 at rho = 1.0 and 0.60 at rho = 0.5.
+2. Every mapping's attainable share exceeds 0.14, the upper limit of both rows of the reweighted
+   stream.
+3. Falsifier: any mapping at rho = 1.0 with an attainable share below 0.50. The result would
+   then depend on which vocabulary was moved and would be narrowed to the realisations run.
+4. Descriptive: the between-mapping standard deviation of the attainable share at rho = 1.0,
+   beside the between-seed standard deviation (0.0019 on A over 10 seeds).
+Prior tilt (second design):
+5. For every tilt draw the mismatch share R/D at rho = 1.0 exceeds 0.80 and A/D is below 0.15.
+6. Falsifier: any tilt draw with A/D above 0.30, which would mean the attainable term depends on
+   which records the tilt drew.
+7. Descriptive: the between-draw standard deviation of A/D and of R/D.
+Matched pair (final design, primary):
+8. For every construction the prior tilt gives R - A > 0 and the half-dose pairing gives
+   A - R > 0, scored as the count out of 8 with the predicted sign, for each mechanism.
+9. The construction-level means of R - A for the prior tilt and of A - R for the pairing both
+   have bootstrap intervals over the 8 constructions that exclude zero.
+10. Falsifier: any construction in which the sign flips (a prior tilt with A > R, or a half-dose
+    pairing with R > A).
+11. Descriptive: between-construction standard deviations of A, R, A/D and R/D for each
+    mechanism, beside the between-seed values of the published rows, and the deficits D of the
+    two mechanisms per construction, to show that the match in size holds.
+No estimator, control, label set, period, learner or dose level changes, and there is no
+selection among constructions. The published rows stay as printed.
+
+Date
+----
+21 September 2026, before any stream of the design was built or any model trained on one; the
+two parts of 11 October 2026 before any of their runs. Only the streams of construction seed
+20260921 had been built by then, to check the builder.
+
+Departures
+----------
+The first two run lists were not run as written; the final design replaced them before any run.
+Predictions 1 to 4 are therefore scored on 2 model seeds per construction, not 3.

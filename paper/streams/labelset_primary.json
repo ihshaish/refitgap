@@ -1,0 +1,61 @@
+{
+  "min_positives": 75,
+  "labels": {
+    "ATC Issue": {
+      "min_test_positives": 282,
+      "kept": true
+    },
+    "Aircraft Equipment Problem": {
+      "min_test_positives": 719,
+      "kept": true
+    },
+    "Airspace Violation": {
+      "min_test_positives": 55,
+      "kept": false
+    },
+    "Conflict": {
+      "min_test_positives": 278,
+      "kept": true
+    },
+    "Deviation - Altitude": {
+      "min_test_positives": 140,
+      "kept": true
+    },
+    "Deviation - Speed": {
+      "min_test_positives": 52,
+      "kept": false
+    },
+    "Deviation - Track / Heading": {
+      "min_test_positives": 109,
+      "kept": true
+    },
+    "Deviation / Discrepancy - Procedural": {
+      "min_test_positives": 1024,
+      "kept": true
+    },
+    "Flight Deck / Cabin / Aircraft Event": {
+      "min_test_positives": 142,
+      "kept": true
+    },
+    "Ground Event / Encounter": {
+      "min_test_positives": 122,
+      "kept": true
+    },
+    "Ground Excursion": {
+      "min_test_positives": 37,
+      "kept": false
+    },
+    "Ground Incursion": {
+      "min_test_positives": 73,
+      "kept": false
+    },
+    "Inflight Event / Encounter": {
+      "min_test_positives": 358,
+      "kept": true
+    },
+    "No Specific Anomaly Occurred": {
+      "min_test_positives": 8,
+      "kept": false
+    }
+  }
+}

@@ -1,0 +1,96 @@
+Study design
+============
+
+Aim
+---
+Benchmarks in continual learning construct their drift; in three decades of ASRS aviation
+safety reports the drift is measured. Three aims: (1) to locate the forgetting of a recurrent
+text classifier under temporal drift, in the embedding layer or the decision layers, and to test
+whether frozen corpus embeddings stabilise it; (2) to predict forgetting per period from
+unlabelled statistics of the token distribution, computed from past data only; (3) to test
+whether a replay buffer chosen to cover decaying vocabulary beats uniform reservoir replay at the
+same memory budget.
+
+Design
+------
+Streams. ASRS yearly exports. A corpus check comes first: record counts, casing, label priors,
+year-by-year divergence of token distributions, breaks. Near-duplicates are removed (MinHash and
+Jaccard over token shingles) before the split. Main stream 2010 to 2021; a second stream from
+the earlier years (first set as 1988 to 2008, then 1999 to 2008 after the corpus check; 1988 to
+1998 for text only), never pooled with the first. 2009 is left out of both and serves as a
+positive control: the known break must show in the drift measures. Each stream has 8 contiguous
+periods of equal record count; a division into 6, and boundaries shifted by half a period, are
+sensitivity checks.
+Task. Multi-label classification over the 14 top-level Anomaly categories, macro-F1 with
+macro-AUPRC beside it. A label enters only if every period's test set has at least 75 positives.
+Splits. A held-out test set per period, of fixed size (for example 2000 records), drawn once
+under one global data seed, never trained on and identical for every condition and seed. The
+training pool per period is cut to one size. Tokenisation uses no future period and no test set.
+Learner. BiGRU, sequential training. Six embedding conditions: frozen corpus embeddings
+(Avi2Vec), frozen GloVe 200d, tuned from each of these, random and trainable, random and frozen.
+A model state is saved after each period.
+Inherited thresholds. One threshold per label is fitted once on the first-period validation split
+and kept for the whole stream. Recalibrating the thresholds alone is the lowest of three
+repairs, before refitting the head and restoring the embedding.
+Replay study. Buffers by vocabulary decay, by the same coverage with static weights, and
+reservoir, at 0.5%, 1%, 2% and 5% of the stream; other selection baselines and EWC; a small
+DistilBERT tier; one public chronological text task (HuffPost).
+
+Analysis
+--------
+The full matrix of macro-F1 on period j's test set after training through period i, for every
+run; final accuracy, backward transfer, and forward transfer relative to a per-period model
+trained from scratch. Ten seeds for every contrast that carries a p-value; five-seed cells are
+descriptive. Main inference: a mixed-effects model over per-period forgetting (condition fixed;
+seed and period random). Paired permutation tests on ten-seed contrasts are a check, with Holm
+within each contrast family and paired mean differences with intervals. For question 2: a
+mixed-effects regression of forgetting on the drift measure (effective n = 8, said plainly),
+with the period that spans COVID left out in turn. Method settings are tuned only on a
+validation slice of the first two periods and then kept.
+
+Predictions
+-----------
+1. Backward transfer degrades in the order frozen corpus embeddings, frozen GloVe, tuned, random
+   and trainable (least forgetting first), with the frozen corpus embeddings' final accuracy
+   statistically indistinguishable.
+2. Freezing any well-covering embedding reduces forgetting; the corpus embeddings do so at
+   less cost in plasticity than the generic one. On stability at equal performance the order is
+   frozen domain, frozen GloVe, frozen random.
+3. With trainable embeddings, refitting only the head on the final features recovers a minority
+   of the lost per-period accuracy, and restoring the earlier embedding a majority. This runs
+   against the usual finding; either outcome is informative.
+4. Forgetting per period correlates positively, across periods and seeds, with the divergence
+   between that period's token distribution and later periods', and with the share of its
+   token mass on tokens that later decay.
+5. At equal buffer size, replay by vocabulary decay is no worse than reservoir replay in
+   backward transfer and accuracy, the advantage widening as the buffer shrinks and vanishing
+   at generous sizes.
+6. Records the sequential learner forgets are richer in decayed vocabulary than records it
+   retains (odds ratio above 1).
+7. Under frozen corpus embeddings, the advantage of prediction 5 shrinks but survives at
+   the smallest buffer.
+Fallback: if forgetting is mild we escalate (16 shorter periods, a smaller training budget per
+period, or the hardest stable task); if it still stays within noise, the paper reports a
+negative result on when forgetting bites, decided by the end of September.
+
+Date
+----
+2 Aug 2026, before any neural run, with the binding changes of that day (inference with ten
+seeds, tuning protocol, thresholds fitted once, the 75-positives rule, the frozen random
+condition, near-duplicate removal).
+
+Departures
+----------
+3 Aug 2026. Test sets are re-encoded with the current vocabulary before every evaluation; every
+    run was repeated and no earlier row is analysed.
+3 Aug 2026. The first runs showed no forgetting for replay to repair; the replay study was
+    dropped, as the plan specified for that case.
+8 Aug 2026. Split-half estimator: thresholds of the attainable level are fitted on one half of a
+    period's test records and scored on the other, not on the labels they are scored against
+    (fitting in-sample is optimistic by about 0.011 macro-F1). Conditions share seeds and test
+    records and are averaged within seed first, giving ten blocks.
+9 Aug 2026. HuffPost's five categories are fixed by schema stability, not by the 75-positives
+    rule; three of them fall below it.
+20 Sep 2026. The inherited thresholds are those the sequential run deployed, fitted from the
+    first-period model's scores on the first-period validation split. Every printed result was
+    regenerated on them; thresholds from the final model's scores are a sensitivity check.

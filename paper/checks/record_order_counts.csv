@@ -1,0 +1,17 @@
+environment,env_stream,other_stream,period_j,period,n_test,retained,stored_clean_mask_count,count_match,retained_cap_control_pool,retained_cap_intervention_pool,all_test_cap_own_pool,retained_unique,sha256_retained_ids,own_scorer,crossed_scorer,Y_checks_pass_all_arms_seeds
+control,asrsprior00,asrsprior100,0,1,1818,1505,1505,True,0,0,0,True,34550f9409e43dc9690f61cc8ce5f29206f9af9152f529f6448f66c84d2bd1ab,asrsprior00-trained P_7_0,asrsprior100-trained Px_7_0,True
+control,asrsprior00,asrsprior100,1,2,1819,1499,1499,True,0,0,0,True,1a0553e156d841b4bd762545eaf8de06e12a9bc01edf22c02a8ed4ccd97f2d97,asrsprior00-trained P_7_1,asrsprior100-trained Px_7_1,True
+control,asrsprior00,asrsprior100,2,3,1811,1520,1520,True,0,0,0,True,91f13e52c6606aa6bcdba3c20e2d129da924f56f2e2f369867bcc00f799f851e,asrsprior00-trained P_7_2,asrsprior100-trained Px_7_2,True
+control,asrsprior00,asrsprior100,3,4,1835,1516,1516,True,0,0,0,True,2cd6ac2abba7c0a28c71347d35ab139e1b28d7274d68c6a49921d6944d8825a8,asrsprior00-trained P_7_3,asrsprior100-trained Px_7_3,True
+control,asrsprior00,asrsprior100,4,5,1834,1538,1538,True,0,0,0,True,ad7823915a68ca28d2c078a49566c6f6c3b9d030a3185189bef6c3beadba2b5d,asrsprior00-trained P_7_4,asrsprior100-trained Px_7_4,True
+control,asrsprior00,asrsprior100,5,6,1828,1502,1502,True,0,0,0,True,e0b2d04d7477ca497deef7d569de0586ec40e2c3a9832f4689541701f7d173a0,asrsprior00-trained P_7_5,asrsprior100-trained Px_7_5,True
+control,asrsprior00,asrsprior100,6,7,1839,1504,1504,True,0,0,0,True,54b7590d9c87ffa1ef5bac26d1784613b122b8c9fe9ada3beed59c1edb8f844f,asrsprior00-trained P_7_6,asrsprior100-trained Px_7_6,True
+control,asrsprior00,asrsprior100,7,8,1839,1523,1523,True,0,0,0,True,e627f0dee009494e61f5a16e4efd23a646fa96d10919ffda6dbc16cc4d082fe7,asrsprior00-trained P_7_7,asrsprior100-trained Px_7_7,True
+intervention,asrsprior100,asrsprior00,0,1,1818,1510,1510,True,0,0,0,True,c5d4751bed68f19aa65f21b528bdbad6c34d2e1038b29e066f1ac312417b055f,asrsprior100-trained P_7_0,asrsprior00-trained Px_7_0,True
+intervention,asrsprior100,asrsprior00,1,2,1819,1509,1509,True,0,0,0,True,ac3639310b427348bf0a0c0c119f588a3de3c34a423f6cd4470f46b6fd821005,asrsprior100-trained P_7_1,asrsprior00-trained Px_7_1,True
+intervention,asrsprior100,asrsprior00,2,3,1811,1499,1499,True,0,0,0,True,1fa6eb72b77457962df150add478084b594b5f57531563bafca38e4c470b6b8e,asrsprior100-trained P_7_2,asrsprior00-trained Px_7_2,True
+intervention,asrsprior100,asrsprior00,3,4,1835,1534,1534,True,0,0,0,True,4f929078a96c0478032068c04e9543771e4268d0868d9be34bc4b94f16c7c04e,asrsprior100-trained P_7_3,asrsprior00-trained Px_7_3,True
+intervention,asrsprior100,asrsprior00,4,5,1834,1506,1506,True,0,0,0,True,4098df6b24cbbeb0d5b4a07a5713ec57accea30a5d0478c5f7e56f6b62c180ae,asrsprior100-trained P_7_4,asrsprior00-trained Px_7_4,True
+intervention,asrsprior100,asrsprior00,5,6,1828,1505,1505,True,0,0,0,True,1090de68d3a7ded9a7e2859a5a88cdae5357cb40a3820a9109f74b21065273e6,asrsprior100-trained P_7_5,asrsprior00-trained Px_7_5,True
+intervention,asrsprior100,asrsprior00,6,7,1839,1501,1501,True,0,0,0,True,272040b8ad1de958122ca0438107ec868083cc544d7701df0a091f46491eaedd,asrsprior100-trained P_7_6,asrsprior00-trained Px_7_6,True
+intervention,asrsprior100,asrsprior00,7,8,1839,1503,1503,True,0,0,0,True,c338574005270c807b73c21d397ea6bfc53e0d2fe8a4490fa4e4d0d7a3380971,asrsprior100-trained P_7_7,asrsprior00-trained Px_7_7,True

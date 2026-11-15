@@ -1,0 +1,66 @@
+Analysis plan: the decomposition B = A + Delta R on English MultiEURLEX
+==================================================================
+
+Aim
+---
+This plan tests whether the decomposition is informative on an independent multi-label
+chronological stream. The four
+benchmark streams are single-label or weakly multi-label, so this is the first test in the
+paper's own setting outside ASRS. We do not ask whether the ASRS composition recurs.
+
+Design
+------
+Stream: English MultiEURLEX, EUROVOC level 1, 1988 to 2014, built as the paper builds its
+streams: time order by CELEX year and sequence number, near-duplicates removed, 8 equal-count
+periods, a 20% test split per period, labels admitted with at least 75 test positives in every
+period. Expected: 12 labels and about 7100 records per period. Level-2 labels (127) are not
+used, so no label level is chosen after results.
+Learner: BiGRU on frozen GloVe embeddings, sequential training, 3 epochs per period, first 256
+tokens, settings unchanged; thresholds fitted once on the 10% validation split of the first
+period. Seeds 0 to 9. The truncation of long legal documents is a stated limit of the learner
+and is not tuned.
+Paired replay: the same ten seeds with a 5% replay buffer, under bigru-paired-refit.txt applied
+without change (same pairing rule on the shared first-period model, same quantities, same 0.005
+margin).
+DistilBERT is run on this stream (6 seeds, as on ASRS) only if the BiGRU deficit B on periods 2
+to 7 is positive with an interval excluding zero; otherwise it is not run and the paper says
+why.
+
+Analysis
+--------
+Macro-F1 at the inherited thresholds theta1; attainable levels by exact split-half selection over
+200 partitions shared between the two models. Periods 2 to 7 are primary and the conventional
+range is reported. Percentile bootstrap over seeds, 20000 resamples.
+1. B, A and Delta R on periods 2 to 7, means over seeds with percentile intervals.
+2. Delta R - A: mean over seeds, its interval, the count of positive seeds and the exact two-sided
+   sign-flip p (minimum 2/1024 at 10 seeds).
+3. The difference in Delta R between this stream and the ASRS primary stream, with the seeds of the
+   two streams resampled independently.
+Secondary, descriptive: how much of the cross-fitted improvement a refit from 500 or 200
+labelled records captures; where Delta R sits per label relative to the movement of that label's
+prevalence, marked as post hoc.
+
+Predictions
+-----------
+No direction is predicted for the composition: earlier results disagree (ASRS and DistilBERT
+have mostly mismatch, HuffPost mostly an attainable gap, three benchmark streams no deficit).
+1. B > 0 and Delta R - A > 0, both resolved: the ASRS composition recurs on an independent
+   multi-label corpus.
+2. B > 0 resolved and Delta R - A < 0 resolved: the decomposition separates two kinds of backward
+   decline across corpora, which conventional backward transfer does not tell apart.
+3. B > 0 resolved and Delta R - A unresolved: a deficit whose composition is not determined at ten
+   seeds, reported with both parts and their intervals.
+4. B <= 0 or unresolved: the final model does not lose historical performance here; the
+   decomposition is reported, no transformer is run, and the stream joins the benchmark table as
+   one without a deficit to decompose.
+All runs are reported, with no selection among seeds and no change to the stream once built.
+
+Date
+----
+22 October 2026, after a feasibility check that used only the labels, dates and text statistics
+of the corpus, and before any training on this stream. No model had seen it.
+
+Departures
+----------
+The built stream has 5671 records per period, not the expected 7100, because near-duplicate
+removal dropped 11427 of 56800 acts. The label set and every analysis are unchanged.

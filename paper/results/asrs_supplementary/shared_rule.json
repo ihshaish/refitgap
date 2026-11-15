@@ -1,0 +1,22 @@
+{
+ "budget": "per-period rules: one fitting half (about 1000 records) each; shared rules: the six pooled halves; evaluation on the other halves, both directions",
+ "U_inherited": 0.692186955594431,
+ "U_shared_rule_pooled_objective": 0.7184891867073684,
+ "U_shared_rule_mean_of_periods_objective": 0.7184760115918554,
+ "V_per_period": 0.7177817318496809,
+ "gain_shared_pooled_over_inherited": 0.02630223111293729,
+ "ci": [
+  0.021568326197181745,
+  0.030837003342008618
+ ],
+ "gain_shared_mean_over_inherited": 0.026289055997424295,
+ "ci_mean": [
+  0.021563791068319762,
+  0.03079541422497035
+ ],
+ "gap_per_period_over_shared_pooled": -0.0007074548576875506,
+ "ci_gap": [
+  -0.0011925406538276133,
+  -0.00023359842887903353
+ ]
+}

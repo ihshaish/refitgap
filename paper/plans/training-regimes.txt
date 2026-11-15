@@ -1,0 +1,75 @@
+Analysis plan: training regimes
+===============================
+
+Aim
+---
+This plan tests whether the composition of backward degradation under sequential training, its
+split into an attainable gap and a change in mismatch, changes when the input embeddings adapt
+more strongly, when each period receives more optimisation, or both. The first factor is
+plasticity of the input embeddings only (the GRU and the head train at every level); the second
+is optimisation per period under this learner, not a general statement about under-training.
+
+Design
+------
+ASRS primary stream, BiGRU with GloVe embeddings, sequential training. Two factors, with levels
+taken from earlier work only:
+  lambda, the multiplier on the embedding learning rate: 0, 0.1, 0.3, 1.0;
+  E, epochs per period: 3 (the setting of every primary result) and 10.
+Primary cells: the corners lambda in {0, 1.0} x E in {3, 10}, seeds 0 to 9, 40 runs.
+Secondary cells (dose curve, descriptive): lambda in {0.1, 0.3} x E in {3, 10}, seeds 0 to 2, 12
+runs. All 52 runs are new and seeded, so the same ten seeds appear in every primary cell. The 12
+runs of the earlier 3-seed sweep are not reused; they are prior information only.
+
+Measures
+--------
+From stored scores, with exact F1 optimisation over all cutpoints, split-half cross-fitted over
+200 partitions, on historical periods j = 1..N-2 (the primary averaging range). Per cell and
+seed:
+  BWT_att    attainable backward transfer: the mean over periods of the final model's attainable
+             level minus that of the period's own model. Primary outcome.
+  BWT_op     the mismatch part of backward transfer: the final model's macro-F1 at inherited
+             thresholds minus its attainable level, minus the same for the period's own model.
+  BWT_total  macro-F1 backward transfer at inherited thresholds, = BWT_att + BWT_op.
+Absolute components are primary. No conventional-range average and no recovery ratio is used.
+
+Tests
+-----
+Central: the interaction
+  Delta_int = [BWT_att(lambda=1, E=10) - BWT_att(lambda=0, E=10)]
+              - [BWT_att(lambda=1, E=3) - BWT_att(lambda=0, E=3)],
+on seed-paired differences, with a 95% percentile interval from a paired bootstrap over seeds
+(20000 draws).
+Secondary, reported and deciding nothing:
+1. The effect of lambda on BWT_att at E = 3 and at E = 10 (seed-paired corner contrasts, bootstrap
+   intervals).
+2. The effect of E on BWT_att at lambda = 0 and at lambda = 1.
+3. Within each E, the monotonic trend of BWT_att over the four lambda levels: Spearman rho with an
+   exact permutation test blocked within seed (Pearson recorded).
+4. The same contrasts for BWT_op and BWT_total.
+
+Expectations
+------------
+1. BWT_att becomes more negative with lambda and with E.
+2. BWT_op moves the opposite way, and BWT_total is comparatively flat at E = 3.
+3. No expectation for the sign of Delta_int.
+Precision: the earlier sweep's between-seed standard deviation of the attainable component is
+about 0.003 to 0.004. With 10 paired seeds a corner contrast has a standard error of about 0.0013
+to 0.0018, so effects of the size already seen (about 0.007 between lambda = 0 and lambda = 1)
+would have an interval excluding zero. Smaller effects are reported with their intervals and not
+turned into null statements.
+Commitments: all cells are reported, with no selection and no levels added or removed afterwards;
+the central contrast does not change after any cell is seen; a failed run is rerun with the same
+seed, and a cell missing after two attempts is reported missing, with no seed substitution. The
+result enters the paper as one boundary subsection with one figure and a full table in the
+appendix, never as a test of representation forgetting in general. Whatever the outcome, the
+paper's central statement stands: in one regime the deficit is mostly mismatch, and an attainable
+loss in another regime shows why the decomposition is needed.
+
+Date
+----
+29 August 2026, before any run; the analysis script was written at the same time, before the
+first run.
+
+Departures
+----------
+None.

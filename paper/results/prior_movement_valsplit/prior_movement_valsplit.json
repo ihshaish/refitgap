@@ -1,0 +1,28 @@
+{
+ "fit_set": "final model's period-1 VALIDATION split (831 records), exact fitter; prior weights per label = period-j prior odds",
+ "levels": {
+  "frozen_dep": 0.6925037932946799,
+  "refit_old": 0.7066320708819908,
+  "prior_only": 0.7120217810465085,
+  "refit_V": 0.717839417108412
+ },
+ "total_gain": 0.02533562381373211,
+ "share_same_scorer_pct": 55.764474919513106,
+ "ci_same_scorer": [
+  38.839150234472626,
+  67.37171341051284
+ ],
+ "share_prior_pct": 21.273248308954045,
+ "ci_prior": [
+  13.152734101829767,
+  33.78890630680624
+ ],
+ "share_remainder_pct": 22.962276771532846,
+ "ci_remainder": [
+  15.710947323345861,
+  31.804690597230017
+ ],
+ "n_runs_prior_gain_positive": 18,
+ "n_runs_old_gain_positive": 18,
+ "R_N_valsplit_same_scorer": 0.011207346226421278
+}
