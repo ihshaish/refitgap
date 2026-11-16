@@ -31,3 +31,4 @@ distilbert-paired-refit.txt       9 Nov 2026   DistilBERT on ASRS and MultiEURLE
 forward-comparison.txt            9 Nov 2026   stale models scored forward, by lag
 distilbert-matched-updates.txt    10 Nov 2026  new ASRS pairs; replay vs extra updates on current data
 distilbert-repair.txt             13 Nov 2026  full-model repair of the final DistilBERT
+pubmed-paired-refit.txt           16 Nov 2026  four arms on a PubMed stream, fixed before its runs

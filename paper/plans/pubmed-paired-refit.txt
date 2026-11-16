@@ -1,0 +1,159 @@
+Analysis plan: four arms on a PubMed stream after refit (DistilBERT, paired)
+============================================================================
+Fixed by Hisham: 2026-11-16
+Fixed before the development stage and before any model was scored on the stream. The LwF setting
+chosen in development is recorded in a separate dated note (LWF_SELECTION.txt) before any
+confirmatory run. The run manifest records the hashes of code, data and plan.
+
+Aim
+---
+To measure on a third stream how much of each method's historical lead remains once both models
+refit one threshold per label, and whether the refit moves LwF's position relative to replay. No
+prediction about direction or size. Completed results are reported whatever they show. No stream,
+period, label or initialisation is added in response to the results.
+
+Stream
+------
+NLM PubMed 2026 baseline with MeSH 2026; publication years 1995 to 2010; manually indexed MEDLINE
+records; journal articles in English with an abstract of at least 50 words. Ordered by publication
+month: the PubDate year with the PubDate month, or else the Entrez month when its year equals the
+PubDate year, or else June; within a month by ascending PMID. A sample of every fifth
+baseline file at a draw rate of 0.0609: 76080 records in eight periods of about 9510. Each period
+has 7607 to 7609 records in its training pool and 1901 to 1902 test records. The 760 validation
+records of the first period are set aside from its training pool. No validation or test record
+enters training, replay or the control. Periods are cut by record count, so a boundary month can
+fall in two adjacent periods.
+Labels: the 13 top-level MeSH categories (A C D E F G H I J L M N Z) that meet the paper's support
+criterion in every period; 4.86 labels per record. The two rarest labels have 58 and 60 positives
+in the first-period validation split; this is reported, and the label set and threshold grid stay
+as they are. Text: title and abstract, first 256 subword tokens; 69% of records are truncated.
+Fixed by hash: the source manifest, the MeSH mapping and the stream file, which holds the record
+order (ties included), the period boundaries and the split of every record
+(sha256 657dacdce5bdf795b8cfa67452fb2c98a6960cacda1bbcfdf7fc8f3ba6d5e2d3).
+The task is the classification of historically dated records under the labels of one 2026
+snapshot. Feasibility used data checks and a timing of GPU throughput; no model had been scored on
+the stream when this plan was fixed.
+
+Design
+------
+Learner and recipe as in distilbert-paired-refit.txt: distilbert-base-uncased, model and tokenizer
+at one pinned revision; AdamW at 2e-5, linear warm-up over 10% of each period's updates, batch 32,
+3 epochs per period. theta1 is fitted once on the first-period validation split on the paper's
+19-point grid and then inherited.
+Arms:
+  sequential training;
+  replay: a reservoir of 3043 records (5% of the training pool), replayed in full, not tuned;
+  extra updates on current data: as many added records as replay takes from its reservoir, drawn
+    from the current period's training records. Optimiser updates per period match replay's;
+    both step counts and the numbers of current and earlier records processed are recorded. The
+    control matches the number of updates, not total compute or the path of optimisation;
+  LwF: binary distillation from the previous period's model on the current period's training
+    records, T = 2. Loss: BCE + alpha T^2 BCEWithLogits(z/T, sigmoid(z_old/T)), with the BiGRU
+    implementation's normalisation, checked term by term.
+The first period is trained once per initialisation. All four arms continue from that one model
+and its theta1; both hashes and the first-period scores are verified in every block.
+LwF's alpha is chosen from 0.02, 0.1, 0.5, 1, 2 on development initialisations 300 and 301, which
+train with 5% of each period's training pool held out. Objective: macro-F1 at the inherited
+thresholds on the held-out records; for each checkpoint the mean over the periods seen, then the
+mean over checkpoints, then over the two initialisations. Ties (equal at 3 decimals) go to the
+weaker setting. A chosen endpoint is reported; the grid is not extended. The selection reads the
+held-out development files only and cannot open a confirmatory score. The other three arms run on
+these two initialisations as a check of the pipeline at full size. The engineering checks under
+Stops come before tuning.
+Confirmatory runs: initialisations 0 to 7 for all four arms, 32 trajectories in eight blocks. No
+selection among initialisations, no interim contrast, no extension. The selection note, with the
+chosen alpha and the objective values, is fixed and hashed before the first confirmatory run.
+Confirmatory outcomes are not computed or read until the collection is closed, by completion or by
+a stop named below.
+
+Analysis
+--------
+The unit is the initialisation. Periods and partitions are not further independent runs.
+For the final model of arm m, per block and period 2 to 7:
+  U_m: macro-F1 at theta1 on the whole period (the paper's convention);
+  U_sf,m: macro-F1 at theta1 on the scoring halves used for V_m, averaged as V_m is;
+  V_m: cross-fitted macro-F1 after refit. 200 seeded partitions shared by all arms of a block;
+    thresholds fitted on one half and scored on the other, roles swapped, averaged over halves
+    and partitions; the paper's conventions for the threshold grid, ties and labels without
+    positives.
+For arm a against arm b: G_U = U_a - U_b, G_V = V_a - V_b, and the change G_V - G_U. Periods are
+averaged within a block, then blocks. The change is given with its 95% paired t interval and the
+count of blocks by sign. Two leads falling in different classes do not show that a lead changed.
+Comparisons: replay minus sequential training; LwF minus sequential training; replay minus extra
+updates on current data. Each comparison is its own family {G_U, G_V}, analysed as in the
+DistilBERT paired refit at the 0.005 margin. Equivalent: Holm-adjusted TOST within +/-0.005; this
+class takes precedence. Otherwise non-zero by the Holm-adjusted paired t test: material if the
+mean is at or beyond the margin, small non-zero if inside it, and in either case only if the exact
+two-sided sign-flip test (unadjusted) also rejects zero. The sign-flip test does not alter an
+equivalent outcome. All other leads are unresolved. No statement across the three comparisons
+rests on these separate families.
+One secondary contrast, on the common scoring halves, per block:
+  D = (V_LwF - V_replay) - (U_sf,LwF - U_sf,replay),
+the difference between the two changes against sequential training, whose terms cancel. Positive:
+the refit moves the lead towards LwF relative to replay. Mean, two-sided 95% paired t interval,
+number of blocks. An interval that spans zero is unresolved; it does not show equivalence.
+Descriptive outputs, each on periods 2 to 7 unless named, none combined with another:
+  periods 1 to 7, and period 8 with each arm's level;
+  the inherited lead on the same folds for every comparison, beside the whole-period convention;
+    if the two read differently, both are reported;
+  a common cut of 0.5 in place of the inherited thresholds;
+  the refit with a seeded subsample of 500 labelled records per fitting half, the same for all
+    arms, scored on the unchanged other half;
+  support and contribution of every label in the macro-average;
+  each arm's level on a period at first learning and at the end, at theta1 on the same records,
+    so that a lead present at first learning is told apart from a later change in the lead;
+  the decomposition of backward transfer for the sequential arm, with the paper's reference and
+    final checkpoints.
+Scores per label are kept for every checkpoint on every period, with record identifiers, label
+order, thresholds, arm, initialisation, period, split and the partition specification. Any
+comparison with the dating analysis of Appendix F.4 uses one scoring convention throughout.
+
+Stops and missing runs
+----------------------
+Before tuning, on the rebuilt bundle on Colab: the unit checks pass on the GPU; the compute cap is
+shown to stop launches at a low test limit; one engineering run is interrupted on purpose and
+recovered from the copied first-period model. In that exercise the restored model's hash, theta1,
+the first-period scores and the schedule of updates (steps and record order) must agree exactly
+with an uninterrupted reference run of the same development job. Later scores are compared and the
+difference recorded; they are not
+required to be identical, because training on this GPU is not bit-reproducible (identity of a
+recovered run is shown on CPU). A failed check pauses the stage until resolved.
+At most two technical restarts per trajectory (three starts), where the earlier DistilBERT plan
+allowed one. Causes are failures of infrastructure (a lost session, memory), never a result or a
+validation score. A restarted arm begins again from the same verified first-period model with the
+same initialisation, bundle and data; its partial outputs are discarded; cause and cost are logged.
+A job that fails on a live session is restarted by hand with its cause and counts as a restart.
+No replacement initialisations.
+Compute is capped at 80 Colab units for development, confirmation and any lost or repeated
+sessions. At the cap the collection stops and is reported as incomplete; no top-up.
+Each comparison uses its complete pairs, and D its complete LwF and replay pairs; the
+initialisations that contribute are listed. A comparison with fewer than eight pairs is reported
+with its estimates and intervals as descriptive, without outcome classes. A missing arm outside a
+comparison does not affect it.
+Before confirmation: the checks above pass; the analysis reproduces the three stored DistilBERT
+comparisons (six pairs each, with their published classes); splits, labels and scores are aligned;
+replay and the control match in updates on the
+development runs; the launcher matches the fixed plan, the selection note, the stream and the code
+bundle to their hashes. Step counts of each finished replay and control pair are verified before
+it enters the analysis. No run is replaced or reconfigured after a confirmatory outcome is seen.
+
+Limits stated in the article
+----------------------------
+The stream was added after the ASRS and MultiEURLEX results were known, with this plan fixed before
+any model was scored on it. Labels come from one 2026 snapshot, not from the labels available at
+each date. Thirteen broad categories, three with prevalence above 0.6; 69% of texts truncated. One
+learner; LwF tuned in development, replay not tuned. The refit uses labels from the period
+evaluated, also at 500 records. The shared first-period model differs from the earlier DistilBERT
+protocol. The comparison is of recorded scores and decision rules; it identifies no mechanism of
+forgetting.
+
+Cost and reporting
+------------------
+Throughput was measured on one L4 session. Development with its checks about 19 units,
+confirmation about 44; about 74 with a 15% reserve. Wall time about 3.5 hours and 8 hours on three
+sessions. The cap of 80
+governs.
+One manuscript pass after the block: PubMed in the streams table and Figure 2; estimates in Table
+C.1 with the BiGRU LwF result from stored scores; a short paragraph in Section 5.1; the limits.
+The fixed plan is archived at its public commit, and the dated selection note before
+confirmation. The descriptive outputs go with the analysis files or the supplement.
