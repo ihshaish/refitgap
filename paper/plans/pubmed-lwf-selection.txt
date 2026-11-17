@@ -1,0 +1,19 @@
+LwF selection note, PubMed block
+Written by pm_select_alpha.py (sha16 258e229bc60da963) from the development carve-out files only (seeds 300 and 301); no confirmatory score exists or was opened.
+Rule: per run: for each checkpoint i = 0..7, mean over j = 0..i of macro-F1(Pc_i_j >= theta_1 against Yc_j), labels with no positive in Yc_j left out of the cell; mean over i; per alpha mean over seeds 300 and 301; highest wins, ties at 3 decimals to the smaller alpha; the grid is not extended and a chosen endpoint is reported.
+Grid: 0.02, 0.1, 0.5, 1, 2
+Objective per setting (macro-F1 at the inherited thresholds on the 5 % held out from each period's training pool; mean over the periods seen, then over checkpoints; then over the two seeds):
+  setting              seed 300   seed 301       mean
+  naive                0.745360   0.742209   0.743785   (diagnostic, not a candidate)
+  replay               0.748046   0.743633   0.745839   (diagnostic, not a candidate)
+  replaycur            0.748622   0.743611   0.746117   (diagnostic, not a candidate)
+  lwf alpha=0.02       0.745059   0.742263   0.743661
+  lwf alpha=0.1        0.745466   0.742742   0.744104
+  lwf alpha=0.5        0.743627   0.741538   0.742583
+  lwf alpha=1          0.741107   0.738786   0.739947
+  lwf alpha=2          0.735414   0.733422   0.734418
+Ties at 3 decimals with the chosen alpha: 0.1 (smaller alpha taken)
+Endpoint chosen: yes, the smallest grid value (the grid is not extended)
+Files read (sha16): pubmed_distilbert_lwfa0.02_carve0.05c300_s300_carve.npz 8f38ac9dde89aaac; pubmed_distilbert_lwfa0.02_carve0.05c301_s301_carve.npz 59a8a532382a38ef; pubmed_distilbert_lwfa0.1_carve0.05c300_s300_carve.npz 9a89f0f83bc9697d; pubmed_distilbert_lwfa0.1_carve0.05c301_s301_carve.npz c40ff82392a5e884; pubmed_distilbert_lwfa0.5_carve0.05c300_s300_carve.npz 1dc786279818cb3e; pubmed_distilbert_lwfa0.5_carve0.05c301_s301_carve.npz 8f8bfde3c5a591b1; pubmed_distilbert_lwfa1_carve0.05c300_s300_carve.npz 609c82cf4644419f; pubmed_distilbert_lwfa1_carve0.05c301_s301_carve.npz 9269ce2029a1429d; pubmed_distilbert_lwfa2_carve0.05c300_s300_carve.npz 230420e78f74d421; pubmed_distilbert_lwfa2_carve0.05c301_s301_carve.npz 8a72de02b8eae5ce; pubmed_distilbert_naive_carve0.05c300_s300_carve.npz 732bc8ec923398b7; pubmed_distilbert_naive_carve0.05c301_s301_carve.npz 2674e65afdd4c7be; pubmed_distilbert_replay_carve0.05c300_s300_carve.npz 434de4860bdb22ad; pubmed_distilbert_replay_carve0.05c301_s301_carve.npz 4827ba2aa2aa64e1; pubmed_distilbert_replaycur_carve0.05c300_s300_carve.npz d7823d99850f310e; pubmed_distilbert_replaycur_carve0.05c301_s301_carve.npz 3c97f2c385bf0750
+alpha: 0.02
+Date: 2026-11-16
