@@ -1,0 +1,60 @@
+Common inherited thresholds: results
+====================================
+22 November 2026. Definition: DEFINITION.txt in this folder (designed after all results were
+known; descriptive). DistilBERT, final models, macro-F1 (0 to 1) over periods 2 to 7, whole test sets. Leads
+are the first-named arm minus the comparator. Brackets: paired t 95% intervals over 6 pairs; n+/n- counts pairs
+by sign; per-pair values in seed order 0 to 5. The refitted lead does not depend on theta1 and is not recomputed.
+Pairs whose two theta1 vectors are identical give (b) - (a) = (c) - (a) = 0 exactly; they count in neither n+ nor n-.
+MultiEURLEX labels are named by their EuroVoc codes as stored in the score files.
+
+ASRS: replay minus sequential training
+--------------------------------------
+  reproduction of published G_U: computed +0.0109 [+0.0089, +0.0129], published +0.0109 [+0.0089, +0.0129]: equal to 4 decimals
+  quantity                          mean    t95                n+/n-  per pair
+  (a) each arm at its own theta1    +0.0109 [+0.0089, +0.0129] 6+/0-   +0.0093 +0.0118 +0.0099 +0.0111 +0.0141 +0.0091
+  (b) both at first-named theta1    +0.0113 [+0.0091, +0.0136] 6+/0-   +0.0093 +0.0136 +0.0106 +0.0111 +0.0141 +0.0091
+  (c) both at comparator theta1     +0.0112 [+0.0089, +0.0135] 6+/0-   +0.0093 +0.0136 +0.0098 +0.0111 +0.0141 +0.0091
+  (b) - (a)                         +0.0004 [-0.0003, +0.0012] 2+/0-   +0.0000 +0.0018 +0.0007 +0.0000 +0.0000 +0.0000
+  (c) - (a)                         +0.0003 [-0.0005, +0.0011] 1+/1-   +0.0000 +0.0018 -0.0002 +0.0000 +0.0000 +0.0000
+  labels whose theta1 differs between the arms (first-named / comparator):
+    seed 0: none
+    seed 1: ATC Issue  0.5 / 0.3 [not one of the two ASRS labels]
+    seed 1: Conflict  0.35 / 0.4 [not one of the two ASRS labels]
+    seed 2: Deviation - Altitude  0.3 / 0.35 [not one of the two ASRS labels]
+    seed 3: none
+    seed 4: none
+    seed 5: none
+
+MultiEURLEX: replay minus sequential training
+---------------------------------------------
+  reproduction of published G_U: computed +0.0241 [+0.0219, +0.0263], published +0.0241 [+0.0219, +0.0263]: equal to 4 decimals
+  quantity                          mean    t95                n+/n-  per pair
+  (a) each arm at its own theta1    +0.0241 [+0.0219, +0.0263] 6+/0-   +0.0237 +0.0226 +0.0266 +0.0210 +0.0258 +0.0250
+  (b) both at first-named theta1    +0.0244 [+0.0222, +0.0266] 6+/0-   +0.0255 +0.0226 +0.0263 +0.0210 +0.0258 +0.0250
+  (c) both at comparator theta1     +0.0242 [+0.0220, +0.0264] 6+/0-   +0.0241 +0.0228 +0.0267 +0.0210 +0.0258 +0.0250
+  (b) - (a)                         +0.0003 [-0.0006, +0.0011] 2+/1-   +0.0018 +0.0000 -0.0003 +0.0000 +0.0000 +0.0000
+  (c) - (a)                         +0.0001 [-0.0000, +0.0003] 3+/0-   +0.0004 +0.0002 +0.0001 +0.0000 +0.0000 +0.0000
+  labels whose theta1 differs between the arms (first-named / comparator):
+    seed 0: 100148  0.2 / 0.25
+    seed 1: 100156  0.45 / 0.4
+    seed 2: 100157  0.45 / 0.35
+    seed 3: none
+    seed 4: none
+    seed 5: none
+
+MultiEURLEX: replay minus extra updates on current data
+-------------------------------------------------------
+  reproduction of published G_U: computed +0.0217 [+0.0179, +0.0255], published +0.0217 [+0.0179, +0.0255]: equal to 4 decimals
+  quantity                          mean    t95                n+/n-  per pair
+  (a) each arm at its own theta1    +0.0217 [+0.0179, +0.0255] 6+/0-   +0.0217 +0.0219 +0.0273 +0.0159 +0.0226 +0.0209
+  (b) both at first-named theta1    +0.0217 [+0.0179, +0.0255] 6+/0-   +0.0217 +0.0219 +0.0273 +0.0159 +0.0226 +0.0209
+  (c) both at comparator theta1     +0.0218 [+0.0179, +0.0256] 6+/0-   +0.0217 +0.0222 +0.0273 +0.0159 +0.0226 +0.0209
+  (b) - (a)                         -0.0000 [-0.0000, +0.0000] 0+/1-   +0.0000 -0.0001 +0.0000 +0.0000 +0.0000 +0.0000
+  (c) - (a)                         +0.0000 [-0.0001, +0.0001] 1+/0-   +0.0000 +0.0002 +0.0000 +0.0000 +0.0000 +0.0000
+  labels whose theta1 differs between the arms (first-named / comparator):
+    seed 0: none
+    seed 1: 100156  0.45 / 0.4
+    seed 2: none
+    seed 3: none
+    seed 4: none
+    seed 5: none

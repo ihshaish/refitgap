@@ -1,4 +1,5 @@
-"""Reproduce Figure 2: replay's lead in the five paired comparisons (supplement Table C.1).
+"""Reproduce the five ASRS and MultiEURLEX rows of Figure 2 (supplement Table C.1).
+The three PubMed rows: paper/scripts/paired_refit_pubmed.py and paper/results/pubmed_paired_refit/.
 
     python examples/figure2/reproduce_figure2.py [--from-levels] [--workers N] [--out FILE]
 
@@ -6,8 +7,8 @@ Inputs
   BiGRU, 10 pairs per stream (seeds 0-9, both arms trained under the same seed): the stored
     score files in paper/results/asrs_bigru_paired/ and paper/results/multieurlex_bigru/.
     Recomputed from the raw scores with refitgap.compare: U at the inherited thresholds on each
-    period's whole test set, V by split-half cross-fitting with 200 partitions. About 12 min of
-    CPU in all, 3 to 4 min on 4 workers (--workers).
+    period's whole test set, V by split-half cross-fitting with 200 partitions. A few minutes
+    of CPU in all, about one minute on 4 workers (--workers).
     --from-levels reads the stored per-pair levels (paper/results/paired_refit/) instead: seconds.
   DistilBERT, 6 pairs per comparison (seeds 0-5): stored per-pair, per-period levels in
     distilbert_levels.csv (U at each arm's own inherited thresholds, V cross-fitted as above).
@@ -40,7 +41,7 @@ HERE = Path(__file__).resolve().parent
 RESULTS = HERE.parents[1] / "paper" / "results"
 PERIODS = [1, 2, 3, 4, 5, 6]
 SPLITS, BOOT, BOOT_SEED = 200, 20000, 20260920
-TOL = 1e-10          # stated tolerance; the recomputation agrees to the last bit with numpy 1.26 / scipy 1.13
+TOL = 1e-10          # with numpy 1.26 and scipy 1.13 the recomputation agrees to the last bit
 BIGRU = {"bigru_asrs_sequential": ("asrs_bigru_paired", "primary", "paired_replay.json"),
          "bigru_multieurlex_sequential": ("multieurlex_bigru", "eurlex", "paired_replay_eurlex.json")}
 DISTILBERT = {"distilbert_asrs_sequential": ("asrs", "sequential"),
@@ -165,7 +166,7 @@ def main(argv=None):
         ]
         print(f"{exp['label']:38s} {cells[0]:>26s} {cells[1]:>26s} {cells[2]:>26s}   {source[name]}")
     ok = worst <= TOL
-    print(f"largest difference from expected.json: {worst:.1e} (tolerance {TOL:g}): {'match!' if ok else 'MISMATCH'}")
+    print(f"largest difference from expected.json: {worst:.1e} (tolerance {TOL:g}): {'match' if ok else 'MISMATCH'}")
     if args.out:
         Path(args.out).write_text(json.dumps(dict(tolerance=TOL, largest_difference=worst, source=source,
                                                   comparisons=got), indent=1))

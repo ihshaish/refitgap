@@ -2,7 +2,7 @@
 """Analyses on the stored ASRS score matrices (frozen embeddings C1 and C2, seeds 0-9, periods 2 to 7):
 python scripts/asrs_supplementary.py {recovery,budget,loo,origin,invariance,shared,twolevel}.
 Reads results/asrs_supplementary/scores/; each writes results/asrs_supplementary/<name>.json.
-Backs Appendix A ("Estimator on known cases", "Finite labelled budgets", "Resampling records as well")
+Backs Appendix A ("Estimator on known cases", "Finite labelled budgets", "Resampling of records")
 and the Appendix D sensitivity. Needs the score files written by store_asrs_scores.py (not shipped)."""
 import argparse, glob, json, re, time
 import numpy as np

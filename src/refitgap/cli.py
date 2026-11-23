@@ -85,7 +85,7 @@ def summary_lines(result):
     means = [r for r in result["decomposition"] if str(r["period"]).startswith("mean")]
     if means:
         out.append(f"decomposition against the per-period reference, rule '{result['settings']['rule']}', "
-                   f"U_{conv} (descriptive):")
+                   f"U_{conv}:")
         for r in means:
             out.append(f"  {r['method']} seed {r['seed']} {r['period']}: B {r['B']:+.4f} = A {r['A']:+.4f} "
                        f"+ dR {r['dR']:+.4f}")

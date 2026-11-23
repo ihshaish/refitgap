@@ -4,7 +4,7 @@ backward transfer per run (exact split-half), the corner interaction and main ef
 and within-epochs trends by blocked permutation; see plans/training-regimes.txt.
 Reads results/training_regime/primary_C4_naive_lam*_scores.npz; writes ladder_components.csv and ladder_outcome.json
 there.
-Backs Table E.2 and the training-regime rows of Figure 3. Needs 51 of the 52 score files (one is shipped)."""
+Backs Table E.2 and the training-regime rows of Figure 4. Needs 51 of the 52 score files (one is shipped)."""
 import glob
 import itertools
 import json

@@ -1,4 +1,4 @@
-include README.txt LICENSE CITATION.cff
+include README.md LICENSE CITATION.cff CHANGES.txt
 recursive-include src/refitgap *.py *.txt
 include tests/*.py
 prune paper

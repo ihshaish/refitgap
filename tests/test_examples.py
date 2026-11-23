@@ -1,4 +1,4 @@
-"""The two entry points and the Table 1 example, run as a referee or a colleague would (seconds).
+"""The two entry points, the quickstart and the Table 1 example, run as a referee or a colleague would (seconds).
 
 Figure 2: all five comparisons from stored levels against expected.json, plus one BiGRU pair
 per stream recomputed from the raw scores on one period (the full raw run is in
@@ -63,6 +63,13 @@ def test_your_models_example(capsys):
     assert mod.main([str(EXAMPLES / "your_models" / "data"), "--splits", "20"]) == 0
     out = capsys.readouterr().out
     assert "mine against baseline: 4 labels, periods [1, 2, 3], seeds [0, 1, 2, 3]" in out
+
+
+def test_quickstart(capsys):
+    _module(EXAMPLES / "quickstart.py")
+    out = capsys.readouterr().out
+    for cell in ("+0.2093", "[+0.1373, +0.2814]", "+0.0648", "-0.1445", "[-0.2118, -0.0772]"):
+        assert cell in out
 
 
 @pytest.fixture

@@ -1,0 +1,82 @@
+Cold install of refitgap 0.2.0
+==============================
+
+23 Nov 2026. The repository copied to a fresh directory, a new virtual environment, the
+built wheel installed (numpy and scipy from PyPI), and every command run from the copy's root
+with no PYTHONPATH, so refitgap comes from the wheel.
+
+Python 3.12.4, macOS 15.3 arm64. pip 26.3, numpy 2.5.5, scipy 1.18.1, refitgap 0.2.0.
+
+    python -m venv venv
+    venv/bin/python -m pip install refitgap-0.2.0-py3-none-any.whl
+    venv/bin/refitgap --version                    # refitgap 0.2.0
+
+Inputs behind each number
+-------------------------
+
+table1.py                 exact fractions built in refitgap.identification_example().
+reproduce_figure2.py      DistilBERT rows: stored per-pair, per-period levels
+                          (examples/figure2/distilbert_levels.csv); the 30 DistilBERT score
+                          files are not shipped. BiGRU rows: with --from-levels, stored
+                          per-pair levels (paper/results/paired_refit/); without it,
+                          recomputed from the raw score files shipped in
+                          paper/results/asrs_bigru_paired/ and paper/results/multieurlex_bigru/.
+quickstart.py             raw synthetic scores and labels shipped in examples/your_models/data/.
+refitgap example          the eight-record example built into the package.
+
+$ python examples/two_scorer/table1.py
+14 records, one label, carried rule 0.5
+scorer      AUROC     AP  F1 carried  F1 refitted
+reference    6/11   5/18         1/2          1/2
+final A      6/11   5/18        6/13          1/2
+final B      6/11   5/18        6/13         6/13
+
+against reference   deficit  attainable gap  change in mismatch
+final A                1/26               0                1/26
+final B                1/26            1/26                   0
+
+same AUROC and AP, same deficit, opposite components: as in the paper
+(exit 0)
+
+$ python examples/figure2/reproduce_figure2.py --from-levels
+replay against                                          inherited              both refitted                     change   input
+DistilBERT ASRS, sequential            +0.0109 [+0.0089, +0.0129] -0.0004 [-0.0030, +0.0022] -0.0113 [-0.0138, -0.0088]   stored per-pair levels
+DistilBERT MultiEURLEX, sequential     +0.0241 [+0.0219, +0.0263] +0.0223 [+0.0196, +0.0250] -0.0018 [-0.0037, +0.0001]   stored per-pair levels
+DistilBERT MultiEURLEX, extra updates  +0.0217 [+0.0179, +0.0255] +0.0198 [+0.0157, +0.0240] -0.0019 [-0.0027, -0.0011]   stored per-pair levels
+BiGRU ASRS, sequential                 +0.0086 [+0.0021, +0.0159] +0.0034 [+0.0019, +0.0049] -0.0052 [-0.0122, +0.0008]   stored per-pair levels
+BiGRU MultiEURLEX, sequential          +0.0305 [+0.0272, +0.0335] +0.0243 [+0.0220, +0.0271] -0.0062 [-0.0095, -0.0031]   stored per-pair levels
+largest difference from expected.json: 3.3e-16 (tolerance 1e-10): match
+(exit 0)
+
+$ python examples/figure2/reproduce_figure2.py --workers 4
+replay against                                          inherited              both refitted                     change   input
+DistilBERT ASRS, sequential            +0.0109 [+0.0089, +0.0129] -0.0004 [-0.0030, +0.0022] -0.0113 [-0.0138, -0.0088]   stored per-pair levels
+DistilBERT MultiEURLEX, sequential     +0.0241 [+0.0219, +0.0263] +0.0223 [+0.0196, +0.0250] -0.0018 [-0.0037, +0.0001]   stored per-pair levels
+DistilBERT MultiEURLEX, extra updates  +0.0217 [+0.0179, +0.0255] +0.0198 [+0.0157, +0.0240] -0.0019 [-0.0027, -0.0011]   stored per-pair levels
+BiGRU ASRS, sequential                 +0.0086 [+0.0021, +0.0159] +0.0034 [+0.0019, +0.0049] -0.0052 [-0.0122, +0.0008]   raw scores
+BiGRU MultiEURLEX, sequential          +0.0305 [+0.0272, +0.0335] +0.0243 [+0.0220, +0.0271] -0.0062 [-0.0095, -0.0031]   raw scores
+largest difference from expected.json: 3.3e-16 (tolerance 1e-10): match
+(exit 0; 63 s wall, 219 s CPU)
+
+$ python examples/quickstart.py
+mine minus baseline, macro-F1, 4 seeds, 95% t intervals
+  at the carried rule  +0.2093  [+0.1373, +0.2814]
+  after both refits    +0.0648  [+0.0450, +0.0847]
+  change               -0.1445  [-0.2118, -0.0772]
+(exit 0)
+
+$ refitgap example
+tiny example: 2 periods x 4 records, 2 labels, seed 0, 1 partition, inherited thresholds 0.5
+levels (macro-F1):
+  final period 0: V_sep 0.7500  V_shared 0.7500  U_half 0.2500  U_full 0.2500  C 0.0000  M 0.5000  R_half 0.5000
+  final period 1: V_sep 1.0000  V_shared 0.9167  U_half 1.0000  U_full 1.0000  C 0.0833  M -0.0833  R_half 0.0000
+  final period mean: V_sep 0.8750  V_shared 0.8333  U_half 0.6250  U_full 0.6250  C 0.0417  M 0.2083  R_half 0.2500
+  reference period 0: V_sep 1.0000  U_half 1.0000  U_full 1.0000  R_half 0.0000
+  reference period 1: V_sep 1.0000  U_half 1.0000  U_full 1.0000  R_half 0.0000
+  reference period mean: V_sep 1.0000  U_half 1.0000  U_full 1.0000  R_half 0.0000
+decomposition B = A + dR against the per-period reference, U on the whole period:
+  period 0: B 0.7500  A 0.2500  dR 0.5000
+  period 1: B 0.0000  A 0.0000  dR 0.0000
+  period mean: B 0.3750  A 0.1250  dR 0.2500
+reference minus final (tiny example): after own-period refit the lead goes from +0.3750 to +0.1250; with one run no interval is computed.
+(exit 0)

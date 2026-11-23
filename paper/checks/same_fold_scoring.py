@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Same-fold inherited scoring for the frozen-embedding ASRS decomposition (supplement Table D.1,
-ASRS row; 20 observations = C1, C2 x seeds 0-9; period indices j = 1..6, i.e. periods 2 to 7).
+"""Same-fold inherited scoring for the frozen-embedding ASRS decomposition (supplement Table D.2;
+20 observations = C1, C2 x seeds 0-9; period indices j = 1..6, i.e. periods 2 to 7).
 Does scoring the inherited thresholds on the held-out halves, as the refit is scored, change
 the decomposition? No: the deficit and the change in mismatch move by less than 1e-5.
 

@@ -1,0 +1,580 @@
+{
+ "ASRS: replay minus sequential training": {
+  "arms": [
+   "replay",
+   "sequential training"
+  ],
+  "seeds": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "a_own": {
+   "mean": 0.010916110829288728,
+   "t95": [
+    0.008922216459901327,
+    0.012910005198676128
+   ],
+   "per_pair": [
+    0.00930195532807232,
+    0.01184978320807184,
+    0.00993482804454926,
+    0.0111158696406779,
+    0.014147174608035606,
+    0.00914705414632544
+   ],
+   "positive": 6,
+   "negative": 0,
+   "zero": 0,
+   "n": 6
+  },
+  "b_first_theta1": {
+   "mean": 0.011324388994525278,
+   "t95": [
+    0.00909225749910775,
+    0.013556520489942806
+   ],
+   "per_pair": [
+    0.00930195532807232,
+    0.013620593699105732,
+    0.010613686544934664,
+    0.0111158696406779,
+    0.014147174608035606,
+    0.00914705414632544
+   ],
+   "positive": 6,
+   "negative": 0,
+   "zero": 0,
+   "n": 6
+  },
+  "c_comparator_theta1": {
+   "mean": 0.011185854042398524,
+   "t95": [
+    0.008863056963846799,
+    0.01350865112095025
+   ],
+   "per_pair": [
+    0.00930195532807232,
+    0.013635862744389882,
+    0.009767207786889998,
+    0.0111158696406779,
+    0.014147174608035606,
+    0.00914705414632544
+   ],
+   "positive": 6,
+   "negative": 0,
+   "zero": 0,
+   "n": 6
+  },
+  "b_minus_a": {
+   "mean": 0.0004082781652365493,
+   "t95": [
+    -0.00034796707403828014,
+    0.0011645234045113788
+   ],
+   "per_pair": [
+    0.0,
+    0.0017708104910338918,
+    0.0006788585003854042,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "positive": 2,
+   "negative": 0,
+   "zero": 4,
+   "n": 6
+  },
+  "c_minus_a": {
+   "mean": 0.00026974321310979654,
+   "t95": [
+    -0.0005129990620301277,
+    0.0010524854882497207
+   ],
+   "per_pair": [
+    0.0,
+    0.0017860795363180415,
+    -0.00016762025765926225,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "positive": 1,
+   "negative": 1,
+   "zero": 4,
+   "n": 6
+  },
+  "differing_labels": [
+   {
+    "seed": 0,
+    "files": [
+     "primary_distilbert_replay_s0_scores.npz",
+     "primary_distilbert_naive_s0_scores.npz"
+    ],
+    "n_differ": 0,
+    "labels": []
+   },
+   {
+    "seed": 1,
+    "files": [
+     "primary_distilbert_replay_s1_scores.npz",
+     "primary_distilbert_naive_s1_scores.npz"
+    ],
+    "n_differ": 2,
+    "labels": [
+     {
+      "label": "ATC Issue",
+      "theta1_first": 0.5,
+      "theta1_comparator": 0.30000001192092896,
+      "asrs_top_two": false
+     },
+     {
+      "label": "Conflict",
+      "theta1_first": 0.3499999940395355,
+      "theta1_comparator": 0.4000000059604645,
+      "asrs_top_two": false
+     }
+    ]
+   },
+   {
+    "seed": 2,
+    "files": [
+     "primary_distilbert_replay_s2_scores.npz",
+     "primary_distilbert_naive_s2_scores.npz"
+    ],
+    "n_differ": 1,
+    "labels": [
+     {
+      "label": "Deviation - Altitude",
+      "theta1_first": 0.30000001192092896,
+      "theta1_comparator": 0.3499999940395355,
+      "asrs_top_two": false
+     }
+    ]
+   },
+   {
+    "seed": 3,
+    "files": [
+     "primary_distilbert_replay_s3_scores.npz",
+     "primary_distilbert_naive_s3_scores.npz"
+    ],
+    "n_differ": 0,
+    "labels": []
+   },
+   {
+    "seed": 4,
+    "files": [
+     "primary_distilbert_replay_s4_scores.npz",
+     "primary_distilbert_naive_s4_scores.npz"
+    ],
+    "n_differ": 0,
+    "labels": []
+   },
+   {
+    "seed": 5,
+    "files": [
+     "primary_distilbert_replay_s5_scores.npz",
+     "primary_distilbert_naive_s5_scores.npz"
+    ],
+    "n_differ": 0,
+    "labels": []
+   }
+  ],
+  "reproduction": {
+   "published": [
+    0.0109,
+    0.0089,
+    0.0129
+   ],
+   "computed": [
+    0.010916110829288728,
+    0.008922216459901327,
+    0.012910005198676128
+   ],
+   "equal_to_4_decimals": true
+  }
+ },
+ "MultiEURLEX: replay minus sequential training": {
+  "arms": [
+   "replay",
+   "sequential training"
+  ],
+  "seeds": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "a_own": {
+   "mean": 0.024105566042957882,
+   "t95": [
+    0.021905435759322606,
+    0.02630569632659316
+   ],
+   "per_pair": [
+    0.023706243644261105,
+    0.022597376528857738,
+    0.026570428242936428,
+    0.02096712219117869,
+    0.02577416000771049,
+    0.025018065642802845
+   ],
+   "positive": 6,
+   "negative": 0,
+   "zero": 0,
+   "n": 6
+  },
+  "b_first_theta1": {
+   "mean": 0.02436776794613325,
+   "t95": [
+    0.022169310415427114,
+    0.026566225476839386
+   ],
+   "per_pair": [
+    0.025533837932612546,
+    0.02263982237255091,
+    0.026273599529944014,
+    0.02096712219117869,
+    0.02577416000771049,
+    0.025018065642802845
+   ],
+   "positive": 6,
+   "negative": 0,
+   "zero": 0,
+   "n": 6
+  },
+  "c_comparator_theta1": {
+   "mean": 0.024226343216539215,
+   "t95": [
+    0.022046883049677037,
+    0.026405803383401392
+   ],
+   "per_pair": [
+    0.024083226140774072,
+    0.022842670689688482,
+    0.02667281462708071,
+    0.02096712219117869,
+    0.02577416000771049,
+    0.025018065642802845
+   ],
+   "positive": 6,
+   "negative": 0,
+   "zero": 0,
+   "n": 6
+  },
+  "b_minus_a": {
+   "mean": 0.0002622019031753668,
+   "t95": [
+    -0.0005530563852757667,
+    0.0010774601916265004
+   ],
+   "per_pair": [
+    0.0018275942883514418,
+    4.2445843693172947e-05,
+    -0.0002968287129924141,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "positive": 2,
+   "negative": 1,
+   "zero": 3,
+   "n": 6
+  },
+  "c_minus_a": {
+   "mean": 0.00012077717358133233,
+   "t95": [
+    -4.531586547744788e-05,
+    0.00028687021264011255
+   ],
+   "per_pair": [
+    0.00037698249651296756,
+    0.0002452941608307446,
+    0.0001023863841442818,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "positive": 3,
+   "negative": 0,
+   "zero": 3,
+   "n": 6
+  },
+  "differing_labels": [
+   {
+    "seed": 0,
+    "files": [
+     "eurlex_distilbert_replay_s0_scores.npz",
+     "eurlex_distilbert_naive_s0_scores.npz"
+    ],
+    "n_differ": 1,
+    "labels": [
+     {
+      "label": "100148",
+      "theta1_first": 0.20000000298023224,
+      "theta1_comparator": 0.25
+     }
+    ]
+   },
+   {
+    "seed": 1,
+    "files": [
+     "eurlex_distilbert_replay_s1_scores.npz",
+     "eurlex_distilbert_naive_s1_scores.npz"
+    ],
+    "n_differ": 1,
+    "labels": [
+     {
+      "label": "100156",
+      "theta1_first": 0.44999998807907104,
+      "theta1_comparator": 0.4000000059604645
+     }
+    ]
+   },
+   {
+    "seed": 2,
+    "files": [
+     "eurlex_distilbert_replay_s2_scores.npz",
+     "eurlex_distilbert_naive_s2_scores.npz"
+    ],
+    "n_differ": 1,
+    "labels": [
+     {
+      "label": "100157",
+      "theta1_first": 0.44999998807907104,
+      "theta1_comparator": 0.3499999940395355
+     }
+    ]
+   },
+   {
+    "seed": 3,
+    "files": [
+     "eurlex_distilbert_replay_s3_scores.npz",
+     "eurlex_distilbert_naive_s3_scores.npz"
+    ],
+    "n_differ": 0,
+    "labels": []
+   },
+   {
+    "seed": 4,
+    "files": [
+     "eurlex_distilbert_replay_s4_scores.npz",
+     "eurlex_distilbert_naive_s4_scores.npz"
+    ],
+    "n_differ": 0,
+    "labels": []
+   },
+   {
+    "seed": 5,
+    "files": [
+     "eurlex_distilbert_replay_s5_scores.npz",
+     "eurlex_distilbert_naive_s5_scores.npz"
+    ],
+    "n_differ": 0,
+    "labels": []
+   }
+  ],
+  "reproduction": {
+   "published": [
+    0.0241,
+    0.0219,
+    0.0263
+   ],
+   "computed": [
+    0.024105566042957882,
+    0.021905435759322606,
+    0.02630569632659316
+   ],
+   "equal_to_4_decimals": true
+  }
+ },
+ "MultiEURLEX: replay minus extra updates on current data": {
+  "arms": [
+   "replay",
+   "extra updates on current data"
+  ],
+  "seeds": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "a_own": {
+   "mean": 0.021715550050922388,
+   "t95": [
+    0.017912218319141512,
+    0.025518881782703264
+   ],
+   "per_pair": [
+    0.021667375255849053,
+    0.021945961149443582,
+    0.027259999384710465,
+    0.01594088166348051,
+    0.02261381737200907,
+    0.02086526548004164
+   ],
+   "positive": 6,
+   "negative": 0,
+   "zero": 0,
+   "n": 6
+  },
+  "b_first_theta1": {
+   "mean": 0.021704413185593668,
+   "t95": [
+    0.017901865441485837,
+    0.0255069609297015
+   ],
+   "per_pair": [
+    0.021667375255849053,
+    0.02187913995747126,
+    0.027259999384710465,
+    0.01594088166348051,
+    0.02261381737200907,
+    0.02086526548004164
+   ],
+   "positive": 6,
+   "negative": 0,
+   "zero": 0,
+   "n": 6
+  },
+  "c_comparator_theta1": {
+   "mean": 0.021756432411060844,
+   "t95": [
+    0.017948378531920443,
+    0.025564486290201246
+   ],
+   "per_pair": [
+    0.021667375255849053,
+    0.022191255310274327,
+    0.027259999384710465,
+    0.01594088166348051,
+    0.02261381737200907,
+    0.02086526548004164
+   ],
+   "positive": 6,
+   "negative": 0,
+   "zero": 0,
+   "n": 6
+  },
+  "b_minus_a": {
+   "mean": -1.1136865328720269e-05,
+   "t95": [
+    -3.9765089048656445e-05,
+    1.7491358391215907e-05
+   ],
+   "per_pair": [
+    0.0,
+    -6.682119197232161e-05,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "positive": 0,
+   "negative": 1,
+   "zero": 5,
+   "n": 6
+  },
+  "c_minus_a": {
+   "mean": 4.088236013845744e-05,
+   "t95": [
+    -6.420909223140336e-05,
+    0.00014597381250831826
+   ],
+   "per_pair": [
+    0.0,
+    0.0002452941608307446,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "positive": 1,
+   "negative": 0,
+   "zero": 5,
+   "n": 6
+  },
+  "differing_labels": [
+   {
+    "seed": 0,
+    "files": [
+     "eurlex_distilbert_replay_s0_scores.npz",
+     "eurlex_distilbert_replaycur_s0_scores.npz"
+    ],
+    "n_differ": 0,
+    "labels": []
+   },
+   {
+    "seed": 1,
+    "files": [
+     "eurlex_distilbert_replay_s1_scores.npz",
+     "eurlex_distilbert_replaycur_s1_scores.npz"
+    ],
+    "n_differ": 1,
+    "labels": [
+     {
+      "label": "100156",
+      "theta1_first": 0.44999998807907104,
+      "theta1_comparator": 0.4000000059604645
+     }
+    ]
+   },
+   {
+    "seed": 2,
+    "files": [
+     "eurlex_distilbert_replay_s2_scores.npz",
+     "eurlex_distilbert_replaycur_s2_scores.npz"
+    ],
+    "n_differ": 0,
+    "labels": []
+   },
+   {
+    "seed": 3,
+    "files": [
+     "eurlex_distilbert_replay_s3_scores.npz",
+     "eurlex_distilbert_replaycur_s3_scores.npz"
+    ],
+    "n_differ": 0,
+    "labels": []
+   },
+   {
+    "seed": 4,
+    "files": [
+     "eurlex_distilbert_replay_s4_scores.npz",
+     "eurlex_distilbert_replaycur_s4_scores.npz"
+    ],
+    "n_differ": 0,
+    "labels": []
+   },
+   {
+    "seed": 5,
+    "files": [
+     "eurlex_distilbert_replay_s5_scores.npz",
+     "eurlex_distilbert_replaycur_s5_scores.npz"
+    ],
+    "n_differ": 0,
+    "labels": []
+   }
+  ],
+  "reproduction": {
+   "published": [
+    0.0217,
+    0.0179,
+    0.0255
+   ],
+   "computed": [
+    0.021715550050922388,
+    0.017912218319141512,
+    0.025518881782703264
+   ],
+   "equal_to_4_decimals": true
+  }
+ }
+}

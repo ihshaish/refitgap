@@ -2,7 +2,7 @@
 """Rebuild the fixed-pairing token map of the asrsdrift streams (build_vocabulary.py, same seed)
 and check it: distinct images, images within the selected vocabulary, f(f(w)) = w, and tokens on
 more than one label's list. Reads streams/stream_primary.parquet and scripts/build_vocabulary.py;
-writes results/asrs_supplementary/pairing_check.json. Backs Appendix E, "How the streams were built".
+writes results/asrs_supplementary/pairing_check.json. Backs Appendix E, "Construction of the streams".
 Needs the stream files (not shipped)."""
 import json, re, numpy as np, pandas as pd
 from collections import Counter

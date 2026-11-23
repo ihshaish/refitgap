@@ -2,7 +2,7 @@
 """Each benchmark stream's dR and A minus the ASRS values on the restricted range, resampling
 the benchmark's and ASRS's initialisations independently.
 Reads results/benchmarks/external_bridge.parquet and results/asrs_inherited_rule/bwt_bridge.parquet;
-writes results/asrs_supplementary/benchmark_vs_asrs.json. Backs the first two columns of Table D.2.
+writes results/asrs_supplementary/benchmark_vs_asrs.json. Not reported in the current supplement.
 Needs nothing beyond the repository."""
 import json, numpy as np, pandas as pd
 b = pd.read_parquet("results/benchmarks/external_bridge.parquet"); b = b[b.j >= 1]

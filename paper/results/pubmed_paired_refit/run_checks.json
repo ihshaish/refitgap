@@ -1,0 +1,1877 @@
+{
+ "blocks": {
+  "pubmed_distilbert_p0_s0": {
+   "arms": {
+    "pubmed_distilbert_lwfa0.02_s0": {
+     "arm": "lwf a=0.02",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "c9e5d12c68207654dc71f5e5f14c6526b9f6137c44b809fdc7bbcdcd1331beca",
+     "arrays_combined_sha256": "182301111d7e61504b458d7ebfb87ef93ca24d03f19129ac394a46b3c3028dc1",
+     "theta_1_sha256": "90fbfe5a0812fce114943b06330f261d05f2d45c20d10dafeb5bcc7e89036e89",
+     "steps": [
+      642,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714
+     ],
+     "n_train": [
+      6848,
+      7607,
+      7608,
+      7609,
+      7608,
+      7609,
+      7607,
+      7609
+     ]
+    },
+    "pubmed_distilbert_naive_s0": {
+     "arm": "naive",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "c9e5d12c68207654dc71f5e5f14c6526b9f6137c44b809fdc7bbcdcd1331beca",
+     "arrays_combined_sha256": "182301111d7e61504b458d7ebfb87ef93ca24d03f19129ac394a46b3c3028dc1",
+     "theta_1_sha256": "90fbfe5a0812fce114943b06330f261d05f2d45c20d10dafeb5bcc7e89036e89",
+     "steps": [
+      642,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714
+     ],
+     "n_train": [
+      6848,
+      7607,
+      7608,
+      7609,
+      7608,
+      7609,
+      7607,
+      7609
+     ]
+    },
+    "pubmed_distilbert_replay_s0": {
+     "arm": "replay",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "c9e5d12c68207654dc71f5e5f14c6526b9f6137c44b809fdc7bbcdcd1331beca",
+     "arrays_combined_sha256": "182301111d7e61504b458d7ebfb87ef93ca24d03f19129ac394a46b3c3028dc1",
+     "theta_1_sha256": "90fbfe5a0812fce114943b06330f261d05f2d45c20d10dafeb5bcc7e89036e89",
+     "steps": [
+      642,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999
+     ],
+     "n_train": [
+      6848,
+      10650,
+      10651,
+      10652,
+      10651,
+      10652,
+      10650,
+      10652
+     ],
+     "exposures": [
+      {
+       "period": 1,
+       "earlier_records": 3043,
+       "current_records": 7607,
+       "earlier_exposures": 9129,
+       "current_exposures": 22821,
+       "added_records": 3043
+      },
+      {
+       "period": 2,
+       "earlier_records": 3043,
+       "current_records": 7608,
+       "earlier_exposures": 9129,
+       "current_exposures": 22824,
+       "added_records": 3043
+      },
+      {
+       "period": 3,
+       "earlier_records": 3043,
+       "current_records": 7609,
+       "earlier_exposures": 9129,
+       "current_exposures": 22827,
+       "added_records": 3043
+      },
+      {
+       "period": 4,
+       "earlier_records": 3043,
+       "current_records": 7608,
+       "earlier_exposures": 9129,
+       "current_exposures": 22824,
+       "added_records": 3043
+      },
+      {
+       "period": 5,
+       "earlier_records": 3043,
+       "current_records": 7609,
+       "earlier_exposures": 9129,
+       "current_exposures": 22827,
+       "added_records": 3043
+      },
+      {
+       "period": 6,
+       "earlier_records": 3043,
+       "current_records": 7607,
+       "earlier_exposures": 9129,
+       "current_exposures": 22821,
+       "added_records": 3043
+      },
+      {
+       "period": 7,
+       "earlier_records": 3043,
+       "current_records": 7609,
+       "earlier_exposures": 9129,
+       "current_exposures": 22827,
+       "added_records": 3043
+      }
+     ]
+    },
+    "pubmed_distilbert_replaycur_s0": {
+     "arm": "replaycur",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "c9e5d12c68207654dc71f5e5f14c6526b9f6137c44b809fdc7bbcdcd1331beca",
+     "arrays_combined_sha256": "182301111d7e61504b458d7ebfb87ef93ca24d03f19129ac394a46b3c3028dc1",
+     "theta_1_sha256": "90fbfe5a0812fce114943b06330f261d05f2d45c20d10dafeb5bcc7e89036e89",
+     "steps": [
+      642,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999
+     ],
+     "n_train": [
+      6848,
+      10650,
+      10651,
+      10652,
+      10651,
+      10652,
+      10650,
+      10652
+     ],
+     "exposures": [
+      {
+       "period": 1,
+       "earlier_records": 0,
+       "current_records": 10650,
+       "earlier_exposures": 0,
+       "current_exposures": 31950,
+       "added_records": 3043
+      },
+      {
+       "period": 2,
+       "earlier_records": 0,
+       "current_records": 10651,
+       "earlier_exposures": 0,
+       "current_exposures": 31953,
+       "added_records": 3043
+      },
+      {
+       "period": 3,
+       "earlier_records": 0,
+       "current_records": 10652,
+       "earlier_exposures": 0,
+       "current_exposures": 31956,
+       "added_records": 3043
+      },
+      {
+       "period": 4,
+       "earlier_records": 0,
+       "current_records": 10651,
+       "earlier_exposures": 0,
+       "current_exposures": 31953,
+       "added_records": 3043
+      },
+      {
+       "period": 5,
+       "earlier_records": 0,
+       "current_records": 10652,
+       "earlier_exposures": 0,
+       "current_exposures": 31956,
+       "added_records": 3043
+      },
+      {
+       "period": 6,
+       "earlier_records": 0,
+       "current_records": 10650,
+       "earlier_exposures": 0,
+       "current_exposures": 31950,
+       "added_records": 3043
+      },
+      {
+       "period": 7,
+       "earlier_records": 0,
+       "current_records": 10652,
+       "earlier_exposures": 0,
+       "current_exposures": 31956,
+       "added_records": 3043
+      }
+     ]
+    }
+   },
+   "problems": [],
+   "p0_files_checked": true
+  },
+  "pubmed_distilbert_p0_s1": {
+   "arms": {
+    "pubmed_distilbert_lwfa0.02_s1": {
+     "arm": "lwf a=0.02",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "daffd6d51a9603f366f2a5ac91790b54b7d281e8cc6388c249095dfc4de2e4a1",
+     "arrays_combined_sha256": "e03ca2d3be4022f2640e2b5c1232ecbf9c0ad52a29caf2f9d111d3799e34f529",
+     "theta_1_sha256": "91caa38b3f0ae99a3f58272d49c38bf7b3712f415327dd3d4c298e3863492ef1",
+     "steps": [
+      642,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714
+     ],
+     "n_train": [
+      6848,
+      7607,
+      7608,
+      7609,
+      7608,
+      7609,
+      7607,
+      7609
+     ]
+    },
+    "pubmed_distilbert_naive_s1": {
+     "arm": "naive",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "daffd6d51a9603f366f2a5ac91790b54b7d281e8cc6388c249095dfc4de2e4a1",
+     "arrays_combined_sha256": "e03ca2d3be4022f2640e2b5c1232ecbf9c0ad52a29caf2f9d111d3799e34f529",
+     "theta_1_sha256": "91caa38b3f0ae99a3f58272d49c38bf7b3712f415327dd3d4c298e3863492ef1",
+     "steps": [
+      642,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714
+     ],
+     "n_train": [
+      6848,
+      7607,
+      7608,
+      7609,
+      7608,
+      7609,
+      7607,
+      7609
+     ]
+    },
+    "pubmed_distilbert_replay_s1": {
+     "arm": "replay",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "daffd6d51a9603f366f2a5ac91790b54b7d281e8cc6388c249095dfc4de2e4a1",
+     "arrays_combined_sha256": "e03ca2d3be4022f2640e2b5c1232ecbf9c0ad52a29caf2f9d111d3799e34f529",
+     "theta_1_sha256": "91caa38b3f0ae99a3f58272d49c38bf7b3712f415327dd3d4c298e3863492ef1",
+     "steps": [
+      642,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999
+     ],
+     "n_train": [
+      6848,
+      10650,
+      10651,
+      10652,
+      10651,
+      10652,
+      10650,
+      10652
+     ],
+     "exposures": [
+      {
+       "period": 1,
+       "earlier_records": 3043,
+       "current_records": 7607,
+       "earlier_exposures": 9129,
+       "current_exposures": 22821,
+       "added_records": 3043
+      },
+      {
+       "period": 2,
+       "earlier_records": 3043,
+       "current_records": 7608,
+       "earlier_exposures": 9129,
+       "current_exposures": 22824,
+       "added_records": 3043
+      },
+      {
+       "period": 3,
+       "earlier_records": 3043,
+       "current_records": 7609,
+       "earlier_exposures": 9129,
+       "current_exposures": 22827,
+       "added_records": 3043
+      },
+      {
+       "period": 4,
+       "earlier_records": 3043,
+       "current_records": 7608,
+       "earlier_exposures": 9129,
+       "current_exposures": 22824,
+       "added_records": 3043
+      },
+      {
+       "period": 5,
+       "earlier_records": 3043,
+       "current_records": 7609,
+       "earlier_exposures": 9129,
+       "current_exposures": 22827,
+       "added_records": 3043
+      },
+      {
+       "period": 6,
+       "earlier_records": 3043,
+       "current_records": 7607,
+       "earlier_exposures": 9129,
+       "current_exposures": 22821,
+       "added_records": 3043
+      },
+      {
+       "period": 7,
+       "earlier_records": 3043,
+       "current_records": 7609,
+       "earlier_exposures": 9129,
+       "current_exposures": 22827,
+       "added_records": 3043
+      }
+     ]
+    },
+    "pubmed_distilbert_replaycur_s1": {
+     "arm": "replaycur",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "daffd6d51a9603f366f2a5ac91790b54b7d281e8cc6388c249095dfc4de2e4a1",
+     "arrays_combined_sha256": "e03ca2d3be4022f2640e2b5c1232ecbf9c0ad52a29caf2f9d111d3799e34f529",
+     "theta_1_sha256": "91caa38b3f0ae99a3f58272d49c38bf7b3712f415327dd3d4c298e3863492ef1",
+     "steps": [
+      642,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999
+     ],
+     "n_train": [
+      6848,
+      10650,
+      10651,
+      10652,
+      10651,
+      10652,
+      10650,
+      10652
+     ],
+     "exposures": [
+      {
+       "period": 1,
+       "earlier_records": 0,
+       "current_records": 10650,
+       "earlier_exposures": 0,
+       "current_exposures": 31950,
+       "added_records": 3043
+      },
+      {
+       "period": 2,
+       "earlier_records": 0,
+       "current_records": 10651,
+       "earlier_exposures": 0,
+       "current_exposures": 31953,
+       "added_records": 3043
+      },
+      {
+       "period": 3,
+       "earlier_records": 0,
+       "current_records": 10652,
+       "earlier_exposures": 0,
+       "current_exposures": 31956,
+       "added_records": 3043
+      },
+      {
+       "period": 4,
+       "earlier_records": 0,
+       "current_records": 10651,
+       "earlier_exposures": 0,
+       "current_exposures": 31953,
+       "added_records": 3043
+      },
+      {
+       "period": 5,
+       "earlier_records": 0,
+       "current_records": 10652,
+       "earlier_exposures": 0,
+       "current_exposures": 31956,
+       "added_records": 3043
+      },
+      {
+       "period": 6,
+       "earlier_records": 0,
+       "current_records": 10650,
+       "earlier_exposures": 0,
+       "current_exposures": 31950,
+       "added_records": 3043
+      },
+      {
+       "period": 7,
+       "earlier_records": 0,
+       "current_records": 10652,
+       "earlier_exposures": 0,
+       "current_exposures": 31956,
+       "added_records": 3043
+      }
+     ]
+    }
+   },
+   "problems": [],
+   "p0_files_checked": true
+  },
+  "pubmed_distilbert_p0_s2": {
+   "arms": {
+    "pubmed_distilbert_lwfa0.02_s2": {
+     "arm": "lwf a=0.02",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "2ee02cb9409607e51d6429c2489c701c2f13e82ccdbc520260c74c2323c93b28",
+     "arrays_combined_sha256": "52531be11d97992a24ac46ba967ab965c85154b5ac0bf9b9124d2260527c70b6",
+     "theta_1_sha256": "0f71cc0132b427199a38ac474e5175e20e75edeaa7716f6384822e66ae7bf6e9",
+     "steps": [
+      642,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714
+     ],
+     "n_train": [
+      6848,
+      7607,
+      7608,
+      7609,
+      7608,
+      7609,
+      7607,
+      7609
+     ]
+    },
+    "pubmed_distilbert_naive_s2": {
+     "arm": "naive",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "2ee02cb9409607e51d6429c2489c701c2f13e82ccdbc520260c74c2323c93b28",
+     "arrays_combined_sha256": "52531be11d97992a24ac46ba967ab965c85154b5ac0bf9b9124d2260527c70b6",
+     "theta_1_sha256": "0f71cc0132b427199a38ac474e5175e20e75edeaa7716f6384822e66ae7bf6e9",
+     "steps": [
+      642,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714
+     ],
+     "n_train": [
+      6848,
+      7607,
+      7608,
+      7609,
+      7608,
+      7609,
+      7607,
+      7609
+     ]
+    },
+    "pubmed_distilbert_replay_s2": {
+     "arm": "replay",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "2ee02cb9409607e51d6429c2489c701c2f13e82ccdbc520260c74c2323c93b28",
+     "arrays_combined_sha256": "52531be11d97992a24ac46ba967ab965c85154b5ac0bf9b9124d2260527c70b6",
+     "theta_1_sha256": "0f71cc0132b427199a38ac474e5175e20e75edeaa7716f6384822e66ae7bf6e9",
+     "steps": [
+      642,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999
+     ],
+     "n_train": [
+      6848,
+      10650,
+      10651,
+      10652,
+      10651,
+      10652,
+      10650,
+      10652
+     ],
+     "exposures": [
+      {
+       "period": 1,
+       "earlier_records": 3043,
+       "current_records": 7607,
+       "earlier_exposures": 9129,
+       "current_exposures": 22821,
+       "added_records": 3043
+      },
+      {
+       "period": 2,
+       "earlier_records": 3043,
+       "current_records": 7608,
+       "earlier_exposures": 9129,
+       "current_exposures": 22824,
+       "added_records": 3043
+      },
+      {
+       "period": 3,
+       "earlier_records": 3043,
+       "current_records": 7609,
+       "earlier_exposures": 9129,
+       "current_exposures": 22827,
+       "added_records": 3043
+      },
+      {
+       "period": 4,
+       "earlier_records": 3043,
+       "current_records": 7608,
+       "earlier_exposures": 9129,
+       "current_exposures": 22824,
+       "added_records": 3043
+      },
+      {
+       "period": 5,
+       "earlier_records": 3043,
+       "current_records": 7609,
+       "earlier_exposures": 9129,
+       "current_exposures": 22827,
+       "added_records": 3043
+      },
+      {
+       "period": 6,
+       "earlier_records": 3043,
+       "current_records": 7607,
+       "earlier_exposures": 9129,
+       "current_exposures": 22821,
+       "added_records": 3043
+      },
+      {
+       "period": 7,
+       "earlier_records": 3043,
+       "current_records": 7609,
+       "earlier_exposures": 9129,
+       "current_exposures": 22827,
+       "added_records": 3043
+      }
+     ]
+    },
+    "pubmed_distilbert_replaycur_s2": {
+     "arm": "replaycur",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "2ee02cb9409607e51d6429c2489c701c2f13e82ccdbc520260c74c2323c93b28",
+     "arrays_combined_sha256": "52531be11d97992a24ac46ba967ab965c85154b5ac0bf9b9124d2260527c70b6",
+     "theta_1_sha256": "0f71cc0132b427199a38ac474e5175e20e75edeaa7716f6384822e66ae7bf6e9",
+     "steps": [
+      642,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999
+     ],
+     "n_train": [
+      6848,
+      10650,
+      10651,
+      10652,
+      10651,
+      10652,
+      10650,
+      10652
+     ],
+     "exposures": [
+      {
+       "period": 1,
+       "earlier_records": 0,
+       "current_records": 10650,
+       "earlier_exposures": 0,
+       "current_exposures": 31950,
+       "added_records": 3043
+      },
+      {
+       "period": 2,
+       "earlier_records": 0,
+       "current_records": 10651,
+       "earlier_exposures": 0,
+       "current_exposures": 31953,
+       "added_records": 3043
+      },
+      {
+       "period": 3,
+       "earlier_records": 0,
+       "current_records": 10652,
+       "earlier_exposures": 0,
+       "current_exposures": 31956,
+       "added_records": 3043
+      },
+      {
+       "period": 4,
+       "earlier_records": 0,
+       "current_records": 10651,
+       "earlier_exposures": 0,
+       "current_exposures": 31953,
+       "added_records": 3043
+      },
+      {
+       "period": 5,
+       "earlier_records": 0,
+       "current_records": 10652,
+       "earlier_exposures": 0,
+       "current_exposures": 31956,
+       "added_records": 3043
+      },
+      {
+       "period": 6,
+       "earlier_records": 0,
+       "current_records": 10650,
+       "earlier_exposures": 0,
+       "current_exposures": 31950,
+       "added_records": 3043
+      },
+      {
+       "period": 7,
+       "earlier_records": 0,
+       "current_records": 10652,
+       "earlier_exposures": 0,
+       "current_exposures": 31956,
+       "added_records": 3043
+      }
+     ]
+    }
+   },
+   "problems": [],
+   "p0_files_checked": true
+  },
+  "pubmed_distilbert_p0_s3": {
+   "arms": {
+    "pubmed_distilbert_lwfa0.02_s3": {
+     "arm": "lwf a=0.02",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "16443a0593598b4dc3ff192d7352ea6e3853afc89c26a698e9f99ad07057661a",
+     "arrays_combined_sha256": "10c91838bcca47b972aa25d03c5d068ae2be4604201e2fea71ad32055e9f8720",
+     "theta_1_sha256": "41abf72d018651957afbab5f68b8c4086bd51dfad24453aca3771f36e9ac0676",
+     "steps": [
+      642,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714
+     ],
+     "n_train": [
+      6848,
+      7607,
+      7608,
+      7609,
+      7608,
+      7609,
+      7607,
+      7609
+     ]
+    },
+    "pubmed_distilbert_naive_s3": {
+     "arm": "naive",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "16443a0593598b4dc3ff192d7352ea6e3853afc89c26a698e9f99ad07057661a",
+     "arrays_combined_sha256": "10c91838bcca47b972aa25d03c5d068ae2be4604201e2fea71ad32055e9f8720",
+     "theta_1_sha256": "41abf72d018651957afbab5f68b8c4086bd51dfad24453aca3771f36e9ac0676",
+     "steps": [
+      642,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714
+     ],
+     "n_train": [
+      6848,
+      7607,
+      7608,
+      7609,
+      7608,
+      7609,
+      7607,
+      7609
+     ]
+    },
+    "pubmed_distilbert_replay_s3": {
+     "arm": "replay",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "16443a0593598b4dc3ff192d7352ea6e3853afc89c26a698e9f99ad07057661a",
+     "arrays_combined_sha256": "10c91838bcca47b972aa25d03c5d068ae2be4604201e2fea71ad32055e9f8720",
+     "theta_1_sha256": "41abf72d018651957afbab5f68b8c4086bd51dfad24453aca3771f36e9ac0676",
+     "steps": [
+      642,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999
+     ],
+     "n_train": [
+      6848,
+      10650,
+      10651,
+      10652,
+      10651,
+      10652,
+      10650,
+      10652
+     ],
+     "exposures": [
+      {
+       "period": 1,
+       "earlier_records": 3043,
+       "current_records": 7607,
+       "earlier_exposures": 9129,
+       "current_exposures": 22821,
+       "added_records": 3043
+      },
+      {
+       "period": 2,
+       "earlier_records": 3043,
+       "current_records": 7608,
+       "earlier_exposures": 9129,
+       "current_exposures": 22824,
+       "added_records": 3043
+      },
+      {
+       "period": 3,
+       "earlier_records": 3043,
+       "current_records": 7609,
+       "earlier_exposures": 9129,
+       "current_exposures": 22827,
+       "added_records": 3043
+      },
+      {
+       "period": 4,
+       "earlier_records": 3043,
+       "current_records": 7608,
+       "earlier_exposures": 9129,
+       "current_exposures": 22824,
+       "added_records": 3043
+      },
+      {
+       "period": 5,
+       "earlier_records": 3043,
+       "current_records": 7609,
+       "earlier_exposures": 9129,
+       "current_exposures": 22827,
+       "added_records": 3043
+      },
+      {
+       "period": 6,
+       "earlier_records": 3043,
+       "current_records": 7607,
+       "earlier_exposures": 9129,
+       "current_exposures": 22821,
+       "added_records": 3043
+      },
+      {
+       "period": 7,
+       "earlier_records": 3043,
+       "current_records": 7609,
+       "earlier_exposures": 9129,
+       "current_exposures": 22827,
+       "added_records": 3043
+      }
+     ]
+    },
+    "pubmed_distilbert_replaycur_s3": {
+     "arm": "replaycur",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "16443a0593598b4dc3ff192d7352ea6e3853afc89c26a698e9f99ad07057661a",
+     "arrays_combined_sha256": "10c91838bcca47b972aa25d03c5d068ae2be4604201e2fea71ad32055e9f8720",
+     "theta_1_sha256": "41abf72d018651957afbab5f68b8c4086bd51dfad24453aca3771f36e9ac0676",
+     "steps": [
+      642,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999
+     ],
+     "n_train": [
+      6848,
+      10650,
+      10651,
+      10652,
+      10651,
+      10652,
+      10650,
+      10652
+     ],
+     "exposures": [
+      {
+       "period": 1,
+       "earlier_records": 0,
+       "current_records": 10650,
+       "earlier_exposures": 0,
+       "current_exposures": 31950,
+       "added_records": 3043
+      },
+      {
+       "period": 2,
+       "earlier_records": 0,
+       "current_records": 10651,
+       "earlier_exposures": 0,
+       "current_exposures": 31953,
+       "added_records": 3043
+      },
+      {
+       "period": 3,
+       "earlier_records": 0,
+       "current_records": 10652,
+       "earlier_exposures": 0,
+       "current_exposures": 31956,
+       "added_records": 3043
+      },
+      {
+       "period": 4,
+       "earlier_records": 0,
+       "current_records": 10651,
+       "earlier_exposures": 0,
+       "current_exposures": 31953,
+       "added_records": 3043
+      },
+      {
+       "period": 5,
+       "earlier_records": 0,
+       "current_records": 10652,
+       "earlier_exposures": 0,
+       "current_exposures": 31956,
+       "added_records": 3043
+      },
+      {
+       "period": 6,
+       "earlier_records": 0,
+       "current_records": 10650,
+       "earlier_exposures": 0,
+       "current_exposures": 31950,
+       "added_records": 3043
+      },
+      {
+       "period": 7,
+       "earlier_records": 0,
+       "current_records": 10652,
+       "earlier_exposures": 0,
+       "current_exposures": 31956,
+       "added_records": 3043
+      }
+     ]
+    }
+   },
+   "problems": [],
+   "p0_files_checked": true
+  },
+  "pubmed_distilbert_p0_s4": {
+   "arms": {
+    "pubmed_distilbert_lwfa0.02_s4": {
+     "arm": "lwf a=0.02",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "c47e7326427568688022335e0c66f2a5a0c38cf8844037d78cda185c6eb04f69",
+     "arrays_combined_sha256": "93e928abb45e7f0ba065c90489fc2146e6670fddfd053a842057f18f33d46424",
+     "theta_1_sha256": "8a658a96eae40b6ea85f94821f485e626a2788aec0d0a98dae37fb62cd1cb726",
+     "steps": [
+      642,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714
+     ],
+     "n_train": [
+      6848,
+      7607,
+      7608,
+      7609,
+      7608,
+      7609,
+      7607,
+      7609
+     ]
+    },
+    "pubmed_distilbert_naive_s4": {
+     "arm": "naive",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "c47e7326427568688022335e0c66f2a5a0c38cf8844037d78cda185c6eb04f69",
+     "arrays_combined_sha256": "93e928abb45e7f0ba065c90489fc2146e6670fddfd053a842057f18f33d46424",
+     "theta_1_sha256": "8a658a96eae40b6ea85f94821f485e626a2788aec0d0a98dae37fb62cd1cb726",
+     "steps": [
+      642,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714
+     ],
+     "n_train": [
+      6848,
+      7607,
+      7608,
+      7609,
+      7608,
+      7609,
+      7607,
+      7609
+     ]
+    },
+    "pubmed_distilbert_replay_s4": {
+     "arm": "replay",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "c47e7326427568688022335e0c66f2a5a0c38cf8844037d78cda185c6eb04f69",
+     "arrays_combined_sha256": "93e928abb45e7f0ba065c90489fc2146e6670fddfd053a842057f18f33d46424",
+     "theta_1_sha256": "8a658a96eae40b6ea85f94821f485e626a2788aec0d0a98dae37fb62cd1cb726",
+     "steps": [
+      642,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999
+     ],
+     "n_train": [
+      6848,
+      10650,
+      10651,
+      10652,
+      10651,
+      10652,
+      10650,
+      10652
+     ],
+     "exposures": [
+      {
+       "period": 1,
+       "earlier_records": 3043,
+       "current_records": 7607,
+       "earlier_exposures": 9129,
+       "current_exposures": 22821,
+       "added_records": 3043
+      },
+      {
+       "period": 2,
+       "earlier_records": 3043,
+       "current_records": 7608,
+       "earlier_exposures": 9129,
+       "current_exposures": 22824,
+       "added_records": 3043
+      },
+      {
+       "period": 3,
+       "earlier_records": 3043,
+       "current_records": 7609,
+       "earlier_exposures": 9129,
+       "current_exposures": 22827,
+       "added_records": 3043
+      },
+      {
+       "period": 4,
+       "earlier_records": 3043,
+       "current_records": 7608,
+       "earlier_exposures": 9129,
+       "current_exposures": 22824,
+       "added_records": 3043
+      },
+      {
+       "period": 5,
+       "earlier_records": 3043,
+       "current_records": 7609,
+       "earlier_exposures": 9129,
+       "current_exposures": 22827,
+       "added_records": 3043
+      },
+      {
+       "period": 6,
+       "earlier_records": 3043,
+       "current_records": 7607,
+       "earlier_exposures": 9129,
+       "current_exposures": 22821,
+       "added_records": 3043
+      },
+      {
+       "period": 7,
+       "earlier_records": 3043,
+       "current_records": 7609,
+       "earlier_exposures": 9129,
+       "current_exposures": 22827,
+       "added_records": 3043
+      }
+     ]
+    },
+    "pubmed_distilbert_replaycur_s4": {
+     "arm": "replaycur",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "c47e7326427568688022335e0c66f2a5a0c38cf8844037d78cda185c6eb04f69",
+     "arrays_combined_sha256": "93e928abb45e7f0ba065c90489fc2146e6670fddfd053a842057f18f33d46424",
+     "theta_1_sha256": "8a658a96eae40b6ea85f94821f485e626a2788aec0d0a98dae37fb62cd1cb726",
+     "steps": [
+      642,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999
+     ],
+     "n_train": [
+      6848,
+      10650,
+      10651,
+      10652,
+      10651,
+      10652,
+      10650,
+      10652
+     ],
+     "exposures": [
+      {
+       "period": 1,
+       "earlier_records": 0,
+       "current_records": 10650,
+       "earlier_exposures": 0,
+       "current_exposures": 31950,
+       "added_records": 3043
+      },
+      {
+       "period": 2,
+       "earlier_records": 0,
+       "current_records": 10651,
+       "earlier_exposures": 0,
+       "current_exposures": 31953,
+       "added_records": 3043
+      },
+      {
+       "period": 3,
+       "earlier_records": 0,
+       "current_records": 10652,
+       "earlier_exposures": 0,
+       "current_exposures": 31956,
+       "added_records": 3043
+      },
+      {
+       "period": 4,
+       "earlier_records": 0,
+       "current_records": 10651,
+       "earlier_exposures": 0,
+       "current_exposures": 31953,
+       "added_records": 3043
+      },
+      {
+       "period": 5,
+       "earlier_records": 0,
+       "current_records": 10652,
+       "earlier_exposures": 0,
+       "current_exposures": 31956,
+       "added_records": 3043
+      },
+      {
+       "period": 6,
+       "earlier_records": 0,
+       "current_records": 10650,
+       "earlier_exposures": 0,
+       "current_exposures": 31950,
+       "added_records": 3043
+      },
+      {
+       "period": 7,
+       "earlier_records": 0,
+       "current_records": 10652,
+       "earlier_exposures": 0,
+       "current_exposures": 31956,
+       "added_records": 3043
+      }
+     ]
+    }
+   },
+   "problems": [],
+   "p0_files_checked": true
+  },
+  "pubmed_distilbert_p0_s5": {
+   "arms": {
+    "pubmed_distilbert_lwfa0.02_s5": {
+     "arm": "lwf a=0.02",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "7c75795ecc5a70369486d03ad056bb010f2f2eb2f7b96d9e388484288be2920c",
+     "arrays_combined_sha256": "5e6926207ada07ebc5c19b7f6ad4489db893747a737fc828399d7b7211d818f8",
+     "theta_1_sha256": "09c2c705b94914e9cd68759ac6b1c0cce653ced35f885fdea217da017d7aca8b",
+     "steps": [
+      642,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714
+     ],
+     "n_train": [
+      6848,
+      7607,
+      7608,
+      7609,
+      7608,
+      7609,
+      7607,
+      7609
+     ]
+    },
+    "pubmed_distilbert_naive_s5": {
+     "arm": "naive",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "7c75795ecc5a70369486d03ad056bb010f2f2eb2f7b96d9e388484288be2920c",
+     "arrays_combined_sha256": "5e6926207ada07ebc5c19b7f6ad4489db893747a737fc828399d7b7211d818f8",
+     "theta_1_sha256": "09c2c705b94914e9cd68759ac6b1c0cce653ced35f885fdea217da017d7aca8b",
+     "steps": [
+      642,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714
+     ],
+     "n_train": [
+      6848,
+      7607,
+      7608,
+      7609,
+      7608,
+      7609,
+      7607,
+      7609
+     ]
+    },
+    "pubmed_distilbert_replay_s5": {
+     "arm": "replay",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "7c75795ecc5a70369486d03ad056bb010f2f2eb2f7b96d9e388484288be2920c",
+     "arrays_combined_sha256": "5e6926207ada07ebc5c19b7f6ad4489db893747a737fc828399d7b7211d818f8",
+     "theta_1_sha256": "09c2c705b94914e9cd68759ac6b1c0cce653ced35f885fdea217da017d7aca8b",
+     "steps": [
+      642,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999
+     ],
+     "n_train": [
+      6848,
+      10650,
+      10651,
+      10652,
+      10651,
+      10652,
+      10650,
+      10652
+     ],
+     "exposures": [
+      {
+       "period": 1,
+       "earlier_records": 3043,
+       "current_records": 7607,
+       "earlier_exposures": 9129,
+       "current_exposures": 22821,
+       "added_records": 3043
+      },
+      {
+       "period": 2,
+       "earlier_records": 3043,
+       "current_records": 7608,
+       "earlier_exposures": 9129,
+       "current_exposures": 22824,
+       "added_records": 3043
+      },
+      {
+       "period": 3,
+       "earlier_records": 3043,
+       "current_records": 7609,
+       "earlier_exposures": 9129,
+       "current_exposures": 22827,
+       "added_records": 3043
+      },
+      {
+       "period": 4,
+       "earlier_records": 3043,
+       "current_records": 7608,
+       "earlier_exposures": 9129,
+       "current_exposures": 22824,
+       "added_records": 3043
+      },
+      {
+       "period": 5,
+       "earlier_records": 3043,
+       "current_records": 7609,
+       "earlier_exposures": 9129,
+       "current_exposures": 22827,
+       "added_records": 3043
+      },
+      {
+       "period": 6,
+       "earlier_records": 3043,
+       "current_records": 7607,
+       "earlier_exposures": 9129,
+       "current_exposures": 22821,
+       "added_records": 3043
+      },
+      {
+       "period": 7,
+       "earlier_records": 3043,
+       "current_records": 7609,
+       "earlier_exposures": 9129,
+       "current_exposures": 22827,
+       "added_records": 3043
+      }
+     ]
+    },
+    "pubmed_distilbert_replaycur_s5": {
+     "arm": "replaycur",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "7c75795ecc5a70369486d03ad056bb010f2f2eb2f7b96d9e388484288be2920c",
+     "arrays_combined_sha256": "5e6926207ada07ebc5c19b7f6ad4489db893747a737fc828399d7b7211d818f8",
+     "theta_1_sha256": "09c2c705b94914e9cd68759ac6b1c0cce653ced35f885fdea217da017d7aca8b",
+     "steps": [
+      642,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999
+     ],
+     "n_train": [
+      6848,
+      10650,
+      10651,
+      10652,
+      10651,
+      10652,
+      10650,
+      10652
+     ],
+     "exposures": [
+      {
+       "period": 1,
+       "earlier_records": 0,
+       "current_records": 10650,
+       "earlier_exposures": 0,
+       "current_exposures": 31950,
+       "added_records": 3043
+      },
+      {
+       "period": 2,
+       "earlier_records": 0,
+       "current_records": 10651,
+       "earlier_exposures": 0,
+       "current_exposures": 31953,
+       "added_records": 3043
+      },
+      {
+       "period": 3,
+       "earlier_records": 0,
+       "current_records": 10652,
+       "earlier_exposures": 0,
+       "current_exposures": 31956,
+       "added_records": 3043
+      },
+      {
+       "period": 4,
+       "earlier_records": 0,
+       "current_records": 10651,
+       "earlier_exposures": 0,
+       "current_exposures": 31953,
+       "added_records": 3043
+      },
+      {
+       "period": 5,
+       "earlier_records": 0,
+       "current_records": 10652,
+       "earlier_exposures": 0,
+       "current_exposures": 31956,
+       "added_records": 3043
+      },
+      {
+       "period": 6,
+       "earlier_records": 0,
+       "current_records": 10650,
+       "earlier_exposures": 0,
+       "current_exposures": 31950,
+       "added_records": 3043
+      },
+      {
+       "period": 7,
+       "earlier_records": 0,
+       "current_records": 10652,
+       "earlier_exposures": 0,
+       "current_exposures": 31956,
+       "added_records": 3043
+      }
+     ]
+    }
+   },
+   "problems": [],
+   "p0_files_checked": true
+  },
+  "pubmed_distilbert_p0_s6": {
+   "arms": {
+    "pubmed_distilbert_lwfa0.02_s6": {
+     "arm": "lwf a=0.02",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "47dac5adf188d898c1207db68411d9b9fb254d798a60fcbaa07bd2a33dce6148",
+     "arrays_combined_sha256": "2272a699e426442fbca298e54d5e22bbc1ba68cd3c2a89f576eeb82ada012f22",
+     "theta_1_sha256": "fdd02087fc9d2092878776e4911fbbefbac2fc2b121c06e8c24228a9c6fdd659",
+     "steps": [
+      642,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714
+     ],
+     "n_train": [
+      6848,
+      7607,
+      7608,
+      7609,
+      7608,
+      7609,
+      7607,
+      7609
+     ]
+    },
+    "pubmed_distilbert_naive_s6": {
+     "arm": "naive",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "47dac5adf188d898c1207db68411d9b9fb254d798a60fcbaa07bd2a33dce6148",
+     "arrays_combined_sha256": "2272a699e426442fbca298e54d5e22bbc1ba68cd3c2a89f576eeb82ada012f22",
+     "theta_1_sha256": "fdd02087fc9d2092878776e4911fbbefbac2fc2b121c06e8c24228a9c6fdd659",
+     "steps": [
+      642,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714
+     ],
+     "n_train": [
+      6848,
+      7607,
+      7608,
+      7609,
+      7608,
+      7609,
+      7607,
+      7609
+     ]
+    },
+    "pubmed_distilbert_replay_s6": {
+     "arm": "replay",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "47dac5adf188d898c1207db68411d9b9fb254d798a60fcbaa07bd2a33dce6148",
+     "arrays_combined_sha256": "2272a699e426442fbca298e54d5e22bbc1ba68cd3c2a89f576eeb82ada012f22",
+     "theta_1_sha256": "fdd02087fc9d2092878776e4911fbbefbac2fc2b121c06e8c24228a9c6fdd659",
+     "steps": [
+      642,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999
+     ],
+     "n_train": [
+      6848,
+      10650,
+      10651,
+      10652,
+      10651,
+      10652,
+      10650,
+      10652
+     ],
+     "exposures": [
+      {
+       "period": 1,
+       "earlier_records": 3043,
+       "current_records": 7607,
+       "earlier_exposures": 9129,
+       "current_exposures": 22821,
+       "added_records": 3043
+      },
+      {
+       "period": 2,
+       "earlier_records": 3043,
+       "current_records": 7608,
+       "earlier_exposures": 9129,
+       "current_exposures": 22824,
+       "added_records": 3043
+      },
+      {
+       "period": 3,
+       "earlier_records": 3043,
+       "current_records": 7609,
+       "earlier_exposures": 9129,
+       "current_exposures": 22827,
+       "added_records": 3043
+      },
+      {
+       "period": 4,
+       "earlier_records": 3043,
+       "current_records": 7608,
+       "earlier_exposures": 9129,
+       "current_exposures": 22824,
+       "added_records": 3043
+      },
+      {
+       "period": 5,
+       "earlier_records": 3043,
+       "current_records": 7609,
+       "earlier_exposures": 9129,
+       "current_exposures": 22827,
+       "added_records": 3043
+      },
+      {
+       "period": 6,
+       "earlier_records": 3043,
+       "current_records": 7607,
+       "earlier_exposures": 9129,
+       "current_exposures": 22821,
+       "added_records": 3043
+      },
+      {
+       "period": 7,
+       "earlier_records": 3043,
+       "current_records": 7609,
+       "earlier_exposures": 9129,
+       "current_exposures": 22827,
+       "added_records": 3043
+      }
+     ]
+    },
+    "pubmed_distilbert_replaycur_s6": {
+     "arm": "replaycur",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "47dac5adf188d898c1207db68411d9b9fb254d798a60fcbaa07bd2a33dce6148",
+     "arrays_combined_sha256": "2272a699e426442fbca298e54d5e22bbc1ba68cd3c2a89f576eeb82ada012f22",
+     "theta_1_sha256": "fdd02087fc9d2092878776e4911fbbefbac2fc2b121c06e8c24228a9c6fdd659",
+     "steps": [
+      642,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999
+     ],
+     "n_train": [
+      6848,
+      10650,
+      10651,
+      10652,
+      10651,
+      10652,
+      10650,
+      10652
+     ],
+     "exposures": [
+      {
+       "period": 1,
+       "earlier_records": 0,
+       "current_records": 10650,
+       "earlier_exposures": 0,
+       "current_exposures": 31950,
+       "added_records": 3043
+      },
+      {
+       "period": 2,
+       "earlier_records": 0,
+       "current_records": 10651,
+       "earlier_exposures": 0,
+       "current_exposures": 31953,
+       "added_records": 3043
+      },
+      {
+       "period": 3,
+       "earlier_records": 0,
+       "current_records": 10652,
+       "earlier_exposures": 0,
+       "current_exposures": 31956,
+       "added_records": 3043
+      },
+      {
+       "period": 4,
+       "earlier_records": 0,
+       "current_records": 10651,
+       "earlier_exposures": 0,
+       "current_exposures": 31953,
+       "added_records": 3043
+      },
+      {
+       "period": 5,
+       "earlier_records": 0,
+       "current_records": 10652,
+       "earlier_exposures": 0,
+       "current_exposures": 31956,
+       "added_records": 3043
+      },
+      {
+       "period": 6,
+       "earlier_records": 0,
+       "current_records": 10650,
+       "earlier_exposures": 0,
+       "current_exposures": 31950,
+       "added_records": 3043
+      },
+      {
+       "period": 7,
+       "earlier_records": 0,
+       "current_records": 10652,
+       "earlier_exposures": 0,
+       "current_exposures": 31956,
+       "added_records": 3043
+      }
+     ]
+    }
+   },
+   "problems": [],
+   "p0_files_checked": true
+  },
+  "pubmed_distilbert_p0_s7": {
+   "arms": {
+    "pubmed_distilbert_lwfa0.02_s7": {
+     "arm": "lwf a=0.02",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "3ef3e673d0f70e652d15ae6d918a583e4ef3e89a012643529ac25bb23d0f1751",
+     "arrays_combined_sha256": "4803f47a51d88a5d78a7b287ba2d030ed6ec664cf2e84f5cb2f019314d09da1e",
+     "theta_1_sha256": "975524975f2c4cc182acf511b72eead57136014955a7242b3393927980bc3c7f",
+     "steps": [
+      642,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714
+     ],
+     "n_train": [
+      6848,
+      7607,
+      7608,
+      7609,
+      7608,
+      7609,
+      7607,
+      7609
+     ]
+    },
+    "pubmed_distilbert_naive_s7": {
+     "arm": "naive",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "3ef3e673d0f70e652d15ae6d918a583e4ef3e89a012643529ac25bb23d0f1751",
+     "arrays_combined_sha256": "4803f47a51d88a5d78a7b287ba2d030ed6ec664cf2e84f5cb2f019314d09da1e",
+     "theta_1_sha256": "975524975f2c4cc182acf511b72eead57136014955a7242b3393927980bc3c7f",
+     "steps": [
+      642,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714,
+      714
+     ],
+     "n_train": [
+      6848,
+      7607,
+      7608,
+      7609,
+      7608,
+      7609,
+      7607,
+      7609
+     ]
+    },
+    "pubmed_distilbert_replay_s7": {
+     "arm": "replay",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "3ef3e673d0f70e652d15ae6d918a583e4ef3e89a012643529ac25bb23d0f1751",
+     "arrays_combined_sha256": "4803f47a51d88a5d78a7b287ba2d030ed6ec664cf2e84f5cb2f019314d09da1e",
+     "theta_1_sha256": "975524975f2c4cc182acf511b72eead57136014955a7242b3393927980bc3c7f",
+     "steps": [
+      642,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999
+     ],
+     "n_train": [
+      6848,
+      10650,
+      10651,
+      10652,
+      10651,
+      10652,
+      10650,
+      10652
+     ],
+     "exposures": [
+      {
+       "period": 1,
+       "earlier_records": 3043,
+       "current_records": 7607,
+       "earlier_exposures": 9129,
+       "current_exposures": 22821,
+       "added_records": 3043
+      },
+      {
+       "period": 2,
+       "earlier_records": 3043,
+       "current_records": 7608,
+       "earlier_exposures": 9129,
+       "current_exposures": 22824,
+       "added_records": 3043
+      },
+      {
+       "period": 3,
+       "earlier_records": 3043,
+       "current_records": 7609,
+       "earlier_exposures": 9129,
+       "current_exposures": 22827,
+       "added_records": 3043
+      },
+      {
+       "period": 4,
+       "earlier_records": 3043,
+       "current_records": 7608,
+       "earlier_exposures": 9129,
+       "current_exposures": 22824,
+       "added_records": 3043
+      },
+      {
+       "period": 5,
+       "earlier_records": 3043,
+       "current_records": 7609,
+       "earlier_exposures": 9129,
+       "current_exposures": 22827,
+       "added_records": 3043
+      },
+      {
+       "period": 6,
+       "earlier_records": 3043,
+       "current_records": 7607,
+       "earlier_exposures": 9129,
+       "current_exposures": 22821,
+       "added_records": 3043
+      },
+      {
+       "period": 7,
+       "earlier_records": 3043,
+       "current_records": 7609,
+       "earlier_exposures": 9129,
+       "current_exposures": 22827,
+       "added_records": 3043
+      }
+     ]
+    },
+    "pubmed_distilbert_replaycur_s7": {
+     "arm": "replaycur",
+     "attempt": 1,
+     "restart_cause": null,
+     "state_sha256": "3ef3e673d0f70e652d15ae6d918a583e4ef3e89a012643529ac25bb23d0f1751",
+     "arrays_combined_sha256": "4803f47a51d88a5d78a7b287ba2d030ed6ec664cf2e84f5cb2f019314d09da1e",
+     "theta_1_sha256": "975524975f2c4cc182acf511b72eead57136014955a7242b3393927980bc3c7f",
+     "steps": [
+      642,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999,
+      999
+     ],
+     "n_train": [
+      6848,
+      10650,
+      10651,
+      10652,
+      10651,
+      10652,
+      10650,
+      10652
+     ],
+     "exposures": [
+      {
+       "period": 1,
+       "earlier_records": 0,
+       "current_records": 10650,
+       "earlier_exposures": 0,
+       "current_exposures": 31950,
+       "added_records": 3043
+      },
+      {
+       "period": 2,
+       "earlier_records": 0,
+       "current_records": 10651,
+       "earlier_exposures": 0,
+       "current_exposures": 31953,
+       "added_records": 3043
+      },
+      {
+       "period": 3,
+       "earlier_records": 0,
+       "current_records": 10652,
+       "earlier_exposures": 0,
+       "current_exposures": 31956,
+       "added_records": 3043
+      },
+      {
+       "period": 4,
+       "earlier_records": 0,
+       "current_records": 10651,
+       "earlier_exposures": 0,
+       "current_exposures": 31953,
+       "added_records": 3043
+      },
+      {
+       "period": 5,
+       "earlier_records": 0,
+       "current_records": 10652,
+       "earlier_exposures": 0,
+       "current_exposures": 31956,
+       "added_records": 3043
+      },
+      {
+       "period": 6,
+       "earlier_records": 0,
+       "current_records": 10650,
+       "earlier_exposures": 0,
+       "current_exposures": 31950,
+       "added_records": 3043
+      },
+      {
+       "period": 7,
+       "earlier_records": 0,
+       "current_records": 10652,
+       "earlier_exposures": 0,
+       "current_exposures": 31956,
+       "added_records": 3043
+      }
+     ]
+    }
+   },
+   "problems": [],
+   "p0_files_checked": true
+  }
+ },
+ "problems": []
+}

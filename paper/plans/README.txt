@@ -1,10 +1,10 @@
 Analysis plans
 ==============
 
-We wrote each plan down, dated, before the runs it governs; where we did not, the note says
-so. Each note gives the aim, design, analysis, predictions, date and any departure that changes
-a reading. These are short notes. The full dated originals are kept in a private
-archive, available to reviewers and on request.
+Each plan was written down, dated, before the runs it governs; where it was not, the note
+says so. A note gives the aim, design, analysis, predictions, date and any departure that
+changes a reading. The full dated originals are in a private archive, available to reviewers
+on request.
 
 Periods count from 1 to 8 as in the paper, except in the repair notes, which keep their
 originals' 0 to 7.
@@ -33,3 +33,9 @@ distilbert-matched-updates.txt    10 Nov 2026  new ASRS pairs; replay vs extra u
 distilbert-repair.txt             13 Nov 2026  full-model repair of the final DistilBERT
 pubmed-paired-refit.txt           16 Nov 2026  four arms on a PubMed stream, fixed before its runs
 pubmed-lwf-selection.txt          16 Nov 2026  LwF setting chosen in development, before confirmation
+carried-rules.txt                 19 Nov 2026  carried rules against the refitted lead; records
+                                               and labels resampled; LwF against replay.
+                                               Designed after the results
+
+The common-threshold check (22 Nov 2026, designed after the results) is defined in
+../results/carried_rules/common_thresholds/DEFINITION.txt.

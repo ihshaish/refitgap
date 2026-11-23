@@ -4,7 +4,7 @@
 Reads streams/stream_primary.parquet, checkpoints/primary_{cond}_s{seed}_v2/ and stored results to compare against;
 writes results/asrs_inherited_rule/scores/{cond}_s{seed}.npz, deployed_levels.parquet and
 deployed_scoring_verification.json. Backs the threshold update (Appendix D, "Threshold update with few labels")
-and the ASRS decomposition (Tables D.3-D.5). Needs the checkpoints (not distributed) and the embeddings."""
+and the ASRS decomposition (Tables D.2 to D.4). Needs the checkpoints (not distributed) and the embeddings."""
 import json, sys, time
 from pathlib import Path
 

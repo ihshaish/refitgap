@@ -1,7 +1,7 @@
 Data
 ====
 
-No corpus ships here, bar a 3200-record ASRS sample (public domain). All five corpora are
+No corpus ships here, bar a 3200-record ASRS sample (public domain). All six corpora are
 public; here is where each lives, on what terms, and how the streams were built. Commands
 run from paper/.
 
@@ -11,14 +11,18 @@ Sources
 ASRS          NASA Aviation Safety Reporting System, https://asrs.arc.nasa.gov/search/database.html.
               US government work, public domain; voluntarily reported, de-identified, not a
               probability sample. No bulk download: the web form exports CSV, 5000 records a
-              query (patience...). Our export (August 2026): 77 files, January 1988 to June
-              2026, fields Time/Date, Events/Anomaly and Report 1/Narrative.
+              query. Our export (August 2026): 77 files, January 1988 to June 2026, fields
+              Time/Date, Events/Anomaly and Report 1/Narrative.
 HuffPost      News Category Dataset v3, Misra (2022), Kaggle, CC0. 209527 records.
 arXiv         Hugging Face bluuebunny/arxiv_metadata_by_year, 34 parquet files; metadata CC0.
 Amazon        Amazon Reviews 2023, CDs and Vinyl, Hugging Face McAuley-Lab/Amazon-Reviews-2023;
               research use, check the terms before redistributing.
 MultiEURLEX   Chalkidis et al. (2021), English, EUROVOC level 1, Hugging Face
               coastalcph/multi_eurlex, CC-BY-4.0.
+PubMed        NLM PubMed 2026 annual baseline with MeSH 2026,
+              https://ftp.ncbi.nlm.nih.gov/pubmed/baseline/; NLM terms and conditions. English
+              journal articles indexed in MEDLINE, published 1995 to 2010, 76080 records, 13
+              top-level MeSH categories. Its stream builder is not in this repository.
 GloVe         glove.6B.200d, Stanford NLP, PDDL 1.0.
 DistilBERT    distilbert-base-uncased, Hugging Face, Apache 2.0. No weights ship.
 
@@ -47,9 +51,9 @@ Building the streams
            build_construction_seeds.py, build_factorial.py  # the constructed drifts
     python scripts/train_embedding.py                       # corpus embeddings (word2vec), pre-2010 ASRS
 
-Every stream: records in time order, MinHash near-duplicate removal (earliest kept), 8
+Every stream built here: records in time order, MinHash near-duplicate removal (earliest kept), 8
 contiguous periods of equal size, a 20% test split under data seed 20260802, labels with at
-least 75 test positives in every period (HuffPost bends this rule; its builder says why). The
+least 75 test positives in every period (HuffPost is the exception; its builder says why). The
 2009 ASRS narrative change (abbreviated to expanded text) falls outside every stream, and
 the half year of 2026 is left out.
 
@@ -71,6 +75,7 @@ Rebuild notes
 
 The ASRS streams rebuild record for record. HuffPost gives 34863 records against the paper's
 34805 (same labels and period boundaries); the shipped results use the original stream.
-Its near-duplicate step uses Python's salted hash(), so fix PYTHONHASHSEED for repeatable runs. The arXiv fine-category stream was built inline and its builder is gone. Seeds 0 to 7
+Its near-duplicate step uses Python's salted hash(), so fix PYTHONHASHSEED for repeatable
+runs. The arXiv cs subcategories stream was built inline and has no builder here. Seeds 0 to 7
 of the first BiGRU runs ran on Apple MPS and seeds 8 and 9 on CPU, so agreement across
 devices is statistical, not bitwise.

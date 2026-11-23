@@ -1,0 +1,132 @@
+Analysis plan: carried rules against the refitted lead, from stored scores
+=========================================================================
+Fixed: 19 November 2026
+Nothing below was computed before this date.
+
+Status
+------
+Every analysis here was designed after the results of ASRS, MultiEURLEX and PubMed were known.
+All are descriptive: estimates, intervals and counts by sign, without outcome classes. None
+replaces a result of Table C.1 or of the PubMed plan. No training, no new stream, period, label
+or initialisation. A small estimate is not read as equivalence, and the refitted lead is the
+comparison at a stated label budget, not a true lead against which another rule is wrong.
+
+Aim
+---
+To show, for one comparison on three streams, how far the lead under each carried rule lies from
+the lead after both models refit; to test how far the ASRS result depends on the sample of
+records and on single labels; and to add one stored comparison of LwF with replay.
+
+Inputs
+------
+Final models of the paired DistilBERT runs, scores on the test records of every period, labels,
+inherited thresholds, and the final model's scores on the first-period validation split:
+  ASRS         primary_distilbert_{naive,replay}_s0-5 (distilbert-paired-refit.txt)          6 pairs
+  MultiEURLEX  eurlex_distilbert_{naive,replay,replaycur}_s0-5 (distilbert-paired-refit.txt,
+               distilbert-matched-updates.txt)                                               6 pairs
+  PubMed       pubmed_distilbert_{naive,replay,replaycur}_s0-7 (pubmed-paired-refit.txt)     8 blocks
+The ASRS and MultiEURLEX files hold no record identifiers. Their row order is rebuilt from the
+stream file, whose hash matches each run and whose test labels equal the stored labels in order;
+this is stated wherever those rows are used. BiGRU on MultiEURLEX: the sequential and
+replay runs in results/multieurlex_bigru/ and the LwF runs of the method comparison
+(eurlex_C2_lwf_a0.1_T2_lam1_s0-9), 10 blocks.
+Before any new quantity: the code reproduces the DistilBERT rows of Tables C.1 and C.2 and the
+three PubMed comparisons to 4 decimals. A failure stops the analysis until resolved.
+
+1. Carried rules for replay minus sequential training (DistilBERT, periods 2 to 7)
+---------------------------------------------------------------------------------
+Per pair and period, on the 200 partitions of the paired refit (default_rng(7000+100*seed+period)),
+both arms are scored on each scoring half under:
+  a. the inherited thresholds theta1 of each arm;
+  b. a cut of 0.5;
+  c. own validation: each final model's thresholds fitted on the first-period validation split
+     with that model's scores, as defined for Table C.2;
+  d. the previous period's rule: thresholds fitted for each final model on 500 test records of
+     period j-1, drawn without replacement by default_rng(11000+100*seed+period), one draw per
+     partition, the same records for both arms;
+  f. a matched rate of positive predictions: per label and scoring half, the share of records
+     each arm flags at theta1 is averaged over the two arms, and each arm flags that share of
+     records, those with its highest scores (ceil(share * n) records, ties by record order).
+     The cuts need no labels;
+  e. the refit on the opposite half of the target period (the paired refit), and the same refit
+     with 500 records per fitting half (default_rng(9000+100*seed+period), as in the PubMed plan).
+For each carried rule r in a to d and f: the lead G_r, and the difference G_r - G_V computed within the
+pair on the same scoring halves, averaged over halves, partitions and periods, then over pairs.
+Rule d is set against the 500-record refit, the others against the full refit; both differences
+are printed for d. Each with a 95% paired t interval and the count of pairs by sign. Each arm's
+level under every rule is printed beside the leads, since an unchanged lead can hide a loss in
+both arms. The whole-period value of G_r is given beside the same-fold value for a to c.
+Rule d is a rule carried from the previous period, not a refit; it is not a test of what a
+deployment could have known, since the final model was trained through the whole stream.
+The same table is computed for replay minus extra updates on current data on MultiEURLEX and
+PubMed, for the supplement.
+
+2. Dependence of the ASRS result on records and labels
+------------------------------------------------------
+a. Records and initialisations resampled together. 1000 replicates. In each: the 6 pairs are
+   drawn with replacement; for each period 2 to 7 and each of 10 partitions of the original
+   records into halves, records are drawn with replacement within each half (so no record is in
+   both a fitting and a scoring half), one draw shared by both arms and all pairs; thresholds are
+   refitted within the replicate. Percentile 95% intervals for G_U (same folds), G_V and the
+   change, printed beside the published intervals over initialisations, which remain the paper's
+   inference. Seed default_rng(20261118). The uncertainty is over records of this stream, not
+   over other corpora.
+   Also run for replay minus extra updates on current data on MultiEURLEX.
+b. Labels. For each of the 9 labels: test positives per period, and the label's part of G_U, of
+   G_V and of the change (parts sum to the macro values, checked before rounding), with paired
+   intervals; the three macro values with each label left out in turn; for the two labels with
+   the largest part of the change, false positives and false negatives of each arm at theta1 and
+   at the refitted thresholds, per 1000 test records of the period, on the scoring halves.
+   The same table for MultiEURLEX; PubMed's is already in its analysis output.
+
+3. LwF against replay on MultiEURLEX (BiGRU, stored values)
+-----------------------------------------------------------
+The ten blocks share the first-period model, theta1, labels and partitions (checked).
+Per block: replay's lead over LwF at the inherited thresholds, after both refit, and the change;
+means with percentile bootstrap intervals as for the other BiGRU rows (20000 resamples,
+default_rng(20260920)) and counts by sign. Reported as a change in replay's lead over LwF.
+LwF's weight (0.1) was carried over from ASRS and not tuned on this stream.
+
+4. Constructed streams (run only if the files allow)
+----------------------------------------------------
+Condition: for the reweighted stream, the vocabulary stream and their two controls, stored
+scores of the final sequential and replay BiGRU models on the test records of periods 2 to 7,
+with labels and theta1, for the same ten initialisations. If any is missing the item is dropped
+and the reason recorded.
+One contrast per manipulation: the change in replay's lead on refitting (G_V - G_U, Table C.1
+protocol) on the manipulated stream minus the same change on its control, paired by
+initialisation; mean, bootstrap interval, counts by sign. The reweighted stream and its control
+hold different records, so that contrast also contains the change in the evaluation records;
+the vocabulary stream and its control hold the same records with altered text. No statement
+about the cause of the natural streams' results rests on it.
+
+Left out
+--------
+- Evaluation prevalence of one label varied at fixed scores.
+- The forward comparison of Appendix H stays where it is; it changes both the model and the
+  period scored and is not a row of item 1.
+
+What each outcome changes in the manuscript
+-------------------------------------------
+Item 1  A compact main-text panel (three streams, rules a to d and f against the refit) whatever it
+        shows. If the previous period's rule reads as the refit does, the comparison is said to
+        need less than labels from the scored period, on these records; if not, the dependence
+        on the source of labels is stated in Section 5.1 and the limits.
+Item 2  If the interval over records and initialisations keeps the refitted ASRS lead inside
+        the margin, one sentence in Section 5.1; if it does not, the ASRS sentence in the
+        abstract and Section 5.1 is weakened to match, and the published test is still reported.
+        If one label carries most of the change, that is stated with its counts.
+Item 3  One row in Table C.1 and one sentence.
+Item 4  One sentence joining Sections 5.1 and 5.2 and a supplement row, or nothing.
+
+Outputs
+-------
+One CSV per item at the level of stream, pair, period, arm, rule, source of fitting records,
+number of fitting records, partition, label, with scoring records, positives, tp, fp, fn, F1;
+one JSON of summaries; the scripts; a log of the reproduction check. Tables and the panel are
+built from the same summaries.
+
+Compute
+-------
+CPU only. Items 1, 2b, 3 and 4 are minutes. Item 2a is about 1.4 million threshold fits per
+stream; it runs on a larger CPU machine if it would take more than a few minutes on a desktop.

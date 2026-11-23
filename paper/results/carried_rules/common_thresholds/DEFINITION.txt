@@ -1,0 +1,16 @@
+Common inherited thresholds: definition (written before any value was computed)
+================================================================================
+This check was designed on 22 November 2026, after all results were known. It is descriptive: estimates, paired t
+95% intervals over pairs (refitgap paired_stats, as cr_core.t_summary), and counts of pairs by sign. No outcome class.
+Inputs: the same score files as carried_rules item 1 (DistilBERT, final models, ASRS and MultiEURLEX, 6 pairs each),
+loaded with cr_core.load_arm. Comparisons: ASRS replay minus sequential training; MultiEURLEX replay minus sequential
+training; MultiEURLEX replay minus extra updates on current data.
+Quantities, for each pair and comparison: the lead (first-named arm minus comparator) in macro-F1 averaged over
+periods 2 to 7, each period scored on its whole test set, with
+  (a) each arm at its own theta1; this must reproduce the published G_U to 4 decimals, otherwise the work stops;
+  (b) both arms at the first-named arm's (replay's) theta1;
+  (c) both arms at the comparator's theta1;
+and the within-pair differences (b) - (a) and (c) - (a).
+Listing: per pair, the labels whose theta1 differs between the two arms, with both values; for ASRS, whether each
+such label is Ground Event / Encounter or Inflight Event / Encounter (the two labels that carry 72% of the change
+after refitting). The refitted lead does not depend on the carried vector and is not recomputed.

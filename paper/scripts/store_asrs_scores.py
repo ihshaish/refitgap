@@ -3,7 +3,7 @@
 
 Reads streams/stream_primary.parquet and checkpoints/primary_{cond}_s{seed}_v2/; writes P_i_j, Y_j, Pval_i, Yval,
 theta_dep and theta_final to results/asrs_supplementary/scores/primary_{cond}_s{seed}.npz. Trains nothing.
-Backs the ASRS decomposition (Tables D.3-D.5, Figure 3). Needs the checkpoints (not distributed), the
+Backs the ASRS decomposition (Tables D.2 to D.4, Figure 4). Needs the checkpoints (not distributed), the
 embeddings and the primary stream. Usage: python scripts/store_asrs_scores.py [seeds] [conditions]"""
 import sys, time
 from pathlib import Path

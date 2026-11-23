@@ -446,10 +446,9 @@ def method_contrast(evals_a, evals_b, rule, *, periods=None, weights=None, halve
     """{seed: Evaluation} for methods a and b, and the carried rule's name -> leads of a over b
     at the carried rule (G_U), after both refit (G_V), and the change after refitting
     (change = G_V - G_U, as in the paper), each with mean, 95 % t interval over seeds and
-    unadjusted class. Positive means a is ahead. "placement" (G_U - G_V) is the negative of
-    the change, kept for compatibility. The spread over
-    partitions within each seed is reported apart and never added to the seed interval.
-    same_rule=False lets each method carry its own vector under that name."""
+    unadjusted class. Positive means a is ahead. "placement" is G_U - G_V, minus the change.
+    The spread over partitions within each seed is reported apart and never added to the seed
+    interval. same_rule=False lets each method carry its own vector under that name."""
     if set(evals_a) != set(evals_b) and seeds is None:
         raise ValueError(f"the two methods hold different seeds ({sorted(evals_a)} against {sorted(evals_b)})")
     seeds = sorted(evals_a) if seeds is None else sorted(int(s) for s in seeds)
@@ -502,3 +501,85 @@ def method_contrast(evals_a, evals_b, rule, *, periods=None, weights=None, halve
                           "value, carried level on the held-out halves; not a standard error of record sampling "
                           "and not combined with the seed interval")),
                 per_seed=per_seed)
+
+
+# ------------------------------------------------------------------ lead under one rule, same halves ---
+def _half_level(X, cols, w):
+    """Per-partition level on the scoring halves, averaged over directions and periods (weights w)."""
+    return (0.5 * (X[:, 0, cols] + X[:, 1, cols])) @ w
+
+
+def rule_lead(evals_a, evals_b, rule="previous", *, periods=None, weights=None, names=("a", "b"), seeds=None,
+              by_label=False):
+    """{seed: Evaluation} for methods a and b -> a's lead over b under one rule and after both
+    refit, all on the same scoring halves, paired by seed.
+
+    rule: "previous" for the previous period's rule (evaluate(..., previous=...)), or the name
+    of a fixed rule under `rules` (scored on the halves, U_half). Terms, each with per-seed
+    values, mean, 95 % t interval and unadjusted class: lead_at_rule, lead_after_refit and
+    rule_minus_refit (lead_at_rule - lead_after_refit, seed by seed); with refit_n also
+    lead_after_limited_refit and rule_minus_limited_refit. Positive means a is ahead. For the
+    previous period's rule both methods must hold the same previous period's records, so the
+    draws are the same for both. by_label=True (both evaluated with per_label=True) adds each
+    label's part of every lead, (F1_a - F1_b) / K per seed, which sums over labels to the lead."""
+    if set(evals_a) != set(evals_b) and seeds is None:
+        raise ValueError(f"the two methods hold different seeds ({sorted(evals_a)} against {sorted(evals_b)})")
+    seeds = sorted(evals_a) if seeds is None else sorted(int(s) for s in seeds)
+    vals = {}
+    parts = {}
+    limited = all(getattr(evals_a[s], "limited", None) is not None and getattr(evals_b[s], "limited", None)
+                  is not None for s in seeds)
+    for s in seeds:
+        a, b = evals_a[s], evals_b[s]
+        if a.seed != b.seed or a.period_ids != b.period_ids or a.splits != b.splits or a.split_base != b.split_base:
+            raise ValueError(f"seed {s}: the two evaluations must share seed, period ids and splits")
+        if a.label_hash != b.label_hash:
+            raise ValueError(f"seed {s}: the two evaluations hold different labels or record order")
+        P, cols = a._cols(periods)
+        w = np.full(len(cols), 1.0 / len(cols)) if weights is None else np.asarray(weights, float) / np.sum(weights)
+        if rule == "previous":
+            for e in (a, b):
+                if getattr(e, "previous", None) is None or not all(e.previous_periods[c] for c in cols):
+                    raise ValueError(f"seed {s}: the previous period's rule was not evaluated for periods {P}")
+            if a.previous_n != b.previous_n or [a.previous_label_hash[c] for c in cols] != \
+                    [b.previous_label_hash[c] for c in cols]:
+                raise ValueError(f"seed {s}: the previous period's records or their number differ between methods")
+            Xa, Xb = a.previous, b.previous
+        else:
+            if rule not in a.U_half or rule not in b.U_half:
+                raise KeyError(f"rule {rule!r} was not evaluated for both methods")
+            Xa, Xb = a.U_half[rule], b.U_half[rule]
+        if limited and a.refit_n != b.refit_n:
+            raise ValueError(f"seed {s}: the limited refits use different numbers of records")
+        g = float(np.mean(_half_level(Xa, cols, w) - _half_level(Xb, cols, w)))
+        gv = float(np.mean(_half_level(a.sep, cols, w) - _half_level(b.sep, cols, w)))
+        v = dict(lead_at_rule=g, lead_after_refit=gv, rule_minus_refit=g - gv)
+        if limited:
+            gl = float(np.mean(_half_level(a.limited, cols, w) - _half_level(b.limited, cols, w)))
+            v.update(lead_after_limited_refit=gl, rule_minus_limited_refit=g - gl)
+        vals[s] = v
+        if by_label:
+            la, lb = a.label_summary(P, weights), b.label_summary(P, weights)
+            K = len(la["V_sep"])
+            key = "U_previous" if rule == "previous" else None
+            ra = la[key] if key else la["U_half"][rule]
+            rb = lb[key] if key else lb["U_half"][rule]
+            p = dict(lead_at_rule=(ra - rb) / K, lead_after_refit=(la["V_sep"] - lb["V_sep"]) / K)
+            if limited:
+                p["lead_after_limited_refit"] = (la["V_limited"] - lb["V_limited"]) / K
+            parts[s] = {t: x.tolist() for t, x in p.items()}
+    terms = {}
+    for t in vals[seeds[0]]:
+        per = {s: vals[s][t] for s in seeds}
+        terms[t] = inference.classify_unadjusted(inference.paired_stats(np.array([per[s] for s in seeds]),
+                                                                        name=t))
+        terms[t].update(seeds=seeds, per_seed=per)
+    out = dict(direction=f"{names[0]} minus {names[1]} (positive: {names[0]} scores higher)", names=list(names),
+               rule=rule, periods=evals_a[seeds[0]]._cols(periods)[0], seeds=seeds, terms=terms,
+               refit_n=evals_a[seeds[0]].refit_n if limited else None,
+               previous_n=evals_a[seeds[0]].previous_n if rule == "previous" else None,
+               level=("scoring halves of the common partitions, mean over partitions, directions and periods; "
+                      "one value per seed, marginal 95% t interval over seeds"))
+    if by_label:
+        out["label_parts"] = parts
+    return out

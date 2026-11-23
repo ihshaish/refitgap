@@ -1,7 +1,7 @@
 """MultiEURLEX repair (BiGRU, frozen GloVe, seeds 500-505): full-model repair on replay's final buffer minus replay
 (historical periods 1 to 7 and current period 8) and minus sequential training (period 8), at the shared rule, each
 a family of one against the 0.005 margin. python scripts/repair_multieurlex.py SCORES_DIR OUT_JSON [workers]
-Backs Table G.2 and Main Table 3 (MultiEURLEX); exit 0 if every level matches the stored analysis to 1e-12.
+Backs Table G.2 (MultiEURLEX); exit 0 if every level matches the stored analysis to 1e-12.
 SCORES_DIR holds runs/, repair/ and analysis/meur_analysis.json. Cannot rerun from this repository alone: those
 files are not shipped; the expected output is results/expected/repair_multieurlex.json."""
 import hashlib

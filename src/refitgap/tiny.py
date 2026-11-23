@@ -42,19 +42,18 @@ def tiny_result(u_convention="full"):
 
 
 def lines(result):
-    """The printed lines: one per quantity, 15 significant digits, so a reader can compare
-    them with the hand values and a test can parse them."""
+    """The printed lines, one per quantity, 4 decimals (API.txt gives the exact fractions)."""
     out = [f"tiny example: 2 periods x 4 records, 2 labels, seed {SEED}, {SPLITS} partition, inherited thresholds 0.5",
-           "levels (macro-F1, 0 to 1; descriptive):"]
+           "levels (macro-F1):"]
     for r in result["levels"]:
         p = "mean" if str(r["period"]).startswith("mean") else r["period"]
         vals = [("V_sep", r["V_sep"]), ("V_shared", r["V_shared"]), ("U_half", r["U_half"]), ("U_full", r["U_full"]),
                 ("C", r["C"]), ("M", r["M"]), ("R_half", r["R_half"])]
-        out.append(f"  {r['model']} period {p}: " + "  ".join(f"{k} {v:.15g}" for k, v in vals if v is not None))
-    out.append("decomposition B = A + dR against the per-period reference, U_full (descriptive):")
+        out.append(f"  {r['model']} period {p}: " + "  ".join(f"{k} {v:.4f}" for k, v in vals if v is not None))
+    out.append("decomposition B = A + dR against the per-period reference, U on the whole period:")
     for r in result["decomposition"]:
         p = "mean" if str(r["period"]).startswith("mean") else r["period"]
-        out.append(f"  period {p}: B {r['B']:.15g}  A {r['A']:.15g}  dR {r['dR']:.15g}")
+        out.append(f"  period {p}: B {r['B']:.4f}  A {r['A']:.4f}  dR {r['dR']:.4f}")
     out.extend(result["interpretation"])
     return out
 

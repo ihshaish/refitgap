@@ -48,7 +48,7 @@ def rank_scores(n, selected, threshold=0.5):
 N_RECORDS = 14
 SCORERS = {                       # positive ranks (1 = top), records the carried rule selects
     "reference": dict(positives=(4, 8, 9), selected=9),
-    "final A": dict(positives=(4, 8, 9), selected=10),     # same ranking, rule now takes one more record
+    "final A": dict(positives=(4, 8, 9), selected=10),     # same ranking, rule takes one more record
     "final B": dict(positives=(5, 6, 10), selected=10),    # different ranking
 }
 

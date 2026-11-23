@@ -3,7 +3,7 @@
 split-half partitions; theta_1 stays the grid fit. Defines fit_exact, used across the scripts.
 Writes results/constructed_drift_rescore.parquet (merged by stream) and results/constructed_drift_cells.csv,
 the per-cell comparison of the grid arm with results/calib_splits200*.parquet (exit status 2 if it differs).
-Backs Table E.1 and Appendix A, "How thresholds are fitted". Needs the stream files and checkpoints (not shipped)."""
+Backs Table E.1 and Appendix A, "Threshold fitting". Needs the stream files and checkpoints (not shipped)."""
 import argparse
 import os
 import sys

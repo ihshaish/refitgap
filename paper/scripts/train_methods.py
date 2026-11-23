@@ -3,7 +3,7 @@
 
 Reads streams/stream_<stream>.parquet and the embeddings in ../embeddings; writes <out-dir>/<run>.parquet and
 <run>_scores.npz (default results/methods), no checkpoints. Builds the runs used by the paired refit (Figure 2,
-Table C.1), the benchmark decompositions (Tables D.1, D.2) and the training-regime factorial (Table E.2).
+Table C.1), the benchmark decompositions (Table D.1) and the training-regime factorial (Table E.2).
 Needs the streams built from the corpora, GloVe or the domain word2vec, and training."""
 import argparse, json, time
 from pathlib import Path

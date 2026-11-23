@@ -29,7 +29,7 @@ def main():
     ok = (all(s["auroc"] == F(6, 11) and s["average_precision"] == F(5, 18) for s in ex["scorers"].values())
           and a == dict(deficit=F(1, 26), attainable_gap=F(0), mismatch_change=F(1, 26))
           and b == dict(deficit=F(1, 26), attainable_gap=F(1, 26), mismatch_change=F(0)))
-    print("\nsame AUROC and AP, same deficit, opposite components: " + ("as in the paper!" if ok else "MISMATCH"))
+    print("\nsame AUROC and AP, same deficit, opposite components: " + ("as in the paper" if ok else "MISMATCH"))
     return 0 if ok else 1
 
 

@@ -18,9 +18,8 @@ def _check_PY(P, Y, what):
 
 
 def _above(top):
-    """A cutpoint above every score: top + 1e-9 (the ported rule) wherever that is larger than
-    top, else the next float above top. top + 1e-9 == top only for |top| above about 1.7e7, so
-    for scores in [0, 1] (and up to that magnitude) the result is top + 1e-9, unchanged."""
+    """A cutpoint above every score: top + 1e-9, or the next float above top where adding
+    1e-9 does not change it (|top| above about 1.7e7)."""
     top = np.asarray(top, np.float64)
     c = top + 1e-9
     return np.where(c > top, c, np.nextafter(top, np.inf))
@@ -48,7 +47,7 @@ def fit_exact(P, Y):
     _check_PY(P, Y, "fit_exact")
     Yb = np.asarray(Y).astype(bool)
     n, K = P.shape
-    o = np.argsort(-P, axis=0, kind="mergesort")          # per column, as the 1-d sort in decomposition.py
+    o = np.argsort(-P, axis=0, kind="mergesort")          # stable descending sort per column
     ss = np.take_along_axis(P, o, 0)
     ys = np.take_along_axis(Yb, o, 0)
     npos = ys.sum(0)
@@ -102,8 +101,8 @@ def shared_objective(Ps, Ys, theta, w=None):
 
 
 def fit_grid(P, Y, grid=GRID):
-    """The coarse grid fitter (first index of the best grid value). This is how the
-    inherited theta_1 and the same-scorer validation rule were fitted in the paper."""
+    """Best of the 19-point grid per label (first best on ties). The paper fitted theta_1 and
+    the validation rule this way."""
     P = np.asarray(P, np.float64)
     _check_PY(P, Y, "fit_grid")
     Y = np.asarray(Y).astype(int)

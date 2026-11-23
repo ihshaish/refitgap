@@ -3,7 +3,7 @@
 validation scores), for the 20 frozen-embedding observations, from the checkpoints; V from
 results/exact_fitter/oracle_both.parquet, checked against results/e1_results.parquet. Seed-block
 bootstrap over both ranges. Writes results/asrs_inherited_rule/bwt_bridge{,_raw}.parquet and
-bwt_bridge_summary.json. Backs Table D.3. Needs the stream files and checkpoints (not shipped)."""
+bwt_bridge_summary.json. Backs Table D.2 and the ASRS row of Figure 4. Needs the stream files and checkpoints (not shipped)."""
 import json, sys, time
 from pathlib import Path
 

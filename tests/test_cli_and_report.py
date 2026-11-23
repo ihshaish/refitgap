@@ -86,12 +86,19 @@ def test_tiny_example_printed_values(capsys):
     assert list(crossfit.partitions(4, 0, 1, 1)[0]) == [3, 0, 1, 2]
     assert cli.main(["example"]) == 0
     got = _parse(capsys.readouterr().out)
+    res = tiny.tiny_result()
+    exact = {}
+    for r in res["levels"]:
+        exact[(r["model"], "mean" if str(r["period"]).startswith("mean") else str(r["period"]))] = r
+    for r in res["decomposition"]:
+        exact[("decomposition", "mean" if str(r["period"]).startswith("mean") else str(r["period"]))] = r
     n = 0
     for section, per in tiny.HAND.items():
         for p, vals in per.items():
             row = got[(section, str(p))]
             for k, want in vals.items():
-                assert abs(row[k] - want) < EXACT, (section, p, k, row[k], want)
+                assert abs(row[k] - want) < 5e-5, (section, p, k, row[k], want)          # printed to 4 decimals
+                assert abs(exact[(section, str(p))][k] - want) < EXACT, (section, p, k)
                 n += 1
     assert n == 39
     # the fitted own-period thresholds the README lists (final model, period 0, label b)
@@ -319,7 +326,7 @@ def test_version(capsys):
     with pytest.raises(SystemExit):
         cli.main(["--version"])
     assert capsys.readouterr().out.strip() == f"refitgap {rg.__version__}"
-    assert rg.__version__ == "0.1.0"
+    assert rg.__version__ == "0.2.0"
     if (REPO / "pyproject.toml").exists():          # one version source: pyproject reads refitgap.__version__
         text = (REPO / "pyproject.toml").read_text()
         assert 'dynamic = ["version"]' in text and 'attr = "refitgap.__version__"' in text

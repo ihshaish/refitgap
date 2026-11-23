@@ -3,7 +3,7 @@
 
 Reads streams/stream_<stream>.parquet and the embeddings in ../embeddings; appends to results/e1_results.parquet,
 writes checkpoints/<run>/period<k>.pt and, with --save-scores, the score matrices. Builds the BiGRU runs used by
-the ASRS decomposition (Tables D.3-D.5, Figure 3) and the constructed drifts (Table E.1). Needs the streams
+the ASRS decomposition (Tables D.2 to D.4, Figure 4) and the constructed drifts (Table E.1). Needs the streams
 built from the corpora, GloVe or the domain word2vec, and training; streams/stream_sample.parquet is a smoke test."""
 
 import argparse

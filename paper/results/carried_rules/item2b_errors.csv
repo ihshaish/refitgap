@@ -1,0 +1,17 @@
+comparison,label,arm,thresholds,fp_per_1000,fn_per_1000,tp_per_1000
+ASRS: replay minus sequential training,Ground Event / Encounter,replay,theta1,80.34804461,24.36215406,88.44920117
+ASRS: replay minus sequential training,Ground Event / Encounter,replay,refit,33.39846116,38.3790208,74.43233443
+ASRS: replay minus sequential training,Ground Event / Encounter,sequential training,theta1,114.8781416,20.92458061,91.88677462
+ASRS: replay minus sequential training,Ground Event / Encounter,sequential training,refit,31.03996991,39.93149168,72.87986355
+ASRS: replay minus sequential training,Inflight Event / Encounter,replay,theta1,89.18732788,40.55188103,196.9576198
+ASRS: replay minus sequential training,Inflight Event / Encounter,replay,refit,52.62634649,57.10579885,180.403702
+ASRS: replay minus sequential training,Inflight Event / Encounter,sequential training,theta1,126.544708,34.30832381,203.2011771
+ASRS: replay minus sequential training,Inflight Event / Encounter,sequential training,refit,54.70634604,59.52263047,177.9868704
+MultiEURLEX: replay minus sequential training,100148,replay,theta1,36.73713182,23.95454457,100.6905478
+MultiEURLEX: replay minus sequential training,100148,replay,refit,19.5499809,32.58857718,92.05651521
+MultiEURLEX: replay minus sequential training,100148,sequential training,theta1,48.98023166,24.05166354,100.5934289
+MultiEURLEX: replay minus sequential training,100148,sequential training,refit,18.83078623,35.17093102,89.47416138
+MultiEURLEX: replay minus sequential training,100158,replay,theta1,35.21984287,30.54731927,66.06655846
+MultiEURLEX: replay minus sequential training,100158,replay,refit,24.15540804,36.0187013,60.59517643
+MultiEURLEX: replay minus sequential training,100158,sequential training,theta1,39.0108239,33.11122009,63.50265764
+MultiEURLEX: replay minus sequential training,100158,sequential training,refit,31.04592438,37.69453863,58.9193391

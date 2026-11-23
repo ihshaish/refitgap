@@ -2,7 +2,7 @@
 """Three statistics: backward transfer on ASRS by condition over both ranges (macro-F1 and macro-AUPRC,
 seed-block bootstrap; DistilBERT too), labels per record for every stream, and the cross-fitting
 Monte Carlo error on one stored score matrix. Reads results/e1_results.parquet, streams/ and
-results/training_regime/; writes results/asrs_inherited_rule/stats_addenda.json. Backs Table D.4 and
+results/training_regime/; writes results/asrs_inherited_rule/stats_addenda.json. Backs Table D.3 and
 the streams table of Appendix B. Needs the stream files for labels per record (not shipped)."""
 import json
 import numpy as np

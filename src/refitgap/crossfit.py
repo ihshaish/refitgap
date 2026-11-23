@@ -4,16 +4,24 @@ Settings: sep (own-period rules, fitted per period), shared (one rule over `shar
 and fixed (any threshold vector under `rules`, e.g. "inherited"). Partition b of period id j,
 seed s, is the b-th permutation of default_rng(7000 + 100*s + j); half 0 is the first n_j // 2
 records. Each rule is fitted on one half and scored on the other, both ways, and averaged.
-Every setting uses the same halves, so R = C + M and B = A + dR hold per partition."""
+Every setting uses the same halves, so R = C + M and B = A + dR hold per partition.
+
+Two optional settings use the same halves: a refit on a limited number of labelled records
+drawn from each fitting half (refit_n; draws keyed by default_rng(9000 + 100*s + j)), and the
+previous period's rule, fitted on records of the period before (previous; one draw per
+partition from default_rng(11000 + 100*s + j)). per_label=True keeps per-label F1 as well."""
 import hashlib
 import numbers
 
 import numpy as np
 
-from .fitters import fit_exact, fit_grid, fit_shared_exact, macro_f1
+from .fitters import f1_vec, fit_exact, fit_grid, fit_shared_exact, macro_f1
 
 SPLIT_BASE = 7000                       # partition seed: 7000 + 100*seed + j
 SPLITS = 200                            # the paper's number of partitions
+LIMITED_BASE = 9000                     # limited refit draws: 9000 + 100*seed + j
+PREVIOUS_BASE = 11000                   # previous period's rule draws: 11000 + 100*seed + j
+PREVIOUS_N = 500                        # records of the previous period the rule is fitted on
 IDENTITY_TOL = 1e-12
 
 
@@ -45,6 +53,42 @@ def partitions(n, seed, j, splits=SPLITS, base=SPLIT_BASE):
     check_partition_key(seed, j, base)
     rng = np.random.default_rng(base + 100 * seed + j)
     return [rng.permutation(n) for _ in range(splits)]
+
+
+def limited_draws(n, seed, j, refit_n, splits=SPLITS, base=LIMITED_BASE):
+    """The records of a limited refit for period id j with n records: out[b][d] holds positions
+    within the fitting half of partition b, direction d (half 0 fits in direction 0, half 1 in
+    direction 1). One generator, default_rng(base + 100*seed + j), draws refit_n positions
+    without replacement for b = 0, 1, ... and d = 0, 1 in that order; a fitting half with
+    fewer than refit_n records is used whole and takes no draw. The draws depend on
+    (seed, j, n) only, so every model compared on the same records gets the same ones."""
+    check_partition_key(seed, j, base)
+    if not _is_int(refit_n) or refit_n < 1:
+        raise ValueError(f"refit_n must be a positive integer, got {refit_n!r}")
+    rng = np.random.default_rng(base + 100 * seed + j)
+    h = n // 2
+    out = []
+    for _ in range(splits):
+        row = []
+        for d in (0, 1):
+            nf = h if d == 0 else n - h
+            row.append(rng.choice(nf, refit_n, replace=False) if nf >= refit_n else np.arange(nf))
+        out.append(row)
+    return out
+
+
+def previous_draws(n_prev, seed, j, n=PREVIOUS_N, splits=SPLITS, base=PREVIOUS_BASE):
+    """The records the previous period's rule is fitted on, for target period id j: one draw of
+    n positions out of the previous period's n_prev records per partition, without replacement,
+    from default_rng(base + 100*seed + j) (j is the target period's id). Same draws for every
+    model compared on the same records."""
+    check_partition_key(seed, j, base)
+    if not _is_int(n) or n < 1:
+        raise ValueError(f"previous_n must be a positive integer, got {n!r}")
+    if n > n_prev:
+        raise ValueError(f"previous_n = {n} exceeds the previous period's {n_prev} records")
+    rng = np.random.default_rng(base + 100 * seed + j)
+    return [rng.choice(n_prev, n, replace=False) for _ in range(splits)]
 
 
 def fit_validation_rule(Pval, Yval):
@@ -90,7 +134,10 @@ def array_hash(a, dtype):
 
 class Evaluation:
     """Per-partition levels of one model, arrays of shape (splits, 2, periods): sep, shared,
-    U_half[name]; U_full[name] per period. Also rules, label hashes and settings. Made by evaluate()."""
+    U_half[name]; U_full[name] per period. Also rules, label hashes and settings. Made by evaluate().
+    With refit_n: `limited`, the refit on refit_n records of each fitting half. With previous:
+    `previous`, the previous period's rule on the scoring halves (NaN for a period without one).
+    With per_label: `label_levels`, the same levels per label (one more axis of length K)."""
 
     def __init__(self, **kw):
         self.__dict__.update(kw)
@@ -111,6 +158,10 @@ class Evaluation:
                      V_shared=(hm(self.shared, c) if self.single_model and j in self.shared_periods else None),
                      U_half={k: hm(v, c) for k, v in self.U_half.items()},
                      U_full={k: float(v[c]) for k, v in self.U_full.items()})
+            if getattr(self, "limited", None) is not None:
+                r["V_limited"] = hm(self.limited, c)
+            if getattr(self, "previous", None) is not None:
+                r["U_previous"] = hm(self.previous, c) if self.previous_periods[c] else None
             out[j] = r
         return out
 
@@ -152,18 +203,60 @@ class Evaluation:
                 if r["identity_residual"] > IDENTITY_TOL:
                     raise AssertionError(f"C + M != R for rule {name}: {r['identity_residual']:.3g}")
             out["rules"][name] = r
+        if getattr(self, "limited", None) is not None:
+            out["V_limited"] = float(agg(self.limited).mean())
+        if getattr(self, "previous", None) is not None:
+            has = all(self.previous_periods[c] for c in cols)
+            out["U_previous"] = float(agg(self.previous).mean()) if has else None
+        return out
+
+    def label_summary(self, periods=None, weights=None):
+        """Per-label levels, (K,) arrays averaged over partitions, directions and periods as
+        summary() averages them: V_sep, U_half and U_full per rule, and V_limited and U_previous
+        where evaluated. Needs evaluate(..., per_label=True). The mean over labels of each array
+        is the macro level summary() gives (up to float rounding), so a lead divided by K label
+        by label sums to the macro lead."""
+        L = getattr(self, "label_levels", None)
+        if L is None:
+            raise ValueError("per-label levels were not kept; evaluate with per_label=True")
+        periods, cols = self._cols(periods)
+        if weights is None and self.shared_weights is not None and periods == list(self.shared_periods):
+            weights = self.shared_weights
+        w = (np.full(len(cols), 1.0 / len(cols)) if weights is None else
+             np.asarray(_check_weights(weights, len(cols), "weights")))
+        w = w / w.sum()
+        agg = lambda X: np.einsum("bpk,p->bk", 0.5 * (X[:, 0][:, cols] + X[:, 1][:, cols]), w).mean(0)
+        out = dict(periods=periods, V_sep=agg(L["V_sep"]),
+                   U_half={k: agg(v) for k, v in L["U_half"].items()},
+                   U_full={k: np.einsum("pk,p->k", v[cols], w) for k, v in L["U_full"].items()})
+        if "V_limited" in L:
+            out["V_limited"] = agg(L["V_limited"])
+        if "U_previous" in L:
+            out["U_previous"] = (agg(L["U_previous"]) if all(self.previous_periods[c] for c in cols) else None)
         return out
 
 
 def evaluate(Ps, Ys, seed, period_ids=None, rules=None, shared_periods=None, shared_weights=None,
-             splits=SPLITS, split_base=SPLIT_BASE, single_model=True):
+             splits=SPLITS, split_base=SPLIT_BASE, single_model=True, refit_n=None, previous=None,
+             previous_n=PREVIOUS_N, per_label=False):
     """Per-period scores Ps and 0/1 labels Ys, (n_j, K) each -> Evaluation.
 
     seed and period_ids (ints in [0, 100)) key the partitions: two models compared on the same
     records need the same of both. rules: {name: (K,) thresholds}. shared_periods and
     shared_weights: where the shared rule is fitted and how periods weigh (default all, uniform).
     splits: partitions per period (200 in the paper). single_model=False for a per-period
-    reference (P_j_j on period j): no shared rule is fitted for it."""
+    reference (P_j_j on period j): no shared rule is fitted for it.
+
+    refit_n: also refit on refit_n labelled records of each fitting half (limited_draws), scored
+    on the whole scoring half (Evaluation.limited; V_limited in the summaries). With refit_n at
+    least the half size it equals the full refit.
+    previous: one entry per period, None or (scores, labels) of this model on the previous
+    period's test records; the rule fitted (fit_exact) on previous_n of them, one draw per
+    partition (previous_draws), is scored on both scoring halves of that partition
+    (Evaluation.previous; U_previous in the summaries). For a run with all periods, ids 1 to 6
+    against their predecessors: evaluate(Ps[1:7], Ys[1:7], s, range(1, 7),
+    previous=list(zip(Ps[0:6], Ys[0:6]))).
+    per_label: keep per-label F1 of every level (Evaluation.label_levels, label_summary())."""
     N = len(Ps)
     period_ids = list(range(N)) if period_ids is None else list(period_ids)
     check_partition_key(seed, None, split_base)
@@ -185,11 +278,36 @@ def evaluate(Ps, Ys, seed, period_ids=None, rules=None, shared_periods=None, sha
     S = [period_ids.index(p) for p in shared_periods]
     if shared_weights is not None:
         shared_weights = _check_weights(shared_weights, len(S), "shared_weights")
+    K = Ps[0].shape[1]
+    prev = _check_previous(previous, N, K, period_ids)
     perms = [partitions(len(Ys[c]), seed, period_ids[c], splits, split_base) for c in range(N)]
+    ldraw = (None if refit_n is None else
+             [limited_draws(len(Ys[c]), seed, period_ids[c], refit_n, splits) for c in range(N)])
+    pdraw = [None if prev[c] is None else previous_draws(len(prev[c][1]), seed, period_ids[c], previous_n, splits)
+             for c in range(N)]
     nan = np.full((splits, 2, N), np.nan)
     sep, sh = nan.copy(), nan.copy()
     U = {k: nan.copy() for k in rules}
+    lim = None if refit_n is None else nan.copy()
+    pre = None if previous is None else nan.copy()
+    L = None
+    if per_label:
+        nank = np.full((splits, 2, N, K), np.nan)
+        L = dict(V_sep=nank.copy(), U_half={k: nank.copy() for k in rules})
+        if lim is not None:
+            L["V_limited"] = nank.copy()
+        if pre is not None:
+            L["U_previous"] = nank.copy()
+
+    def put(level, labels_key, b, d, c, Pe, Ye, th, rule=None):
+        f = f1_vec(Pe, Ye, th)
+        level[b, d, c] = float(f.mean())            # = macro_f1(Pe, Ye, th)
+        if L is not None:
+            (L[labels_key] if rule is None else L[labels_key][rule])[b, d, c] = f
+
     for b in range(splits):
+        th_prev = [None if prev[c] is None else fit_exact(prev[c][0][pdraw[c][b]], prev[c][1][pdraw[c][b]])
+                   for c in range(N)]
         for d in (0, 1):
             fit, ev = [], []
             for c in range(N):
@@ -198,26 +316,62 @@ def evaluate(Ps, Ys, seed, period_ids=None, rules=None, shared_periods=None, sha
                 fit.append(A if d == 0 else B); ev.append(B if d == 0 else A)
             for c in range(N):
                 Pe, Ye = Ps[c][ev[c]], Ys[c][ev[c]]
-                sep[b, d, c] = macro_f1(Pe, Ye, fit_exact(Ps[c][fit[c]], Ys[c][fit[c]]))
+                put(sep, "V_sep", b, d, c, Pe, Ye, fit_exact(Ps[c][fit[c]], Ys[c][fit[c]]))
                 for k, th in rules.items():
-                    U[k][b, d, c] = macro_f1(Pe, Ye, th)
+                    put(U[k], "U_half", b, d, c, Pe, Ye, th, rule=k)
+                if lim is not None:
+                    sub = fit[c][ldraw[c][b][d]]
+                    put(lim, "V_limited", b, d, c, Pe, Ye, fit_exact(Ps[c][sub], Ys[c][sub]))
+                if th_prev[c] is not None:
+                    put(pre, "U_previous", b, d, c, Pe, Ye, th_prev[c])
             if not single_model:
                 continue                    # no shared rule across different models' scores
             th_sh = fit_shared_exact([Ps[c][fit[c]] for c in S], [Ys[c][fit[c]] for c in S], shared_weights)
             for c in S:
                 sh[b, d, c] = macro_f1(Ps[c][ev[c]], Ys[c][ev[c]], th_sh)
     U_full = {k: np.array([macro_f1(Ps[c], Ys[c], th) for c in range(N)]) for k, th in rules.items()}
+    if L is not None:
+        L["U_full"] = {k: np.array([f1_vec(Ps[c], Ys[c], th) for c in range(N)]) for k, th in rules.items()}
     # pairing checks for decompose: label counts (readable) and a hash of each label matrix in
     # record order (a permuted or different record set gives a different hash); the fixed rules
     # are kept, with their hashes, so decompose can confirm both models were scored at one rule
     sig = [(int(len(Y)), int(Y.sum())) for Y in Ys]
     label_hash = [array_hash(Y, np.int8) for Y in Ys]
     rule_hash = {k: array_hash(v, np.float64) for k, v in rules.items()}
+    extra = {}
+    if refit_n is not None:
+        extra.update(limited=lim, refit_n=int(refit_n))
+    if previous is not None:
+        extra.update(previous=pre, previous_n=int(previous_n), previous_periods=[p is not None for p in prev],
+                     previous_label_hash=[None if p is None else array_hash(p[1], np.int8) for p in prev])
+    if L is not None:
+        extra["label_levels"] = L
     return Evaluation(seed=seed, splits=splits, split_base=split_base, period_ids=period_ids,
                       shared_periods=shared_periods, shared_weights=shared_weights, sep=sep, shared=sh,
                       U_half=U, U_full=U_full, label_signature=sig, label_hash=label_hash,
                       rules={k: v.copy() for k, v in rules.items()}, rule_hash=rule_hash,
-                      single_model=bool(single_model))
+                      single_model=bool(single_model), **extra)
+
+
+def _check_previous(previous, N, K, period_ids):
+    """previous -> list of N entries, None or (scores float64, labels int), checked."""
+    if previous is None:
+        return [None] * N
+    previous = list(previous)
+    if len(previous) != N:
+        raise ValueError(f"previous: one entry per period ({N}), None or (scores, labels)")
+    out = []
+    for c, e in enumerate(previous):
+        if e is None:
+            out.append(None)
+            continue
+        P, Y = np.asarray(e[0], np.float64), np.asarray(e[1])
+        if P.ndim != 2 or P.shape != Y.shape or P.shape[1] != K:
+            raise ValueError(f"period {period_ids[c]}: previous period's scores and labels must be (n, {K})")
+        if not np.all(np.isfinite(P)) or not np.isin(Y, (0, 1)).all():
+            raise ValueError(f"period {period_ids[c]}: previous period's scores must be finite, labels 0/1")
+        out.append((P, Y.astype(int)))
+    return out
 
 
 def decompose(ref, final, rule, periods=None, weights=None, halves=False, same_rule=True):
@@ -225,9 +379,8 @@ def decompose(ref, final, rule, periods=None, weights=None, halves=False, same_r
 
     B = U_ref - U_final (the deficit), A = V_sep,ref - V_sep,final, dR = R_final - R_ref with
     R_x = V_sep,x - U_x; for two single models also dR = dC + dM. B and dR are also returned
-    as D and R (the earlier names). U on the full period unless
-    halves=True. Raises unless seed, period ids, splits, labels and the rule match;
-    same_rule=False allows a model-specific rule under one name."""
+    as D and R. U on the full period unless halves=True. Raises unless seed, period ids,
+    splits, labels and the rule match; same_rule=False allows a model-specific rule under one name."""
     if ref.seed != final.seed or ref.period_ids != final.period_ids or ref.splits != final.splits \
             or ref.split_base != final.split_base:
         raise ValueError("ref and final must share seed, period ids and splits (same partitions)")
@@ -252,7 +405,7 @@ def decompose(ref, final, rule, periods=None, weights=None, halves=False, same_r
                D=ur - uf, A=sr["V_sep"] - sf["V_sep"], R_ref=sr["V_sep"] - ur, R_final=sf["V_sep"] - uf)
     out["R"] = out["R_final"] - out["R_ref"]
     out["residual_D_A_R"] = abs(out["D"] - (out["A"] + out["R"]))
-    out["B"], out["dR"] = out["D"], out["R"]      # the paper's names; D and R kept for compatibility
+    out["B"], out["dR"] = out["D"], out["R"]      # the paper's names for D and R
     if not (ref.single_model and final.single_model):
         out["shared_terms"] = "omitted: the reference holds different models on different periods"
     elif ref.shared_periods != final.shared_periods or ref.shared_weights != final.shared_weights:

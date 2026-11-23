@@ -1,0 +1,12 @@
+Changes
+=======
+
+0.2.0 (23 Nov 2026)
+- evaluate(refit_n=...): a refit on a limited number of labelled records, on the same halves.
+- evaluate(previous=...): the previous period's rule, scored on the same halves.
+- evaluate(per_label=True) and Evaluation.label_summary(): per-label levels.
+- rule_lead(): a method's lead under the previous period's rule (or any fixed rule) beside its
+  lead after both refit; limited_draws() and previous_draws() expose the draws.
+
+0.1.0 (15 Nov 2026)
+- First release: compare(), method_contrast(), the evaluator and the command line.

@@ -3,7 +3,7 @@ buffer (threshold refit, logit adapter, head, full model) minus replay on histor
 as one non-inferiority family. python scripts/repair_vocabulary.py PATHS_JSON OUT_JSON [workers]
 PATHS_JSON maps each key of results/expected/repair_vocabulary_inputs.json ("asrsperm100|s0|naive", ...) to a score
 file, and "stored_results" to the stored repair results file. Every file is checked against the sha16 listed there.
-Backs Table G.2 and Main Table 3 (vocabulary stream); exit 0 if every number matches the stored results to 1e-12.
+Backs Table G.2 (vocabulary stream); exit 0 if every number matches the stored results to 1e-12.
 Cannot rerun from this repository alone: the 50 score files and the stored results file are not shipped."""
 import hashlib
 import json

@@ -2,7 +2,7 @@
 """Each benchmark stream's contrast A - dR on the restricted range (periods 2 to 7), with a
 percentile bootstrap over initialisations, and whether its dR interval lies below the ASRS 0.0113.
 Reads results/benchmarks/external_bridge.parquet; writes
-results/asrs_supplementary/benchmark_AminusdR.json. Backs the last column of Table D.2.
+results/asrs_supplementary/benchmark_AminusdR.json. Not reported in the current supplement.
 Needs nothing beyond the repository."""
 import json, numpy as np, pandas as pd
 t = pd.read_parquet("results/benchmarks/external_bridge.parquet"); t = t[t.j >= 1]
