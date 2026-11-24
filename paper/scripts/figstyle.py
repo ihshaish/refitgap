@@ -214,10 +214,71 @@ def _apply_base():
         "pdf.fonttype": 42,
     })
 
+def _cm_slot_to_unicode():
+    """(font, slot) -> Unicode for matplotlib's bundled Computer Modern fonts,
+    from matplotlib's own mathtext tables. These fonts keep TeX's slot layout
+    (the minus sign of cmsy10 sits at 0xA1, the math full stop of cmmi10 at
+    0x3A), and the PDF backend writes the slot number as the character's
+    Unicode value, so text extracted from the PDF would read a full stop as a
+    colon, a minus sign as an inverted exclamation mark, and so on."""
+    from matplotlib import _mathtext_data as md
+    table = {}
+    for name, (font, slot) in md.latex_to_bakoma.items():
+        uni = ord(name) if len(name) == 1 else md.tex2uni.get(name[1:])
+        if uni is None or uni > 0xFFFF:
+            continue
+        # where two names share a glyph, the single-character name decides
+        if (font, slot) not in table or len(name) == 1:
+            table[font, slot] = uni
+    return table
+
+
+def _pdf_text_layer():
+    """Context manager: while it is open, PDFs saved by matplotlib carry a
+    ToUnicode map for the Computer Modern fonts that names the glyph drawn
+    (_cm_slot_to_unicode), so text copied or extracted from the figure reads
+    as it is printed. Nothing that is drawn changes."""
+    import contextlib
+    import re as _re
+    from matplotlib.backends.backend_pdf import PdfFile
+
+    table = _cm_slot_to_unicode()
+    embed, output = PdfFile.embedTTF, PdfFile.outputStream
+    state = {"font": None}
+
+    def embedTTF(self, filename, characters):
+        state["font"] = _os.path.splitext(_os.path.basename(filename))[0].lower()
+        try:
+            return embed(self, filename, characters)
+        finally:
+            state["font"] = None
+
+    def _range(m):
+        start = int(m.group(1), 16)
+        dest = [int(h, 16) for h in _re.findall(rb"<([0-9a-fA-F]{4})>", m.group(3))]
+        dest = [table.get((state["font"], start + i), u) for i, u in enumerate(dest)]
+        return b"<%s> <%s> [%s]" % (m.group(1), m.group(2), b" ".join(b"<%04x>" % u for u in dest))
+
+    def outputStream(self, ref, data, extra=None):
+        if state["font"] is not None and isinstance(data, bytes) and b"beginbfrange" in data:
+            data = _re.sub(rb"<([0-9a-fA-F]{4})> <([0-9a-fA-F]{4})> \[([^\]]*)\]", _range, data)
+        return output(self, ref, data, extra=extra)
+
+    @contextlib.contextmanager
+    def patched():
+        PdfFile.embedTTF, PdfFile.outputStream = embedTTF, outputStream
+        try:
+            yield
+        finally:
+            PdfFile.embedTTF, PdfFile.outputStream = embed, output
+    return patched()
+
+
 def save(fig, path_stem, png=False):
     """Save the figure as a vector PDF (and, if asked, a 400 dpi PNG) and
     close it."""
-    fig.savefig(f"{path_stem}.pdf")
+    with _pdf_text_layer():
+        fig.savefig(f"{path_stem}.pdf")
     if png:
         fig.savefig(f"{path_stem}.png", dpi=400)
     plt.close(fig)

@@ -12,8 +12,9 @@ Inputs
     --from-levels reads the stored per-pair levels (paper/results/paired_refit/) instead: seconds.
   DistilBERT, 6 pairs per comparison (seeds 0-5): stored per-pair, per-period levels in
     distilbert_levels.csv (U at each arm's own inherited thresholds, V cross-fitted as above).
-    Its 30 score files (about 60 MB) are not in the repository, so the levels are the input
-    here; paper/scripts/paired_refit_distilbert.py recomputes them from the score files.
+    The levels are the input here; paper/scripts/paired_refit_distilbert.py recomputes them
+    from the 30 score files. The 12 ASRS files are in ../asrs_distilbert/ in slim form, and
+    recompute.py there recomputes the ASRS row from them; the MultiEURLEX files are not shipped.
   Periods 2 to 7 of the paper throughout (period ids 1-6).
 
 Output

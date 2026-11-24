@@ -326,7 +326,7 @@ def test_version(capsys):
     with pytest.raises(SystemExit):
         cli.main(["--version"])
     assert capsys.readouterr().out.strip() == f"refitgap {rg.__version__}"
-    assert rg.__version__ == "0.2.0"
+    assert rg.__version__ == "0.2.1"
     if (REPO / "pyproject.toml").exists():          # one version source: pyproject reads refitgap.__version__
         text = (REPO / "pyproject.toml").read_text()
         assert 'dynamic = ["version"]' in text and 'attr = "refitgap.__version__"' in text

@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: "If you use refitgap, please cite the paper below and this software."
 title: "refitgap: score-based evaluation of thresholded forgetting in continual multi-label classification"
 type: software
-version: 0.2.0
-date-released: 2026-11-23
+version: 0.2.1
+date-released: 2026-11-24
 license: MIT
 repository-code: "https://github.com/ihshaish/refitgap"
 authors:

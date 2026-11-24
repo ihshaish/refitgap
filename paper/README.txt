@@ -16,10 +16,12 @@ Figure 2, Table C.1     figure_paired_refit.py (drawing)     the files below    
   ASRS, MultiEURLEX     ../examples/figure2/                 paired_refit/, ../examples/figure2/      -
   BiGRU rows            paired_refit_bigru.py                paired_refit/paired_replay*.json         -
   DistilBERT rows       paired_refit_distilbert.py           expected/paired_refit_distilbert.json    scores
+    ASRS row            ../examples/asrs_distilbert/         (scores and labels shipped there)        -
   PubMed rows           paired_refit_pubmed.py               pubmed_paired_refit/                     scores
   BiGRU LwF rows        carried_rules_lwf.py                 carried_rules/item3.json                 scores
 Table C.3               ../examples/figure2/                 ../examples/figure2/distilbert_levels.csv -
 Table C.4               decomposition_distilbert.py          distilbert_decomposition/                -
+  paired refit's runs   ../examples/asrs_distilbert/         (scores and labels shipped there)        -
 Table C.6               paired_refit_pubmed.py               pubmed_paired_refit/                     scores
 App. C.2, both arms     carried_rules_common_thresholds.py   carried_rules/common_thresholds/         scores
   at one arm's rule

@@ -94,12 +94,19 @@ Short of labels? `evaluate(..., refit_n=500)` refits on 500 labelled records.
     python examples/two_scorer/table1.py                         # Table 1, exact fractions
     python examples/figure2/reproduce_figure2.py                 # Figure 2, about a minute
     python examples/figure2/reproduce_figure2.py --from-levels   # the same in a second
+    python examples/asrs_distilbert/recompute.py                 # ASRS with DistilBERT from scores, about 3 minutes
 
 The Figure 2 script recomputes the five ASRS and MultiEURLEX rows and checks
 them against stored values to 1e-10. The BiGRU rows come from raw scores in
-this repository. The DistilBERT rows come from stored levels per pair, because
-their score files are too large to ship here. The PubMed rows are stored in
-`paper/results/pubmed_paired_refit/`.
+this repository. The DistilBERT rows come from stored levels per pair. The PubMed
+rows are stored in `paper/results/pubmed_paired_refit/`.
+
+The paper's main result can also be recomputed from scores. `examples/asrs_distilbert/`
+holds the scores, labels and inherited thresholds of the six ASRS DistilBERT pairs (6 MB, no
+text). Its script recomputes replay's lead over sequential training at the inherited
+thresholds and after both refits, and the decomposition of the sequential runs, and checks
+them against the stored values to 1e-10. The MultiEURLEX and PubMed scores for DistilBERT are
+not in this repository.
 
 `paper/README.txt` maps every table and figure to its script and result files.
 `paper/plans/` holds the analysis plans. `paper/checks/cold_install_0.2.0.txt`
@@ -108,7 +115,7 @@ records a clean-environment run of the commands above.
 ## Layout
 
     src/refitgap/   the evaluator
-    examples/       quickstart, Table 1, Figure 2, your own models, a notebook
+    examples/       quickstart, Table 1, Figure 2, ASRS from scores, your own models, a notebook
     paper/          plans, scripts, stored results and checks for the paper
     tests/          python -m pytest
 
