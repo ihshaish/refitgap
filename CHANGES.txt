@@ -1,6 +1,11 @@
 Changes
 =======
 
+0.2.2 (24 Nov 2026)
+- README as plain text (README.txt).
+- paper/README.txt: paired_refit_bigru.py needs the built stream file for its record counts.
+- No change to the evaluator.
+
 0.2.1 (24 Nov 2026)
 - examples/asrs_distilbert/: scores, labels and inherited thresholds of the six ASRS DistilBERT
   pairs (6 MB, no text), and recompute.py, which recomputes the paper's ASRS comparison of replay

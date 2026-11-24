@@ -18,7 +18,7 @@ from .analysis import analyse, make_run, run_from_arrays, run_from_npz, save_arr
 from .twoscorer import compare, method_contrast, rule_lead
 from .identification import f1_bounds_from_counts, identification_example
 
-__version__ = "0.2.1"
+__version__ = "0.2.2"
 
 __all__ = [
     "GRID", "f1_vec", "fit_exact", "fit_grid", "fit_shared_exact", "macro_f1", "shared_objective", "SPLITS",
