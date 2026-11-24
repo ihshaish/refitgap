@@ -14,7 +14,7 @@ Paper item              Script (scripts/)                    Stored result (resu
 Table 1                 ../examples/two_scorer/table1.py     (exact fractions)                        -
 Figure 2, Table C.1     figure_paired_refit.py (drawing)     the files below                          -
   ASRS, MultiEURLEX     ../examples/figure2/                 paired_refit/, ../examples/figure2/      -
-  BiGRU rows            paired_refit_bigru.py                paired_refit/paired_replay*.json         -
+  BiGRU rows            paired_refit_bigru.py                paired_refit/paired_replay*.json         stream*
   DistilBERT rows       paired_refit_distilbert.py           expected/paired_refit_distilbert.json    scores
     ASRS row            ../examples/asrs_distilbert/         (scores and labels shipped there)        -
   PubMed rows           paired_refit_pubmed.py               pubmed_paired_refit/                     scores
@@ -85,6 +85,10 @@ set each benchmark stream against ASRS; the current supplement does not report t
 
 Stored without a script: results/exact_fitter/, e1_results.parquet, prior_only_baseline.csv and
 constructions/training_rows/ come from the training harness and an exact-fitter rescoring run.
+
+* paired_refit_bigru.py also reads the built stream file (streams/stream_<name>.parquet, not
+shipped) for the record counts it stores beside the leads. The leads themselves are recomputed
+from the shipped scores, without that file, by ../examples/figure2/reproduce_figure2.py.
 
 results/forward_comparison/ holds the forward comparison by lag (plans/forward-comparison.txt):
 forward_{primary,eurlex}_{naive,replay}.csv for DistilBERT on ASRS and MultiEURLEX, and
